@@ -1,0 +1,65 @@
+.dt-buttons,
+.dataTables_info,
+.dataTables_length {
+    position: absolute !important;
+}
+
+.dt-buttons {
+    right: 0;
+}
+
+.button-add {
+    top: 74px !important;
+}
+
+.dataTables_length {
+    top: 46px;
+    left: 120px;
+}
+
+.dataTables_filter {
+    padding-top: 50px;
+}
+
+.dataTables_info {
+    bottom: 7px;
+}
+
+.previous,
+.page-link {
+    border-color: #0090e7;
+    background-color: transparent !important;
+    font-size: 0.775rem;
+}
+
+.active>a.page-link {
+    background-color: #0090e7 !important;
+}
+
+@media screen and (max-width: 767px) {
+
+    .card-title,
+    .dt-buttons,
+    .dataTables_info {
+        position: relative !important;
+    }
+
+    .button-add {
+        top: 25px !important;
+        right: 25px;
+    }
+
+    .dataTables_filter {
+        padding-top: 3px;
+    }
+
+    .dataTables_length {
+        top: 89px;
+        width: 100%;
+        left: 0;
+    }
+
+    .dataTables_paginate {
+        padding-top: 5px;
+    }
+}
