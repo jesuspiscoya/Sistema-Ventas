@@ -1,4 +1,4 @@
-<nav class="sidebar sidebar-offcanvas vh-100" id="sidebar">
+<nav class="sidebar sidebar-offcanvas vh-100 position-fixed" id="sidebar">
   <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
     <a class="sidebar-brand brand-logo" href="<?php echo $src ?>index.php">
       <img src="<?php echo $src ?>assets/images/logo.svg" class="w-auto h-auto" alt="logo" />
@@ -75,7 +75,7 @@
       </div>
     </li>
     <li class="nav-item menu-items">
-      <a class="nav-link" href="<?php echo $srcPage ?>pedidos.php">
+      <a class="nav-link" href="<?php echo $srcPage ?>pedidos_page.php">
         <span class="menu-icon">
           <i class="fa-solid fa-box"></i>
         </span>
@@ -83,7 +83,7 @@
       </a>
     </li>
     <li class="nav-item menu-items">
-      <a class="nav-link" href="<?php echo $srcPage ?>productos.php">
+      <a class="nav-link" href="<?php echo $srcPage ?>productos_page.php">
         <span class="menu-icon">
           <i class="fa-solid fa-tags"></i>
         </span>
@@ -91,7 +91,7 @@
       </a>
     </li>
     <li class="nav-item menu-items">
-      <a class="nav-link" href="<?php echo $srcPage ?>usuarios.php">
+      <a class="nav-link" href="<?php echo $srcPage ?>usuarios_page.php">
         <span class="menu-icon">
           <i class="fa-solid fa-user"></i>
         </span>
@@ -99,7 +99,7 @@
       </a>
     </li>
     <li class="nav-item menu-items">
-      <a class="nav-link" href="<?php echo $srcPage ?>clientes.php">
+      <a class="nav-link" href="<?php echo $srcPage ?>clientes_page.php">
         <span class="menu-icon">
           <i class="fa-regular fa-face-smile"></i>
         </span>

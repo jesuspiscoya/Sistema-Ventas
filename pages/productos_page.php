@@ -1,70 +1,74 @@
 <!DOCTYPE html>
 <html lang="es">
 
-<?php $tittle = "Usuarios"; ?>
+<?php $tittle = "Productos"; ?>
 <?php $src = "../" ?>
 <?php include '../components/_head.php' ?>
 <?php $srcPage = "" ?>
+<?php include '../services/producto_dao.php' ?>
 
 <body>
     <div class="container-scroller">
         <?php include '../components/_sidebar.php'; ?>
-        <div class="container-fluid page-body-wrapper">
+        <div class="container-fluid page-body-wrapper mr-0">
             <?php include '../components/_navbar.php'; ?>
             <div class="main-panel">
                 <div class="content-wrapper pt-4 pb-0">
                     <div class="card border-0 mb-4">
                         <div class="card-body">
-                            <h3 class="card-title position-absolute mb-3">Usuarios</h3>
+                            <h3 class="card-title position-absolute mb-3">Productos</h3>
                             <div class="table-responsive">
-                                <table class="table table-hover w-100 pt-5 pt-md-1" id="dataTableUsuarios">
+                                <table class="table table-hover w-100 pt-5 pt-md-1" id="dataTableProductos">
                                     <thead class="thead-dark">
                                         <tr class="text-uppercase">
                                             <th style="width: 15px;">#</th>
-                                            <th style="width: 60px;">código</th>
-                                            <th>nombre completo</th>
-                                            <th>correo</th>
-                                            <th style="width: 90px;">fech. nac.</th>
-                                            <th style="width: 50px;">dni</th>
-                                            <th style="width: 80px;">teléfono</th>
-                                            <th>dirección</th>
-                                            <th style="width: 80px;">acción</th>
+                                            <th style="width: 70px;">código</th>
+                                            <th>prodcuto</th>
+                                            <th style="width: 80px;">precio</th>
+                                            <th style="width: 80px;">stock</th>
+                                            <th style="width: 100px;">estado</th>
+                                            <th style="width: 160px;">acción</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php for ($i = 1; $i < 25; $i++) { ?>
+                                        <?php $productoDao = new ProductoDao();
+                                        $array = $productoDao->listar();
+                                        for ($i = 0; $i < count($array); $i++) { ?>
                                             <tr class="text-light">
                                                 <td>
-                                                    <?php echo $i ?>
+                                                    <?php echo $i + 1 ?>
                                                 </td>
                                                 <td>
-                                                    <?php echo $i * 10000 ?>
+                                                    <?php echo $array[$i]->codigo ?>
                                                 </td>
                                                 <td>
-                                                    <?php echo "Nombre " . $i . " Apellido " . $i ?>
+                                                    <?php echo $array[$i]->nombre ?>
+                                                </td>
+                                                <td>S/
+                                                    <?php echo $array[$i]->precio ?>
                                                 </td>
                                                 <td>
-                                                    <?php echo "correo" . $i . "@gmail.com" ?>
-                                                </td>
-                                                <td>03/05/2001</td>
-                                                <td>
-                                                    <?php echo $i * 1000000 ?>
+                                                    <?php echo $array[$i]->stock ?>
                                                 </td>
                                                 <td>
-                                                    <?php echo "99999999" . $i ?>
+                                                    <?php $estado;
+                                                    if ($array[$i]->estado == 1)
+                                                        $estado = 'Disponible';
+                                                    else
+                                                        $estado = 'No disponible'; ?>
+                                                    <label class="badge badge-pill badge-success">
+                                                        <?php echo $estado ?>
+                                                    </label>
                                                 </td>
-                                                <td>
-                                                    <?php echo "Av. Dirección" . $i ?>
-                                                </td>
-                                                <td class="py-2">
-                                                <div class="btn btn-inverse-warning">
-                                                        <i class="fa-solid fa-pen m-0 my-2"></i>
+                                                <td class="p-0">
+                                                    <div class="btn btn-inverse-warning">
+                                                        <i class="fa-solid fa-pen m-0 my-1"></i>
                                                     </div>
                                                     <div class="btn btn-inverse-primary mx-1">
-                                                        <i class="fa-solid fa-gear m-0 my-2"></i>
+                                                        <i class="fa-solid fa-gear m-0 my-1"></i>
                                                     </div>
                                                     <div class="btn btn-inverse-danger">
-                                                        <i class="fa-solid fa-trash-can m-0 my-2"></i>
+                                                        <i class="fa-solid fa-trash-can m-0 my-1"></i>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -85,8 +89,9 @@
     </div>
     <!-- Custom Bootstrap 5 Js -->
     <script src="../assets/libraries/js/vendor.bundle.base.js"></script>
-    <script src="../assets/js/off-canvas.js"></script>
-    <script src="../assets/js/misc.js"></script>
+    <script src="js/hoverable-collapse.js"></script>
+    <script src="../js/off-canvas.js"></script>
+    <script src="../js/misc.js"></script>
     <!-- Plugins Datatables Js -->
     <script src="../assets/libraries/datatables/JSZip-2.5.0/jszip.min.js"></script>
     <script src="../assets/libraries/datatables/pdfmake-0.1.36/pdfmake.min.js"></script>
@@ -99,8 +104,8 @@
     <script src="../assets/libraries/datatables/Buttons-2.3.6/js/buttons.bootstrap5.min.js"></script>
     <script src="../assets/libraries/datatables/Buttons-2.3.6/js/buttons.html5.min.js"></script>
     <script src="../assets/libraries/datatables/Buttons-2.3.6/js/buttons.print.min.js"></script>
-    <!-- Custom Pedidos Js -->
-    <script src="../assets/js/datatables.js"></script>
+    <!-- Custom Datatables Js -->
+    <script src="../js/datatables.js"></script>
 </body>
 
 </html>

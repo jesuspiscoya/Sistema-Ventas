@@ -5,9 +5,9 @@
     <!-- Icon para pestaña -->
     <link rel="shortcut icon" href="<?php echo $src ?>assets/images/favicon.png" />
     <!-- Bootstrap 5 CSS Custom -->
-    <link rel="stylesheet" href="<?php echo $src ?>assets/css/style.css">
+    <link rel="stylesheet" href="<?php echo $src ?>css/style.css">
     <!-- CSS Custom -->
-    <link rel="stylesheet" href="<?php echo $src ?>assets/css/datatables.css">
+    <link rel="stylesheet" href="<?php echo $src ?>css/datatables.css">
     <!-- Fontawesome -->
     <script src="https://kit.fontawesome.com/f271c886fb.js" crossorigin="anonymous"></script>
     <!-- Datatables CSS Bootstrap 5-->

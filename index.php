@@ -9,7 +9,7 @@
 <body>
     <div class="container-scroller">
         <?php include 'components/_sidebar.php'; ?>
-        <div class="container-fluid page-body-wrapper">
+        <div class="container-fluid page-body-wrapper mr-0">
             <?php include 'components/_navbar.php'; ?>
             <div class="main-panel">
                 <div class="content-wrapper pt-4 pb-0">
@@ -112,12 +112,13 @@
     </div>
     <!-- Custom Bootstrap 5 Js -->
     <script src="assets/libraries/js/vendor.bundle.base.js"></script>
-    <script src="assets/js/off-canvas.js"></script>
-    <script src="assets/js/misc.js"></script>
+    <script src="js/hoverable-collapse.js"></script>
+    <script src="js/off-canvas.js"></script>
+    <script src="js/misc.js"></script>
     <!-- Custom Chart Js -->
     <script src="assets/libraries/chart.js/Chart.min.js"></script>
     <!-- Custom Dashboard Js -->
-    <script src="assets/js/dashboard.js"></script>
+    <script src="js/dashboard.js"></script>
 </body>
 
 </html>
