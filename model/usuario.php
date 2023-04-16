@@ -7,6 +7,8 @@ class Usuario
     public $dni;
     public $telefono;
     public $direccion;
+    public $usuario;
+    public $password;
     public $estado;
 }
 ?>

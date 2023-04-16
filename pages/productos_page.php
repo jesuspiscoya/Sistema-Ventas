@@ -23,7 +23,7 @@
                                         <tr class="text-uppercase">
                                             <th style="width: 15px;">#</th>
                                             <th style="width: 70px;">código</th>
-                                            <th>prodcuto</th>
+                                            <th>producto</th>
                                             <th style="width: 80px;">precio</th>
                                             <th style="width: 80px;">stock</th>
                                             <th style="width: 100px;">estado</th>

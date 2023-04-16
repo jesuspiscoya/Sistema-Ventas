@@ -8880,8 +8880,7 @@ pre {
   .jsgrid .jsgrid-table .jsgrid-filter-row select[readonly], .jsgrid .jsgrid-table .jsgrid-filter-row input[readonly][type=number], .select2-container--default .select2-selection--single[readonly], .select2-container--default .select2-selection--single .select2-search__field[readonly], .typeahead[readonly],
   .tt-query[readonly],
   .tt-hint[readonly] {
-    background-color: #e9ecef;
-    opacity: 1; }
+    opacity: 0.3; }
 
 input[type="date"].form-control, input.asColorPicker-input[type="date"], .jsgrid .jsgrid-table .jsgrid-filter-row input[type="date"][type=text], .jsgrid .jsgrid-table .jsgrid-filter-row input[type="date"][type=number], .select2-container--default input.select2-selection--single[type="date"], .select2-container--default .select2-selection--single input.select2-search__field[type="date"], input.typeahead[type="date"],
 input.tt-query[type="date"],
@@ -9005,6 +9004,82 @@ textarea.tt-hint {
   .form-row > [class*="col-"] {
     padding-right: 5px;
     padding-left: 5px; }
+
+/* Agregando form-switch */
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 3.35rem;
+  height: 1.5rem;
+  margin-right: 0.5rem;
+  margin-bottom: 0;
+}
+
+.switch .input-switch {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #2A3038;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 1rem;
+  width: 1rem;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.input-switch:checked + .slider {
+  background-color: #2196F3;
+}
+
+.input-switch:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+.input-switch:checked + .slider:before {
+  -webkit-transform: translateX(1.85rem);
+  -ms-transform: translateX(1.85rem);
+  transform: translateX(1.85rem);
+}
+
+.input-switch:checked {
+  background-color: #2196F3;
+}
+
+.input-switch:checked {
+  -webkit-transform: translateX(1.85rem);
+  -ms-transform: translateX(1.85rem);
+  transform: translateX(1.85rem);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+/* End form-switch*/
 
 .form-check {
   position: relative;
@@ -11823,8 +11898,6 @@ input[type="button"].btn-block {
 .alert-link {
   font-weight: 700; }
 
-.alert-dismissible {
-  padding-right: 4rem; }
   .alert-dismissible .close {
     position: absolute;
     top: 0;

@@ -6,6 +6,7 @@
 <?php include '../components/_head.php' ?>
 <?php $srcPage = "" ?>
 <?php include '../services/usuario_dao.php' ?>
+<?php $usuarioDao = new UsuarioDao(); ?>
 
 <body>
     <div class="container-scroller">
@@ -14,6 +15,8 @@
             <?php include '../components/_navbar.php'; ?>
             <div class="main-panel">
                 <div class="content-wrapper pt-4 pb-0">
+                    <?php include '../components/insertar_usuario.php' ?>
+                    <?php include '../components/modificar_usuario.php' ?>
                     <div class="card border-0 mb-4">
                         <div class="card-body">
                             <h3 class="card-title position-absolute mb-3">Usuarios</h3>
@@ -32,7 +35,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php $usuarioDao = new UsuarioDao();
+                                        <?php
                                         $array = $usuarioDao->listar();
                                         for ($i = 0; $i < count($array); $i++) { ?>
                                             <tr class="text-light">
@@ -58,7 +61,8 @@
                                                     <?php echo $array[$i]->direccion ?>
                                                 </td>
                                                 <td class="py-2">
-                                                    <div class="btn btn-inverse-warning">
+                                                    <div class="btn btn-inverse-warning" data-bs-toggle="modal"
+                                                        data-bs-target="#modificar">
                                                         <i class="fa-solid fa-pen m-0 my-1"></i>
                                                     </div>
                                                     <div class="btn btn-inverse-primary mx-1">
@@ -73,7 +77,8 @@
                                     </tbody>
                                 </table>
                                 <div class="position-absolute button-add">
-                                    <button type="button" class="btn btn-inverse-primary btn-rounded px-3">
+                                    <button type="button" class="btn btn-inverse-primary btn-rounded px-3"
+                                        data-bs-toggle="modal" data-bs-target="#insertar">
                                         <i class="fa-solid fa-circle-plus text-center my-1"></i>Agregar
                                     </button>
                                 </div>
@@ -85,10 +90,17 @@
         </div>
     </div>
     <!-- Custom Bootstrap 5 Js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
     <script src="../assets/libraries/js/vendor.bundle.base.js"></script>
-    <script src="js/hoverable-collapse.js"></script>
+    <script src="../js/hoverable-collapse.js"></script>
     <script src="../js/off-canvas.js"></script>
     <script src="../js/misc.js"></script>
+    <script src="../js/modal.js"></script>
     <!-- Plugins Datatables Js -->
     <script src="../assets/libraries/datatables/JSZip-2.5.0/jszip.min.js"></script>
     <script src="../assets/libraries/datatables/pdfmake-0.1.36/pdfmake.min.js"></script>
