@@ -14,7 +14,7 @@
                     <label id="mensaje"></label>
                 </div>
                 <div class="modal-footer justify-content-center">
-                    <button class="btn btn-inverse-primary btn-rounded px-4 py-2">
+                    <button class="btn btn-inverse-primary btn-rounded px-4 py-2" data-bs-dismiss="modal" aria-label="Close" onclick="return false">
                         <i class="fa-solid fa-rotate-left my-1"></i>Cancelar
                     </button>
                     <button type="submit" name="eliminar" class="btn btn-inverse-danger btn-rounded px-4 py-2">

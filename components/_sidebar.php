@@ -108,7 +108,7 @@
     </li>
     <li class="nav-item menu-items mt-auto">
       <div class="dropdown-divider"></div>
-      <a class="nav-link mb-2" href="#">
+      <a class="nav-link mb-2" href="<?php echo $src ?>components/salir.php">
         <div class="menu-icon">
           <i class="fa-solid fa-right-from-bracket text-danger"></i>
         </div>
