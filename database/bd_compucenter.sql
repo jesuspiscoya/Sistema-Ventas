@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-04-2023 a las 02:52:42
+-- Tiempo de generación: 18-04-2023 a las 13:27:17
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -25,12 +25,35 @@ DELIMITER $$
 --
 -- Procedimientos
 --
+CREATE DEFINER=`root`@`localhost` PROCEDURE `BuscarPermiso` (IN `codigo` INT)   BEGIN
+SELECT cod_permiso FROM detalle_permiso WHERE cod_usuario = codigo;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `BuscarUsuario` (IN `codigo` INT)   BEGIN
+SELECT u.cod_usuario, p.nombre, p.correo, p.dni, p.telefono, p.direccion, p.estado, u.password
+FROM persona p
+INNER JOIN usuario u
+ON u.cod_persona=p.cod_persona
+WHERE u.cod_usuario = codigo;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarPermiso` (IN `cod_permisos` INT, IN `cod_usuarios` INT)   BEGIN
+DELETE FROM detalle_permiso WHERE cod_permiso=cod_permisos AND cod_usuario=cod_usuarios;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarUsuario` (IN `codigo` INT)   BEGIN
+DELETE FROM detalle_permiso WHERE cod_usuario = codigo;
+SET @cod_per = (SELECT cod_persona FROM usuario WHERE cod_usuario = codigo);
+DELETE FROM usuario WHERE cod_usuario = codigo;
+DELETE FROM persona WHERE cod_persona = @cod_per;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarPermiso` (IN `cod_permiso` INT, IN `cod_usuario` INT)   BEGIN
 INSERT INTO detalle_permiso VALUES(null,cod_permiso,cod_usuario);
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarUsuario` (IN `dni` VARCHAR(8), IN `nombre` VARCHAR(200), IN `correo` VARCHAR(200), IN `telefono` VARCHAR(9), IN `direccion` VARCHAR(300), IN `usuario` VARCHAR(20), IN `contrasena` VARCHAR(30))   BEGIN
-INSERT INTO persona VALUES(null,dni,nombre,correo,telefono,direccion,1);
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarUsuario` (IN `nombre` VARCHAR(200), IN `correo` VARCHAR(200), IN `dni` VARCHAR(8), IN `telefono` VARCHAR(9), IN `direccion` VARCHAR(300), IN `usuario` VARCHAR(20), IN `contrasena` VARCHAR(30))   BEGIN
+INSERT INTO persona VALUES(null,nombre,correo,dni,telefono,direccion,1);
 INSERT INTO usuario VALUES(null,(SELECT cod_persona FROM persona ORDER BY cod_persona DESC LIMIT 1),usuario,SHA(contrasena));
 END$$
 
@@ -41,10 +64,13 @@ INNER JOIN usuario u
 ON u.cod_persona=p.cod_persona;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ModificarUsuario` (IN `cod_usuarios` INT, IN `dnis` VARCHAR(8), IN `nombres` VARCHAR(200), IN `correos` VARCHAR(200), IN `telefonos` VARCHAR(9), IN `direccions` VARCHAR(300), IN `usuarios` VARCHAR(20), IN `contrasena` VARCHAR(30))   BEGIN
-UPDATE persona SET dni=dnis,nombre=nombres,correo=correos,telefono=telefonos,direccion=direccions
-WHERE cod_persona=(SELECT cod_persona FROM usuario WHERE cod_usuario=cod_usuarios);
-UPDATE usuario SET usuario=usuarios,pasword=SHA(contrasena) WHERE cod_usuario=cod_usuarios;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ModificarPasswordUsuario` (IN `codigo` INT, IN `contrasena` VARCHAR(50))   BEGIN
+UPDATE usuario SET password=SHA(contrasena) WHERE cod_usuario=codigo;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ModificarUsuario` (IN `codigo` INT, IN `nombres` VARCHAR(200), IN `correos` VARCHAR(200), IN `dnis` VARCHAR(8), IN `telefonos` VARCHAR(9), IN `direccions` VARCHAR(300))   BEGIN
+UPDATE persona SET nombre=nombres,correo=correos,dni=dnis,telefono=telefonos,direccion=direccions
+WHERE cod_persona=(SELECT cod_persona FROM usuario WHERE cod_usuario=codigo);
 END$$
 
 DELIMITER ;
@@ -126,7 +152,13 @@ CREATE TABLE `detalle_permiso` (
 INSERT INTO `detalle_permiso` (`cod_deta_permiso`, `cod_permiso`, `cod_usuario`) VALUES
 (1, 1, 1),
 (2, 2, 1),
-(3, 3, 1);
+(3, 3, 1),
+(4, 1, 2),
+(5, 2, 2),
+(6, 3, 2),
+(32, 1, 3),
+(33, 1, 3),
+(34, 2, 3);
 
 -- --------------------------------------------------------
 
@@ -171,9 +203,9 @@ INSERT INTO `permiso` (`cod_permiso`, `nom_permiso`) VALUES
 
 CREATE TABLE `persona` (
   `cod_persona` int(11) NOT NULL,
-  `dni` varchar(8) NOT NULL,
   `nombre` varchar(200) NOT NULL,
   `correo` varchar(200) NOT NULL,
+  `dni` varchar(8) NOT NULL,
   `telefono` varchar(9) NOT NULL,
   `direccion` varchar(300) NOT NULL,
   `estado` tinyint(1) NOT NULL
@@ -183,11 +215,12 @@ CREATE TABLE `persona` (
 -- Volcado de datos para la tabla `persona`
 --
 
-INSERT INTO `persona` (`cod_persona`, `dni`, `nombre`, `correo`, `telefono`, `direccion`, `estado`) VALUES
-(1, '74644014', 'Jesus Piscoya Bances', 'jesus@piscoya.com', '910029102', 'Av. direccion 123', 1),
-(2, '08965412', 'Juan Espinoza Lopez', 'juan@gmail.com', '985412365', 'Av. direccion 423', 1),
-(3, '08545115', 'Luis Carranza', 'luis@gmail.com', '978895612', 'av. los olivos 296', 1),
-(7, '78452136', 'Keyla', 'keyla@gmail.com', '999985552', 'av. Catolica 2390', 1);
+INSERT INTO `persona` (`cod_persona`, `nombre`, `correo`, `dni`, `telefono`, `direccion`, `estado`) VALUES
+(1, 'Jesus Piscoya Bances', 'jesus@piscoya.com', '74644014', '921104614', 'Av. direccion 123', 1),
+(2, 'Juan Espinoza Lopez', 'juan@gmail.com', '08965412', '985412365', 'Av. direccion 423', 1),
+(3, 'Luis Carranza', 'luis@gmail.com', '08545115', '978895612', 'av. los olivos 296', 1),
+(5, 'Carlos Mendoza', 'carlos@gmail.com', '09708495', '998745213', 'Av. Lima 156', 1),
+(7, 'Luz', 'luz@gmail.com', '09408566', '989988888', 'av lima 64', 1);
 
 -- --------------------------------------------------------
 
@@ -233,7 +266,8 @@ INSERT INTO `usuario` (`cod_usuario`, `cod_persona`, `usuario`, `password`) VALU
 (1, 1, 'admin', 'admin'),
 (2, 2, 'juan', 'juan'),
 (3, 3, 'luis', 'faea5242a00c52da62a0f00df168c199b7ab748d'),
-(4, 7, 'keyla', '4a92aef4d9fc6251df0705489aa5145cbe6a92af');
+(5, 5, 'carlos', 'ab5e2bca84933118bbc9d48ffaccce3bac4eeb64'),
+(7, 7, 'luz', 'c307b63565c069c7f841b112a6280a8de6fc9ef6');
 
 --
 -- Índices para tablas volcadas
@@ -323,7 +357,7 @@ ALTER TABLE `cliente`
 -- AUTO_INCREMENT de la tabla `detalle_permiso`
 --
 ALTER TABLE `detalle_permiso`
-  MODIFY `cod_deta_permiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `cod_deta_permiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT de la tabla `pedido`
@@ -335,13 +369,13 @@ ALTER TABLE `pedido`
 -- AUTO_INCREMENT de la tabla `permiso`
 --
 ALTER TABLE `permiso`
-  MODIFY `cod_permiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `cod_permiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `persona`
 --
 ALTER TABLE `persona`
-  MODIFY `cod_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
+  MODIFY `cod_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT de la tabla `producto`
@@ -353,7 +387,7 @@ ALTER TABLE `producto`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `cod_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `cod_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Restricciones para tablas volcadas
