@@ -1,7 +1,3 @@
-<?php
-
-
-?>
 <!-- Modal -->
 <div class="modal fade" id="modificar" tabindex="-1" aria-labelledby="modificarLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -14,74 +10,45 @@
             </div>
             <form action="" method="post">
                 <div class="modal-body card">
+                    <input type="hidden" id="cod_modificar" name="codigo" class="form-control p_input">
                     <div class="form-group">
                         <label>Nombre completo</label>
-                        <input type="text" name="nombre" class="form-control p_input" required>
+                        <input type="text" id="nombre" name="nombre" class="form-control p_input" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Correo</label>
+                        <input type="email" id="correo" name="correo" class="form-control p_input" required>
                     </div>
                     <div class="row">
+                        <input type="hidden" id="dni" name="dni" required>
                         <div class="form-group col-12 col-sm-6">
                             <label>DNI</label>
-                            <input type="text" name="dni" class="form-control p_input" disabled>
+                            <input type="text" id="dni2" class="form-control p_input" disabled>
                         </div>
                         <div class="form-group col-12 col-sm-6">
                             <label>Teléfono</label>
-                            <input type="tel" name="telefono" class="form-control p_input" required maxlength="9">
+                            <input type="tel" id="telefono" name="telefono" class="form-control p_input" required
+                                maxlength="9">
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Dirección</label>
-                        <input type="text" name="direccion" class="form-control p_input" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Correo</label>
-                        <input type="email" name="correo" class="form-control p_input" required>
+                        <input type="text" id="direccion" name="direccion" class="form-control p_input" required>
                     </div>
                     <div class="row">
                         <div class="form-group col-12 col-sm-6">
-                            <label>Usuario</label>
-                            <input type="text" name="usuario" class="form-control p_input" disabled>
+                            <label for="old_password">Contraseña actual</label>
+                            <input type="password" id="old_password" name="old_password" class="form-control p_input">
                         </div>
                         <div class="form-group col-12 col-sm-6">
-                            <label>Password</label>
-                            <input type="password" name="password" class="form-control p_input" required>
-                        </div>
-                    </div>
-                    <div class="form-group mb-0">
-                        <label>Permisos</label>
-                        <div class="row">
-                            <div class="form-group col mb-0">
-                                <div class="d-flex flex-column flex-sm-row">
-                                    <label class="switch">
-                                        <input class="input-switch" type="checkbox">
-                                        <span class="slider round"></span>
-                                    </label>
-                                    <span>Usuarios</span>
-                                </div>
-                            </div>
-                            <div class="form-group col mb-0">
-                                <div class="d-flex flex-column flex-sm-row align-items-center">
-                                    <label class="switch">
-                                        <input class="input-switch" type="checkbox">
-                                        <span class="slider round"></span>
-                                    </label>
-                                    <span>Clientes</span>
-                                </div>
-                            </div>
-                            <div class="form-group col mb-0">
-                                <div class="d-flex flex-column flex-sm-row align-items-end">
-                                    <label class="switch">
-                                        <input class="input-switch" type="checkbox">
-                                        <span class="slider round"></span>
-                                    </label>
-                                    <span>Productos</span>
-                                </div>
-                            </div>
+                            <label for="new_password">Nueva contraseña</label>
+                            <input type="password" id="new_password" name="new_password" class="form-control p_input">
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-center">
-                    <button type="submit" class="btn btn-inverse-primary btn-rounded px-4 py-2">
-                        <i class="fa-solid fa-user-plus my-1"></i>Registrar
+                    <button type="submit" name="actualizar" class="btn btn-inverse-primary btn-rounded px-4 py-2">
+                        <i class="fa-solid fa-user-pen my-1"></i>Actualizar
                     </button>
                 </div>
             </form>
@@ -90,33 +57,24 @@
 </div>
 
 <?php
-if (!empty($_POST)) {
+if (isset($_POST['actualizar'])) {
     $usuario = new Usuario;
+    $usuario->codigo = $_POST['codigo'];
     $usuario->nombre = $_POST['nombre'];
+    $usuario->correo = $_POST['correo'];
     $usuario->dni = $_POST['dni'];
     $usuario->telefono = $_POST['telefono'];
     $usuario->direccion = $_POST['direccion'];
-    $usuario->correo = $_POST['correo'];
-    $usuario->usuario = $_POST['usuario'];
-    $usuario->password = $_POST['password'];
-    $respuesta = $usuarioDao->insertar($usuario);
+    // $usuario->password = $_POST['password'];
+
+    $respuesta = $usuarioDao->modificar($usuario);
 
     if ($respuesta) {
-        $mensaje = 'Usuario registrado con éxito.';
+        $mensaje = 'Usuario actualizado con éxito.';
         $alert = 'success';
     } else {
-        $mensaje = 'Error al resgistrar usuario.';
+        $mensaje = 'Error al actualizar usuario.';
         $alert = 'danger';
     }
 }
 ?>
-<?php if (!empty($mensaje)) { ?>
-    <div class="alert alert-<?php echo $alert ?> alert-dismissible fade show d-flex justify-content-between" role="alert">
-        <span class="">
-            <?php echo $mensaje ?>
-        </span>
-        <div class="btn p-0" data-bs-dismiss="alert" aria-label="Close">
-            <i class="fa-solid fa-xmark text-<?php echo $alert ?> m-0 h3"></i>
-        </div>
-    </div>
-<?php } ?>

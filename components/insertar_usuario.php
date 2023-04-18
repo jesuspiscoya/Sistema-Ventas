@@ -10,9 +10,14 @@
             </div>
             <form action="" method="post">
                 <div class="modal-body card">
+                    <input type="hidden" name="registro" value="true">
                     <div class="form-group">
                         <label>Nombre completo</label>
                         <input type="text" name="nombre" class="form-control p_input" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Correo</label>
+                        <input type="email" name="correo" class="form-control p_input" required>
                     </div>
                     <div class="row">
                         <div class="form-group col-12 col-sm-6">
@@ -27,10 +32,6 @@
                     <div class="form-group">
                         <label>Dirección</label>
                         <input type="text" name="direccion" class="form-control p_input" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Correo</label>
-                        <input type="email" name="correo" class="form-control p_input" required>
                     </div>
                     <div class="row">
                         <div class="form-group col-12 col-sm-6">
@@ -76,7 +77,7 @@
                     </div>
                 </div>
                 <div class="modal-footer justify-content-center">
-                    <button type="submit" class="btn btn-inverse-primary btn-rounded px-4 py-2">
+                    <button type="submit" name="registrar" class="btn btn-inverse-primary btn-rounded px-4 py-2">
                         <i class="fa-solid fa-user-plus my-1"></i>Registrar
                     </button>
                 </div>
@@ -86,13 +87,13 @@
 </div>
 
 <?php
-if (!empty($_POST)) {
+if (isset($_POST['registrar'])) {
     $usuario = new Usuario;
     $usuario->nombre = $_POST['nombre'];
+    $usuario->correo = $_POST['correo'];
     $usuario->dni = $_POST['dni'];
     $usuario->telefono = $_POST['telefono'];
     $usuario->direccion = $_POST['direccion'];
-    $usuario->correo = $_POST['correo'];
     $usuario->usuario = $_POST['usuario'];
     $usuario->password = $_POST['password'];
     $respuesta = $usuarioDao->insertar($usuario);
@@ -106,13 +107,3 @@ if (!empty($_POST)) {
     }
 }
 ?>
-<?php if (!empty($mensaje)) { ?>
-    <div class="alert alert-<?php echo $alert ?> alert-dismissible fade show d-flex justify-content-between" role="alert">
-        <span class="">
-            <?php echo $mensaje ?>
-        </span>
-        <div class="btn p-0" data-bs-dismiss="alert" aria-label="Close">
-            <i class="fa-solid fa-xmark text-<?php echo $alert ?> m-0 h3"></i>
-        </div>
-    </div>
-<?php } ?>

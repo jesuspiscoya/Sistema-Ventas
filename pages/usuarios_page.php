@@ -5,8 +5,8 @@
 <?php $src = "../" ?>
 <?php include '../components/_head.php' ?>
 <?php $srcPage = "" ?>
-<?php include '../services/usuario_dao.php' ?>
-<?php $usuarioDao = new UsuarioDao(); ?>
+<?php require '../services/usuario_dao.php' ?>
+<?php $usuarioDao = new UsuarioDao ?>
 
 <body>
     <div class="container-scroller">
@@ -15,8 +15,22 @@
             <?php include '../components/_navbar.php'; ?>
             <div class="main-panel">
                 <div class="content-wrapper pt-4 pb-0">
+                    <!-- Modals de botones -->
                     <?php include '../components/insertar_usuario.php' ?>
                     <?php include '../components/modificar_usuario.php' ?>
+                    <?php include '../components/permisos_usuario.php' ?>
+                    <?php include '../components/eliminar_usuario.php' ?>
+                    <?php if (!empty($mensaje)) { ?>
+                        <div class="alert alert-<?php echo $alert ?> alert-dismissible fade show d-flex justify-content-between"
+                            role="alert">
+                            <span class="">
+                                <?php echo $mensaje ?>
+                            </span>
+                            <div class="btn p-0" data-bs-dismiss="alert" aria-label="Close">
+                                <i class="fa-solid fa-xmark text-<?php echo $alert ?> m-0 h3"></i>
+                            </div>
+                        </div>
+                    <?php } ?>
                     <div class="card border-0 mb-4">
                         <div class="card-body">
                             <h3 class="card-title position-absolute mb-3">Usuarios</h3>
@@ -61,16 +75,21 @@
                                                     <?php echo $array[$i]->direccion ?>
                                                 </td>
                                                 <td class="py-2">
-                                                    <div class="btn btn-inverse-warning" data-bs-toggle="modal"
-                                                        data-bs-target="#modificar">
+                                                    <button class="btn btn-inverse-warning" data-bs-toggle="modal"
+                                                        data-bs-target="#modificar"
+                                                        onclick="modificar(<?php echo $array[$i]->codigo ?>)">
                                                         <i class="fa-solid fa-pen m-0 my-1"></i>
-                                                    </div>
-                                                    <div class="btn btn-inverse-primary mx-1">
+                                                    </button>
+                                                    <button class="btn btn-inverse-primary mx-1" data-bs-toggle="modal"
+                                                        data-bs-target="#permisos"
+                                                        onclick="permisos(<?php echo $array[$i]->codigo ?>)">
                                                         <i class="fa-solid fa-gear m-0 my-1"></i>
-                                                    </div>
-                                                    <div class="btn btn-inverse-danger">
+                                                    </button>
+                                                    <button class="btn btn-inverse-danger" data-bs-toggle="modal"
+                                                        data-bs-target="#eliminar"
+                                                        onclick="eliminar(<?php echo $array[$i]->codigo ?>)">
                                                         <i class="fa-solid fa-trash-can m-0 my-1"></i>
-                                                    </div>
+                                                    </button>
                                                 </td>
                                             </tr>
                                         <?php } ?>
@@ -89,6 +108,7 @@
             </div>
         </div>
     </div>
+
     <!-- Custom Bootstrap 5 Js -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
         integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
@@ -100,7 +120,6 @@
     <script src="../js/hoverable-collapse.js"></script>
     <script src="../js/off-canvas.js"></script>
     <script src="../js/misc.js"></script>
-    <script src="../js/modal.js"></script>
     <!-- Plugins Datatables Js -->
     <script src="../assets/libraries/datatables/JSZip-2.5.0/jszip.min.js"></script>
     <script src="../assets/libraries/datatables/pdfmake-0.1.36/pdfmake.min.js"></script>
@@ -115,6 +134,7 @@
     <script src="../assets/libraries/datatables/Buttons-2.3.6/js/buttons.print.min.js"></script>
     <!-- Custom Pedidos Js -->
     <script src="../js/datatables.js"></script>
+    <script src="../js/ajax-backend.js"></script>
 </body>
 
 </html>
