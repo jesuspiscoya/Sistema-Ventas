@@ -12,6 +12,24 @@ class UsuarioDao
         $this->conexion = $obj->getConexion();
     }
 
+    public function validar(string $user, string $pass)
+    {
+        $usuario = mysqli_real_escape_string($this->conexion, $user);
+        $password = mysqli_real_escape_string($this->conexion, $pass);
+        $sql = "CALL ValidarLogin('" . $usuario . "','" . $password . "')";
+        $resultado = $this->conexion->query($sql);
+
+        if ($row = $resultado->fetch_assoc()) {
+            $usuario = new Usuario;
+            $usuario->codigo = $row['cod_usuario'];
+            $usuario->nombre = $row['nombre'];
+            $usuario->estado = $row['estado'];
+            return $usuario;
+        } else {
+            return null;
+        }
+    }
+
     public function insertar(Usuario $usuario)
     {
         $sql = "CALL InsertarUsuario('" . $usuario->nombre . "','" . $usuario->correo . "','" . $usuario->dni . "','" . $usuario->telefono . "','" . $usuario->direccion . "','" . $usuario->usuario . "','" . $usuario->password . "')";

@@ -17,4 +17,6 @@
         rel="stylesheet" />
     <!-- Fontawesome -->
     <script src="https://kit.fontawesome.com/f271c886fb.js" crossorigin="anonymous"></script>
+    <!-- login -->
+    <link rel="stylesheet" href="../css/login.css">
 </head>

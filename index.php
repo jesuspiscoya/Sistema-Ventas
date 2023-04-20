@@ -3,14 +3,15 @@
 
 <?php $tittle = "Dashboard"; ?>
 <?php $src = "" ?>
-<?php include 'components/_head.php' ?>
+<?php require 'components/_head.php' ?>
 <?php $srcPage = "pages/" ?>
+<?php require 'components/_validar_session.php' ?>
 
 <body>
     <div class="container-scroller">
-        <?php include 'components/_sidebar.php'; ?>
+        <?php require 'components/_sidebar.php'; ?>
         <div class="container-fluid page-body-wrapper mr-0">
-            <?php include 'components/_navbar.php'; ?>
+            <?php require 'components/_navbar.php'; ?>
             <div class="main-panel">
                 <div class="content-wrapper pt-4 pb-0">
                     <div class="row">
@@ -106,7 +107,7 @@
                         </div>
                     </div>
                 </div>
-                <?php include 'components/_footer.php'; ?>
+                <?php require 'components/_footer.php'; ?>
             </div>
         </div>
     </div>

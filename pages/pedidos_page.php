@@ -3,9 +3,10 @@
 
 <?php $tittle = "Pedidos"; ?>
 <?php $src = "../" ?>
-<?php include '../components/_head.php' ?>
+<?php require '../components/_head.php' ?>
 <?php $srcPage = "" ?>
-<?php include '../services/pedido_dao.php' ?>
+<?php require '../services/pedido_dao.php' ?>
+<?php require '../components/_validar_session.php' ?>
 
 <body>
     <style>

@@ -3,9 +3,10 @@
 
 <?php $tittle = "Clientes"; ?>
 <?php $src = "../" ?>
-<?php include '../components/_head.php' ?>
+<?php require '../components/_head.php' ?>
 <?php $srcPage = "" ?>
-<?php include '../services/cliente_dao.php' ?>
+<?php require '../services/cliente_dao.php' ?>
+<?php require '../components/_validar_session.php' ?>
 
 <body>
     <style>
@@ -14,9 +15,9 @@
         }
     </style>
     <div class="container-scroller">
-        <?php include '../components/_sidebar.php'; ?>
+        <?php require '../components/_sidebar.php'; ?>
         <div class="container-fluid page-body-wrapper mr-0">
-            <?php include '../components/_navbar.php'; ?>
+            <?php require '../components/_navbar.php'; ?>
             <div class="main-panel">
                 <div class="content-wrapper pt-4 pb-0">
                     <div class="card border-0 mb-4">

@@ -16,7 +16,9 @@
             <span class="count bg-success"></span>
           </div>
           <div class="profile-name">
-            <h5 class="mb-0 font-weight-normal">Jesús Piscoya</h5>
+            <h5 class="mb-0 font-weight-normal">
+              <?php echo $_SESSION['nombre'] ?>
+            </h5>
             <span>Administrador</span>
           </div>
         </div>

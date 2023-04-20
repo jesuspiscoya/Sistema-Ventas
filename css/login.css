@@ -1,61 +1,68 @@
+/* Fonts */
 @font-face {
-  font-family: Poppins-Regular;
-  src: url('fuentes/poppins/Poppins-Regular.ttf'); 
-}
-
-@font-face {
-  font-family: Poppins-Medium;
-  src: url('fuentes/poppins/Poppins-Medium.ttf'); 
+  font-family: 'Rubik';
+  font-weight: 300;
+  src: url("../assets/fonts/Rubik/Rubik-Light.ttf");
+  /* IE9 Compat Modes */
 }
 
 @font-face {
-  font-family: Poppins-Bold;
-  src: url('fuentes/poppins/Poppins-Bold.ttf'); 
+  font-family: 'Rubik';
+  font-weight: 400;
+  src: url("../assets/fonts/Rubik/Rubik-Regular.ttf");
+  /* IE9 Compat Modes */
 }
 
 @font-face {
-  font-family: Poppins-SemiBold;
-  src: url('fuentes/poppins/Poppins-SemiBold.ttf'); 
+  font-family: 'Rubik';
+  font-weight: 500;
+  src: url("../assets/fonts/Rubik/Rubik-Medium.ttf");
+  /* IE9 Compat Modes */
 }
 
-*{
-	margin: 0px; 
-	padding: 0px; 
-	box-sizing: border-box;
+@font-face {
+  font-family: 'Rubik';
+  font-weight: 700;
+  src: url("../assets/fonts/Rubik/Rubik-Bold.ttf");
+  /* IE9 Compat Modes */
 }
 
-body, html {
-	height: 100%;
-	font-family: Poppins-Regular, sans-serif;
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+body,
+html {
+  height: 100%;
+  font-family: 'Rubik';
 }
 
 
 input {
-	outline: none;
-	border: none;
+  outline: none;
+  border: none;
 }
 
 button {
-	outline: none !important;
-	border: none;
-	background: transparent;
+  outline: none !important;
+  border: none;
+  background: transparent;
 }
 
 button:hover {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 /*-- contenedor del Login--*/
 
 .container-login {
-  width: 100%;  
+  width: 100%;
   min-height: 100vh;
-  display: -webkit-flex;
-  display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  padding: 15px;
   background: -webkit-linear-gradient(to right, #00dbde, #fc00ff);
   background: linear-gradient(to right, #00dbde, #fc00ff);
 }
@@ -67,7 +74,7 @@ button:hover {
   overflow: hidden;
   padding: 77px 55px 53px 55px;
   -webkit-box-shadow: 25px 40px 28px 0px rgba(0, 0, 0, 0.38);
- /* box-shadow: eje-x | eje-y | blur-radius | color */
+  /* box-shadow: eje-x | eje-y | blur-radius | color */
 }
 
 
@@ -79,7 +86,7 @@ button:hover {
 
 .login-form-title {
   display: block;
-  font-family: Poppins-Bold;
+  font-family: 'Rubik';
   font-size: 40px;
   color: #333333;
   line-height: 1.5;
@@ -98,9 +105,9 @@ button:hover {
 }
 
 .input100 {
-  font-family: Poppins-Regular;
+  font-family: 'Rubik';
   font-size: 15px;
-  color: #555555;
+  color: #4998ff;
   line-height: 1.2;
 
   display: block;
@@ -110,7 +117,7 @@ button:hover {
   padding: 0 5px;
 }
 
-/*---------------------------------------------*/ 
+/*---------------------------------------------*/
 .focus-efecto {
   position: absolute;
   display: block;
@@ -128,7 +135,8 @@ button:hover {
   bottom: -2px;
   left: 0;
   width: 0;
-  height: 4px; /*ancho de la linea que hace el efecto de barra de progeso en el input al hacer foco*/
+  height: 4px;
+  /*ancho de la linea que hace el efecto de barra de progeso en el input al hacer foco*/
 
   -webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
@@ -143,7 +151,7 @@ button:hover {
 }
 
 .focus-efecto::after {
-  font-family: Poppins-Regular;
+  font-family: 'Rubik';
   font-size: 15px;
   color: #999999;
   line-height: 1.2;
@@ -162,19 +170,19 @@ button:hover {
   transition: all 0.4s;
 }
 
-.input100:focus + .focus-efecto::after {
+.input100:focus+.focus-efecto::after {
   top: -15px;
 }
 
-.input100:focus + .focus-efecto::before {
+.input100:focus+.focus-efecto::before {
   width: 100%;
 }
 
-.has-val.input100 + .focus-efecto::after {
+.has-val.input100+.focus-efecto::after {
   top: -15px;
 }
 
-.has-val.input100 + .focus-efecto::before {
+.has-val.input100+.focus-efecto::before {
   width: 100%;
 }
 
@@ -224,7 +232,7 @@ button:hover {
 }
 
 .login-form-btn {
-  font-family: Poppins-Medium;
+  font-family: 'Rubik';
   font-size: 20px;
   color: #fff;
   line-height: 1.2;

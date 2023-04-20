@@ -20,7 +20,9 @@
         <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
           <div class="navbar-profile">
             <img class="img-xs rounded-circle" src="<?php echo $src ?>assets/images/homer.png" alt="">
-            <p class="mb-0 d-none d-sm-block navbar-profile-name">Jesús Piscoya</p>
+            <p class="mb-0 d-none d-sm-block navbar-profile-name">
+              <?php echo $_SESSION['nombre'] ?>
+            </p>
             <i class="fa-solid fa-caret-down d-none d-sm-block ml-2"></i>
           </div>
         </a>

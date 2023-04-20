@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
 
-<?php $tittle = "Usuarios"; ?>
+<?php $tittle = "Usuarios" ?>
 <?php $src = "../" ?>
-<?php include '../components/_head.php' ?>
+<?php require '../components/_head.php' ?>
 <?php $srcPage = "" ?>
 <?php require '../services/usuario_dao.php' ?>
+<?php require '../components/_validar_session.php' ?>
 <?php $usuarioDao = new UsuarioDao ?>
 
 <body>

@@ -3,9 +3,10 @@
 
 <?php $tittle = "Productos"; ?>
 <?php $src = "../" ?>
-<?php include '../components/_head.php' ?>
+<?php require '../components/_head.php' ?>
 <?php $srcPage = "" ?>
-<?php include '../services/producto_dao.php' ?>
+<?php require '../services/producto_dao.php' ?>
+<?php require '../components/_validar_session.php' ?>
 
 <body>
     <div class="container-scroller">
