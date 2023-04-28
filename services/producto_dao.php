@@ -20,7 +20,6 @@ class ProductoDao
             $conexion->query($sql);
             return true;
         } catch (\Throwable $th) {
-            echo "<script>alert('ERROR: " . $conexion->error . "')</script>";
             return false;
         }
     }

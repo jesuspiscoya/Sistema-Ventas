@@ -63,7 +63,8 @@ if (isset($_POST['registrar'])) {
     $producto->descripcion = $_POST['descripcion'];
     $producto->precio = $_POST['precio'];
     $producto->stock = $_POST['stock'];
-    $producto->categoria = $_POST['categoria'];
+    $producto->cod_categoria = $_POST['categoria'];
+
     $respuesta = $productoDao->insertar($producto);
 
     if ($respuesta) {
