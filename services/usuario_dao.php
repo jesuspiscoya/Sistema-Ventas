@@ -32,7 +32,7 @@ class UsuarioDao
 
     public function insertar(Usuario $usuario)
     {
-        $sql = "CALL InsertarUsuario('" . $usuario->nombre . "','" . $usuario->correo . "','" . $usuario->dni . "','" . $usuario->telefono . "','" . $usuario->direccion . "','" . $usuario->usuario . "','" . $usuario->password . "')";
+        $sql = "CALL RegistrarUsuario('" . $usuario->nombre . "','" . $usuario->correo . "','" . $usuario->dni . "','" . $usuario->telefono . "','" . $usuario->direccion . "','" . $usuario->usuario . "','" . $usuario->password . "')";
         try {
             $this->conexion->query($sql);
             return true;
@@ -130,7 +130,7 @@ class UsuarioDao
 
     public function listar()
     {
-        $sql = 'CALL ListarUsuarios';
+        $sql = "CALL ListarUsuarios";
         $resultado = $this->conexion->query($sql);
 
         while ($row = $resultado->fetch_assoc()) {

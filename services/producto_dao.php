@@ -8,15 +8,77 @@ class ProductoDao
 
     public function __construct()
     {
-        $obj = new Conexion;
-        $this->conexion = $obj->getConexion();
+        $this->conexion = new Conexion;
+    }
+
+    public function insertar(Producto $producto)
+    {
+        $conexion = $this->conexion->getConexion();
+        $sql = "CALL InsertarProducto('" . $producto->cod_categoria . "','" . $producto->nombre . "','" . $producto->descripcion . "','" . $producto->precio . "','" . $producto->stock . "')";
+
+        try {
+            $conexion->query($sql);
+            return true;
+        } catch (\Throwable $th) {
+            echo "<script>alert('ERROR: " . $conexion->error . "')</script>";
+            return false;
+        }
+    }
+
+    public function buscar(int $codigo)
+    {
+        $conexion = $this->conexion->getConexion();
+        $sql = "CALL BuscarProducto('" . $codigo . "')";
+        $resultado = $conexion->query($sql);
+
+        while ($row = $resultado->fetch_assoc()) {
+            $producto = new Producto;
+            $producto->codigo = $row['cod_producto'];
+            $producto->nombre = $row['nombre'];
+            $producto->descripcion = $row['descripcion'];
+            $producto->cod_categoria = $row['cod_categoria'];
+            $producto->categoria = $row['nom_categoria'];
+            $producto->precio = $row['precio'];
+            $producto->stock = $row['stock'];
+            $producto->estado = $row['estado'];
+        }
+        $resultado->free_result();
+        $conexion->next_result();
+        $conexion->close();
+        return $producto;
+    }
+
+    public function modificar(Producto $producto)
+    {
+        $conexion = $this->conexion->getConexion();
+        $sql = "CALL ModificarProducto('" . $producto->codigo . "','" . $producto->cod_categoria . "','" . $producto->nombre . "','" . $producto->descripcion . "','" . $producto->precio . "','" . $producto->stock . "','" . $producto->estado . "')";
+
+        try {
+            $conexion->query($sql);
+            return true;
+        } catch (\Throwable $th) {
+            return false;
+        }
+    }
+
+    public function eliminar(int $codigo)
+    {
+        $conexion = $this->conexion->getConexion();
+        $sql = "CALL EliminarProducto('" . $codigo . "')";
+        try {
+            $conexion->query($sql);
+            return true;
+        } catch (\Throwable $th) {
+            return false;
+        }
     }
 
     public function listar()
     {
-        $sql = 'SELECT p.cod_producto,p.nombre,p.precio,p.stock,p.estado,c.nom_categoria FROM producto p INNER JOIN categoria c ON p.cod_categoria = c.cod_categoria;';
+        $conexion = $this->conexion->getConexion();
+        $sql = 'CALL ListarProductos';
         $array = array();
-        $resultado = mysqli_query($this->conexion, $sql);
+        $resultado = mysqli_query($conexion, $sql);
 
         while ($row = mysqli_fetch_assoc($resultado)) {
             $producto = new Producto;
@@ -28,6 +90,28 @@ class ProductoDao
             $producto->categoria = $row['nom_categoria'];
             $array[] = $producto;
         }
+        $resultado->free_result();
+        $conexion->next_result();
+        $conexion->close();
+        return $array;
+    }
+
+    public function categorias()
+    {
+        $conexion = $this->conexion->getConexion();
+        $sql = 'CALL ListarCategorias';
+        $array = array();
+        $resultado = mysqli_query($conexion, $sql);
+
+        while ($row = mysqli_fetch_assoc($resultado)) {
+            $producto = new Producto;
+            $producto->cod_categoria = $row['cod_categoria'];
+            $producto->categoria = $row['nom_categoria'];
+            $array[] = $producto;
+        }
+        $resultado->free_result();
+        $conexion->next_result();
+        $conexion->close();
         return $array;
     }
 }

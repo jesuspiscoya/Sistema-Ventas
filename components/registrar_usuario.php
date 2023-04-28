@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" id="insertar" tabindex="-1" aria-labelledby="insertarLabel" aria-hidden="true">
+<div class="modal fade" id="registrar" tabindex="-1" aria-labelledby="registrarLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header card flex-row">
@@ -10,7 +10,6 @@
             </div>
             <form action="" method="post">
                 <div class="modal-body card">
-                    <input type="hidden" name="registro" value="true">
                     <div class="form-group">
                         <label>Nombre completo</label>
                         <input type="text" name="nombre" class="form-control p_input" required>

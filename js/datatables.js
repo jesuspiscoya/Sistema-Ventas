@@ -287,8 +287,8 @@ let lenguaje = {
                 [6, 12, 18, "Todo"]
             ],
             columnDefs: [
-                { searchable: false, target: [0, 6] },
-                { orderable: false, target: [6] },
+                { searchable: false, target: [0, 7] },
+                { orderable: false, target: [7] },
             ],
             language: lenguaje
         });

@@ -1,4 +1,4 @@
-function modificar(codigo) {
+function modificarUsuario(codigo) {
     var parametros = { "modificar": codigo };
     $.ajax({
         data: parametros, //datos que se envian a traves de ajax
@@ -6,18 +6,18 @@ function modificar(codigo) {
         type: 'post', //método de envio
         success: function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
             var datos = JSON.parse(response); //se parcea la respuesta como json
-            document.getElementById('cod_modificar').value = datos.codigo;
-            document.getElementById('nombre').value = datos.nombre;
-            document.getElementById('correo').value = datos.correo;
-            document.getElementById('dni').value = datos.dni;
-            document.getElementById('dni2').value = datos.dni;
-            document.getElementById('telefono').value = datos.telefono;
-            document.getElementById('direccion').value = datos.direccion;
+            $('#cod_modificar').val(datos.codigo);
+            $('#nombre').val(datos.nombre);
+            $('#correo').val(datos.correo);
+            $('#dni').val(datos.dni);
+            $('#dni2').val(datos.dni);
+            $('#telefono').val(datos.telefono);
+            $('#direccion').val(datos.direccion);
         }
     });
 }
 
-function permisos(codigo) {
+function permisosUsuario(codigo) {
     var parametros = { "permisos": codigo };
     $.ajax({
         data: parametros, //datos que se envian a traves de ajax
@@ -42,7 +42,7 @@ function permisos(codigo) {
     });
 }
 
-function eliminar(codigo) {
+function eliminarUsuario(codigo) {
     var parametros = { "eliminar": codigo };
     $.ajax({
         data: parametros, //datos que se envian a traves de ajax
@@ -50,8 +50,60 @@ function eliminar(codigo) {
         type: 'post', //método de envio
         success: function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
             var datos = JSON.parse(response); //se parcea la respuesta como json
-            document.getElementById('cod_eliminar').value = datos.codigo;
+            $('#cod_eliminar').val(datos.codigo);
             $('#mensaje').html('¿Está seguro de eliminar a ' + datos.nombre + '?');
         }
     });
+}
+
+function modificarProducto(codigo) {
+    var parametros = { "modificar": codigo };
+    $.ajax({
+        data: parametros, //datos que se envian a traves de ajax
+        url: '../controller/producto_controller.php', //archivo que recibe la peticion
+        type: 'post', //método de envio
+        success: function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
+            var datos = JSON.parse(response); //se parcea la respuesta como json
+            $('#cod_modificar').val(datos.codigo);
+            $('#nombre').val(datos.nombre);
+            $('#descripcion').val(datos.descripcion);
+            $('#cod_categoria').val(datos.cod_categoria);
+            $('#labelModificarCategoria').text(datos.categoria);
+            $('#precio').val(datos.precio);
+            $('#stock').val(datos.stock);
+            datos.estado == 1 ? $('#estado').prop("checked", true) : $('#estado').prop("checked", false);
+        }
+    });
+}
+
+function eliminarProducto(codigo) {
+    var parametros = { "eliminar": codigo };
+    $.ajax({
+        data: parametros, //datos que se envian a traves de ajax
+        url: '../controller/producto_controller.php', //archivo que recibe la peticion
+        type: 'post', //método de envio
+        success: function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
+            var datos = JSON.parse(response); //se parcea la respuesta como json
+            $('#cod_eliminar').val(datos.codigo);
+            $('#mensaje').html('¿Está seguro de eliminar ' + datos.nombre + '?');
+        }
+    });
+}
+
+$('#dropdownCategoria > option').on('click', setDropdownValue);
+$('#dropdownModificarCategoria > option').on('click', setDropdownValueModificar);
+
+function setDropdownValue() {
+    $('#categoria').val($(this).val());
+    $('#labelCategoria').text($(this).text());
+}
+
+function setDropdownValueModificar() {
+    $('#cod_categoria').val($(this).val());
+    $('#labelModificarCategoria').text($(this).text());
+}
+
+function soloNumeros(e) {
+    var key = window.Event ? e.which : e.keyCode
+    return (key == 46 || key >= 48 && key <= 57)
 }

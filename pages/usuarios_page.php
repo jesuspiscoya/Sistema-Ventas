@@ -17,7 +17,7 @@
             <div class="main-panel">
                 <div class="content-wrapper pt-4 pb-0">
                     <!-- Modals de botones -->
-                    <?php include '../components/insertar_usuario.php' ?>
+                    <?php include '../components/registrar_usuario.php' ?>
                     <?php include '../components/modificar_usuario.php' ?>
                     <?php include '../components/permisos_usuario.php' ?>
                     <?php include '../components/eliminar_usuario.php' ?>
@@ -78,17 +78,17 @@
                                                 <td class="py-2">
                                                     <button class="btn btn-inverse-warning" data-bs-toggle="modal"
                                                         data-bs-target="#modificar"
-                                                        onclick="modificar(<?php echo $array[$i]->codigo ?>)">
+                                                        onclick="modificarUsuario(<?php echo $array[$i]->codigo ?>)">
                                                         <i class="fa-solid fa-pen m-0 my-1"></i>
                                                     </button>
                                                     <button class="btn btn-inverse-primary mx-1" data-bs-toggle="modal"
                                                         data-bs-target="#permisos"
-                                                        onclick="permisos(<?php echo $array[$i]->codigo ?>)">
+                                                        onclick="permisosUsuario(<?php echo $array[$i]->codigo ?>)">
                                                         <i class="fa-solid fa-gear m-0 my-1"></i>
                                                     </button>
                                                     <button class="btn btn-inverse-danger" data-bs-toggle="modal"
                                                         data-bs-target="#eliminar"
-                                                        onclick="eliminar(<?php echo $array[$i]->codigo ?>)">
+                                                        onclick="eliminarUsuario(<?php echo $array[$i]->codigo ?>)">
                                                         <i class="fa-solid fa-trash-can m-0 my-1"></i>
                                                     </button>
                                                 </td>
@@ -98,7 +98,7 @@
                                 </table>
                                 <div class="position-absolute button-add">
                                     <button type="button" class="btn btn-inverse-primary btn-rounded px-3"
-                                        data-bs-toggle="modal" data-bs-target="#insertar">
+                                        data-bs-toggle="modal" data-bs-target="#registrar">
                                         <i class="fa-solid fa-circle-plus text-center my-1"></i>Agregar
                                     </button>
                                 </div>
