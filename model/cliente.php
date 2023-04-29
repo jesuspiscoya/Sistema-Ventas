@@ -7,6 +7,7 @@ class Cliente
     public $dni;
     public $telefono;
     public $direccion;
+    public $password;
     public $estado;
 }
 ?>

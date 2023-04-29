@@ -5,7 +5,15 @@
 <?php $src = "" ?>
 <?php require 'components/_head.php' ?>
 <?php $srcPage = "pages/" ?>
+<?php require 'services/usuario_dao.php' ?>
+<?php require 'services/cliente_dao.php' ?>
+<?php require 'services/producto_dao.php' ?>
+<?php require 'services/pedido_dao.php' ?>
 <?php require 'components/_validar_session.php' ?>
+<?php $usuarioDao = new UsuarioDao ?>
+<?php $clienteDao = new ClienteDao ?>
+<?php $productoDao = new ProductoDao ?>
+<?php $pedidoDao = new PedidoDao ?>
 
 <body>
     <div class="container-scroller">
@@ -22,7 +30,7 @@
                                         <div class="col-8 d-flex flex-column justify-content-center">
                                             <h3>Usuarios</h3>
                                             <div class="d-flex align-items-center">
-                                                <h3 class="mb-0">5</h3>
+                                                <h3 class="mb-0"><?php echo count($usuarioDao->listar()) ?></h3>
                                                 <p class="text-success ml-2 mb-0 font-weight-medium">REGISTRADOS</p>
                                             </div>
                                         </div>
@@ -40,7 +48,7 @@
                                         <div class="col-8 d-flex flex-column justify-content-center">
                                             <h3>Clientes</h3>
                                             <div class="d-flex align-items-center">
-                                                <h3 class="mb-0">10</h3>
+                                                <h3 class="mb-0"><?php echo count($clienteDao->listar()) ?></h3>
                                                 <p class="text-success ml-2 mb-0 font-weight-medium">REGISTRADOS</p>
                                             </div>
                                         </div>
@@ -58,7 +66,7 @@
                                         <div class="col-8 d-flex flex-column justify-content-center">
                                             <h3>Productos</h3>
                                             <div class="d-flex align-items-center">
-                                                <h3 class="mb-0">20</h3>
+                                                <h3 class="mb-0"><?php echo count($productoDao->listar()) ?></h3>
                                                 <p class="text-success ml-2 mb-0 font-weight-medium">REGISTRADOS</p>
                                             </div>
                                         </div>
@@ -76,7 +84,7 @@
                                         <div class="col-8 d-flex flex-column justify-content-center">
                                             <h3>Pedidos</h3>
                                             <div class="d-flex align-items-center">
-                                                <h3 class="mb-0">30</h3>
+                                                <h3 class="mb-0"><?php echo count($pedidoDao->listar()) ?></h3>
                                                 <p class="text-success ml-2 mb-0 font-weight-medium">REGISTRADAS</p>
                                             </div>
                                         </div>

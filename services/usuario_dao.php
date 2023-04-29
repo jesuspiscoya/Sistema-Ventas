@@ -1,6 +1,6 @@
 <?php
-require 'conexion.php';
-require '../model/usuario.php';
+require_once 'conexion.php';
+require $src . 'model/usuario.php';
 
 class UsuarioDao
 {
@@ -8,54 +8,70 @@ class UsuarioDao
 
     public function __construct()
     {
-        $obj = new Conexion;
-        $this->conexion = $obj->getConexion();
+        $this->conexion = new Conexion;
     }
 
+    // Corregir
     public function validar(string $user, string $pass)
     {
-        $usuario = mysqli_real_escape_string($this->conexion, $user);
-        $password = mysqli_real_escape_string($this->conexion, $pass);
+        $conexion = $this->conexion->getConexion();
+        $usuario = $conexion->real_escape_string($user);
+        $password = $conexion->real_escape_string($pass);
         $sql = "CALL ValidarLogin('" . $usuario . "','" . $password . "')";
-        $resultado = $this->conexion->query($sql);
+        $resultado = $conexion->query($sql);
 
         if ($row = $resultado->fetch_assoc()) {
             $usuario = new Usuario;
             $usuario->codigo = $row['cod_usuario'];
             $usuario->nombre = $row['nombre'];
             $usuario->estado = $row['estado'];
+            $resultado->free_result();
+            $conexion->next_result();
+            $conexion->close();
             return $usuario;
         } else {
+            $resultado->free_result();
+            $conexion->next_result();
+            $conexion->close();
             return null;
         }
     }
 
     public function insertar(Usuario $usuario)
     {
+        $conexion = $this->conexion->getConexion();
         $sql = "CALL RegistrarUsuario('" . $usuario->nombre . "','" . $usuario->correo . "','" . $usuario->dni . "','" . $usuario->telefono . "','" . $usuario->direccion . "','" . $usuario->usuario . "','" . $usuario->password . "')";
+
         try {
-            $this->conexion->query($sql);
+            $conexion->query($sql);
+            $conexion->close();
             return true;
         } catch (\Throwable $th) {
+            $conexion->close();
             return false;
         }
     }
 
     public function insertarPermiso(int $permiso, int $codigo)
     {
+        $conexion = $this->conexion->getConexion();
         $sql = "CALL InsertarPermiso('" . $permiso . "','" . $codigo . "')";
+
         try {
-            $this->conexion->query($sql);
+            $conexion->query($sql);
+            $conexion->close();
             return true;
         } catch (\Throwable $th) {
+            $conexion->close();
             return false;
         }
     }
 
     public function buscar(int $codigo)
     {
+        $conexion = $this->conexion->getConexion();
         $sql = "CALL BuscarUsuario('" . $codigo . "')";
-        $resultado = $this->conexion->query($sql);
+        $resultado = $conexion->query($sql);
 
         while ($row = $resultado->fetch_assoc()) {
             $usuario = new Usuario;
@@ -68,70 +84,97 @@ class UsuarioDao
             $usuario->estado = $row['estado'];
             $usuario->password = $row['password'];
         }
+
+        $resultado->free_result();
+        $conexion->next_result();
+        $conexion->close();
         return $usuario;
     }
 
+    // Corregir
     public function buscarPermisos(int $codigo)
     {
+        $conexion = $this->conexion->getConexion();
         $sql = "CALL BuscarPermiso('" . $codigo . "')";
-        $resultado = $this->conexion->query($sql);
-
+        $resultado = $conexion->query($sql);
         $permiso = array();
+
         while ($row = $resultado->fetch_assoc()) {
             $permiso[] = $row['cod_permiso'];
         }
+
         $array = $permiso;
+        $resultado->free_result();
+        $conexion->next_result();
+        $conexion->close();
         return $array;
     }
 
     public function modificar(Usuario $usuario)
     {
+        $conexion = $this->conexion->getConexion();
         $sql = "CALL ModificarUsuario('" . $usuario->codigo . "','" . $usuario->nombre . "','" . $usuario->correo . "','" . $usuario->dni . "','" . $usuario->telefono . "','" . $usuario->direccion . "')";
+
         try {
-            $this->conexion->query($sql);
+            $conexion->query($sql);
+            $conexion->close();
             return true;
         } catch (\Throwable $th) {
+            $conexion->close();
             return false;
         }
     }
 
     public function modificarPassword(int $codigo, string $oldPassword, string $newPassword)
     {
+        $conexion = $this->conexion->getConexion();
         $sql = "CALL ModificarPasswordUsuario('" . $codigo . "','" . $newPassword . "')";
+
         try {
-            $this->conexion->query($sql);
+            $conexion->query($sql);
+            $conexion->close();
             return true;
         } catch (\Throwable $th) {
+            $conexion->close();
             return false;
         }
     }
 
     public function eliminar(int $codigo)
     {
+        $conexion = $this->conexion->getConexion();
         $sql = "CALL EliminarUsuario('" . $codigo . "')";
+
         try {
-            $this->conexion->query($sql);
+            $conexion->query($sql);
+            $conexion->close();
             return true;
         } catch (\Throwable $th) {
+            $conexion->close();
             return false;
         }
     }
 
     public function eliminarPermiso(int $permiso, int $codigo)
     {
+        $conexion = $this->conexion->getConexion();
         $sql = "CALL EliminarPermiso('" . $permiso . "','" . $codigo . "')";
+
         try {
-            $this->conexion->query($sql);
+            $conexion->query($sql);
+            $conexion->close();
             return true;
         } catch (\Throwable $th) {
+            $conexion->close();
             return false;
         }
     }
 
     public function listar()
     {
+        $conexion = $this->conexion->getConexion();
         $sql = "CALL ListarUsuarios";
-        $resultado = $this->conexion->query($sql);
+        $resultado = $conexion->query($sql);
 
         while ($row = $resultado->fetch_assoc()) {
             $usuario = new Usuario;
@@ -144,6 +187,10 @@ class UsuarioDao
             $usuario->estado = $row['estado'];
             $array[] = $usuario;
         }
+
+        $resultado->free_result();
+        $conexion->next_result();
+        $conexion->close();
         return $array;
     }
 }

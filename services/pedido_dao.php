@@ -1,6 +1,6 @@
 <?php
-require 'conexion.php';
-require '../model/pedido.php';
+require_once 'conexion.php';
+require $src . 'model/pedido.php';
 
 class PedidoDao
 {
@@ -8,17 +8,17 @@ class PedidoDao
 
     public function __construct()
     {
-        $obj = new Conexion;
-        $this->conexion = $obj->getConexion();
+        $this->conexion = new Conexion;
     }
 
     public function listar()
     {
+        $conexion = $this->conexion->getConexion();
         $sql = 'SELECT p.cod_pedido,ps.nombre,p.cantidad,p.total,p.fecha,p.estado FROM pedido p INNER JOIN cliente c INNER JOIN persona ps ON p.cod_cliente = c.cod_cliente AND c.cod_persona = ps.cod_persona';
         $array = array();
-        $resultado = mysqli_query($this->conexion, $sql);
+        $resultado = $conexion->query($sql);
 
-        while ($row = mysqli_fetch_assoc($resultado)) {
+        while ($row = $resultado->fetch_assoc()) {
             $pedido = new Pedido;
             $pedido->codigo = $row['cod_pedido'];
             $pedido->cliente = $row['nombre'];
@@ -28,9 +28,10 @@ class PedidoDao
             $pedido->estado = $row['estado'];
             $array[] = $pedido;
         }
+        $resultado->free_result();
+        $conexion->next_result();
+        $conexion->close();
         return $array;
     }
 }
 ?>
-
-

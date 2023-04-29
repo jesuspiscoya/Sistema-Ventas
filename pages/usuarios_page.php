@@ -50,8 +50,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php
-                                        $array = $usuarioDao->listar();
+                                        <?php $array = $usuarioDao->listar();
                                         for ($i = 0; $i < count($array); $i++) { ?>
                                             <tr class="text-light">
                                                 <td>

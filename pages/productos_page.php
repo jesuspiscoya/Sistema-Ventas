@@ -49,8 +49,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php $productoDao = new ProductoDao();
-                                        $array = $productoDao->listar();
+                                        <?php $array = $productoDao->listar();
                                         for ($i = 0; $i < count($array); $i++) { ?>
                                             <tr class="text-light">
                                                 <td>
@@ -85,7 +84,7 @@
                                                     </label>
                                                 </td>
                                                 <td class="p-0">
-                                                    <button class="btn btn-inverse-warning mx-1" data-bs-toggle="modal"
+                                                    <button class="btn btn-inverse-primary mx-1" data-bs-toggle="modal"
                                                         data-bs-target="#modificar"
                                                         onclick="modificarProducto(<?php echo $array[$i]->codigo ?>)">
                                                         <i class="fa-solid fa-pen m-0 my-1"></i>

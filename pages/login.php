@@ -1,4 +1,5 @@
 <?php
+$src = "../";
 require '../services/usuario_dao.php';
 $usuarioDao = new UsuarioDao;
 

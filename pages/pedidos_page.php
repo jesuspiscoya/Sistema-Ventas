@@ -2,9 +2,9 @@
 <html lang="es">
 
 <?php $tittle = "Pedidos"; ?>
-<?php $src = "../" ?>
+<?php $src = '../' ?>
 <?php require '../components/_head.php' ?>
-<?php $srcPage = "" ?>
+<?php $srcPage = '' ?>
 <?php require '../services/pedido_dao.php' ?>
 <?php require '../components/_validar_session.php' ?>
 
@@ -94,7 +94,7 @@
     </div>
     <!-- Custom Bootstrap 5 Js -->
     <script src="../assets/libraries/js/vendor.bundle.base.js"></script>
-    <script src="js/hoverable-collapse.js"></script>
+    <script src="../js/hoverable-collapse.js"></script>
     <script src="../js/off-canvas.js"></script>
     <script src="../js/misc.js"></script>
     <!-- Plugins Datatables Js -->

@@ -7,6 +7,7 @@
 <?php $srcPage = "" ?>
 <?php require '../services/cliente_dao.php' ?>
 <?php require '../components/_validar_session.php' ?>
+<?php $clienteDao = new ClienteDao ?>
 
 <body>
     <style>
@@ -20,6 +21,20 @@
             <?php require '../components/_navbar.php'; ?>
             <div class="main-panel">
                 <div class="content-wrapper pt-4 pb-0">
+                    <!-- Modals de botones -->
+                    <?php include '../components/modificar_cliente.php' ?>
+                    <?php include '../components/eliminar_cliente.php' ?>
+                    <?php if (!empty($mensaje)) { ?>
+                        <div class="alert alert-<?php echo $alert ?> alert-dismissible fade show d-flex justify-content-between"
+                            role="alert">
+                            <span class="">
+                                <?php echo $mensaje ?>
+                            </span>
+                            <div class="btn p-0" data-bs-dismiss="alert" aria-label="Close">
+                                <i class="fa-solid fa-xmark text-<?php echo $alert ?> m-0 h3"></i>
+                            </div>
+                        </div>
+                    <?php } ?>
                     <div class="card border-0 mb-4">
                         <div class="card-body">
                             <h3 class="card-title position-absolute mb-3">Clientes</h3>
@@ -38,8 +53,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php $clienteDao = new ClienteDao();
-                                        $array = $clienteDao->listar();
+                                        <?php $array = $clienteDao->listar();
                                         for ($i = 0; $i < count($array); $i++) { ?>
                                             <tr class="text-light">
                                                 <td>
@@ -64,12 +78,16 @@
                                                     <?php echo $array[$i]->direccion ?>
                                                 </td>
                                                 <td class="py-2">
-                                                    <div class="btn btn-inverse-primary mr-1">
+                                                    <button class="btn btn-inverse-primary mx-1" data-bs-toggle="modal"
+                                                        data-bs-target="#modificar"
+                                                        onclick="modificarCliente(<?php echo $array[$i]->codigo ?>)">
                                                         <i class="fa-solid fa-pen m-0 my-1"></i>
-                                                    </div>
-                                                    <div class="btn btn-inverse-danger">
+                                                    </button>
+                                                    <button class="btn btn-inverse-danger" data-bs-toggle="modal"
+                                                        data-bs-target="#eliminar"
+                                                        onclick="eliminarCliente(<?php echo $array[$i]->codigo ?>)">
                                                         <i class="fa-solid fa-trash-can m-0 my-1"></i>
-                                                    </div>
+                                                    </button>
                                                 </td>
                                             </tr>
                                         <?php } ?>
@@ -83,8 +101,14 @@
         </div>
     </div>
     <!-- Custom Bootstrap 5 Js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
     <script src="../assets/libraries/js/vendor.bundle.base.js"></script>
-    <script src="js/hoverable-collapse.js"></script>
+    <script src="../js/hoverable-collapse.js"></script>
     <script src="../js/off-canvas.js"></script>
     <script src="../js/misc.js"></script>
     <!-- Plugins Datatables Js -->
@@ -101,6 +125,7 @@
     <script src="../assets/libraries/datatables/Buttons-2.3.6/js/buttons.print.min.js"></script>
     <!-- Custom Datatables Js -->
     <script src="../js/datatables.js"></script>
+    <script src="../js/ajax-backend.js"></script>
 </body>
 
 </html>

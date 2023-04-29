@@ -1,6 +1,6 @@
 <?php
-require 'conexion.php';
-require '../model/producto.php';
+require_once 'conexion.php';
+require $src . 'model/producto.php';
 
 class ProductoDao
 {
@@ -18,8 +18,10 @@ class ProductoDao
 
         try {
             $conexion->query($sql);
+            $conexion->close();
             return true;
         } catch (\Throwable $th) {
+            $conexion->close();
             return false;
         }
     }
@@ -41,6 +43,7 @@ class ProductoDao
             $producto->stock = $row['stock'];
             $producto->estado = $row['estado'];
         }
+
         $resultado->free_result();
         $conexion->next_result();
         $conexion->close();
@@ -54,8 +57,10 @@ class ProductoDao
 
         try {
             $conexion->query($sql);
+            $conexion->close();
             return true;
         } catch (\Throwable $th) {
+            $conexion->close();
             return false;
         }
     }
@@ -64,10 +69,13 @@ class ProductoDao
     {
         $conexion = $this->conexion->getConexion();
         $sql = "CALL EliminarProducto('" . $codigo . "')";
+
         try {
             $conexion->query($sql);
+            $conexion->close();
             return true;
         } catch (\Throwable $th) {
+            $conexion->close();
             return false;
         }
     }
@@ -89,6 +97,7 @@ class ProductoDao
             $producto->categoria = $row['nom_categoria'];
             $array[] = $producto;
         }
+
         $resultado->free_result();
         $conexion->next_result();
         $conexion->close();
@@ -108,6 +117,7 @@ class ProductoDao
             $producto->categoria = $row['nom_categoria'];
             $array[] = $producto;
         }
+
         $resultado->free_result();
         $conexion->next_result();
         $conexion->close();

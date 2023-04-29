@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-04-2023 a las 13:27:17
+-- Tiempo de generación: 29-04-2023 a las 18:58:30
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -25,52 +25,114 @@ DELIMITER $$
 --
 -- Procedimientos
 --
+CREATE DEFINER=`root`@`localhost` PROCEDURE `BuscarCliente` (IN `codigo` INT)   BEGIN
+SELECT c.cod_cliente, p.nombre, p.correo, p.dni, p.telefono, p.direccion, p.estado, c.password
+FROM persona p
+INNER JOIN cliente c
+ON c.cod_persona = p.cod_persona
+WHERE c.cod_cliente = codigo;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `BuscarPermiso` (IN `codigo` INT)   BEGIN
 SELECT cod_permiso FROM detalle_permiso WHERE cod_usuario = codigo;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `BuscarProducto` (IN `codigo` INT)   BEGIN
+SELECT p.cod_producto, p.nombre, p.descripcion, c.cod_categoria, c.nom_categoria, p.precio, p.stock, p.estado
+FROM producto p
+INNER JOIN categoria c
+ON p.cod_categoria = c.cod_categoria
+WHERE p.cod_producto = codigo;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `BuscarUsuario` (IN `codigo` INT)   BEGIN
 SELECT u.cod_usuario, p.nombre, p.correo, p.dni, p.telefono, p.direccion, p.estado, u.password
 FROM persona p
 INNER JOIN usuario u
-ON u.cod_persona=p.cod_persona
+ON u.cod_persona = p.cod_persona
 WHERE u.cod_usuario = codigo;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarCliente` (IN `codigo` INT)   BEGIN
+SET @cod_per = (SELECT cod_persona FROM cliente WHERE cod_cliente = codigo);
+DELETE FROM cliente WHERE cod_cliente = codigo;
+DELETE FROM persona WHERE cod_persona = @cod_per;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarPermiso` (IN `cod_permisos` INT, IN `cod_usuarios` INT)   BEGIN
-DELETE FROM detalle_permiso WHERE cod_permiso=cod_permisos AND cod_usuario=cod_usuarios;
+DELETE FROM detalle_permiso WHERE cod_permiso = cod_permisos AND cod_usuario = cod_usuarios;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarProducto` (IN `codigo` INT)   BEGIN
+DELETE FROM producto WHERE cod_producto = codigo;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarUsuario` (IN `codigo` INT)   BEGIN
-DELETE FROM detalle_permiso WHERE cod_usuario = codigo;
 SET @cod_per = (SELECT cod_persona FROM usuario WHERE cod_usuario = codigo);
+DELETE FROM detalle_permiso WHERE cod_usuario = codigo;
 DELETE FROM usuario WHERE cod_usuario = codigo;
 DELETE FROM persona WHERE cod_persona = @cod_per;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarPermiso` (IN `cod_permiso` INT, IN `cod_usuario` INT)   BEGIN
-INSERT INTO detalle_permiso VALUES(null,cod_permiso,cod_usuario);
+INSERT INTO detalle_permiso VALUES(null, cod_permiso, cod_usuario);
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarProducto` (IN `codigo` INT, IN `nombre` VARCHAR(50), IN `descripcion` VARCHAR(200), IN `precio` FLOAT, IN `stock` INT)   BEGIN
+INSERT INTO producto VALUES(null, codigo, nombre, descripcion, precio, stock, 1);
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarUsuario` (IN `nombre` VARCHAR(200), IN `correo` VARCHAR(200), IN `dni` VARCHAR(8), IN `telefono` VARCHAR(9), IN `direccion` VARCHAR(300), IN `usuario` VARCHAR(20), IN `contrasena` VARCHAR(30))   BEGIN
-INSERT INTO persona VALUES(null,nombre,correo,dni,telefono,direccion,1);
-INSERT INTO usuario VALUES(null,(SELECT cod_persona FROM persona ORDER BY cod_persona DESC LIMIT 1),usuario,SHA(contrasena));
+SET @cod_per = (SELECT cod_persona FROM persona ORDER BY cod_persona DESC LIMIT 1);
+INSERT INTO persona VALUES(null, nombre, correo, dni, telefono, direccion, 1);
+INSERT INTO usuario VALUES(null, @cod_per, usuario, SHA(contrasena));
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ListarCategorias` ()   BEGIN
+SELECT * FROM categoria;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ListarProductos` ()   BEGIN
+SELECT p.cod_producto, p.nombre, p.precio, p.stock, p.estado, c.nom_categoria
+FROM producto p
+INNER JOIN categoria c
+ON p.cod_categoria = c.cod_categoria;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ListarUsuarios` ()   BEGIN
 SELECT u.cod_usuario, p.nombre, p.correo, p.dni, p.telefono, p.direccion, p.estado
 FROM persona p
 INNER JOIN usuario u
-ON u.cod_persona=p.cod_persona;
+ON u.cod_persona = p.cod_persona;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ModificarCliente` (IN `codigo` INT, IN `nombres` VARCHAR(200), IN `correos` VARCHAR(200), IN `dnis` VARCHAR(8), IN `telefonos` VARCHAR(9), IN `direccions` VARCHAR(300), IN `estados` BOOLEAN)   BEGIN
+SET @cod_per = (SELECT cod_persona FROM cliente WHERE cod_cliente = codigo);
+UPDATE persona SET nombre = nombres, correo = correos, dni = dnis, telefono = telefonos, direccion = direccions, estado = estados
+WHERE cod_persona = @cod_per;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ModificarPasswordUsuario` (IN `codigo` INT, IN `contrasena` VARCHAR(50))   BEGIN
-UPDATE usuario SET password=SHA(contrasena) WHERE cod_usuario=codigo;
+UPDATE usuario SET password = SHA(contrasena) WHERE cod_usuario = codigo;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ModificarProducto` (IN `codigo` INT, IN `cod_categorias` INT, IN `producto` VARCHAR(50), IN `descripcions` VARCHAR(200), IN `precios` FLOAT, IN `stocks` INT, IN `estados` BOOLEAN)   BEGIN
+UPDATE producto SET cod_categoria = cod_categorias, nombre = producto, descripcion = descripcions, precio = precios, stock = stocks, estado = estados
+WHERE cod_producto = codigo;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ModificarUsuario` (IN `codigo` INT, IN `nombres` VARCHAR(200), IN `correos` VARCHAR(200), IN `dnis` VARCHAR(8), IN `telefonos` VARCHAR(9), IN `direccions` VARCHAR(300))   BEGIN
-UPDATE persona SET nombre=nombres,correo=correos,dni=dnis,telefono=telefonos,direccion=direccions
-WHERE cod_persona=(SELECT cod_persona FROM usuario WHERE cod_usuario=codigo);
+SET @cod_per = (SELECT cod_persona FROM usuario WHERE cod_usuario = codigo);
+UPDATE persona SET nombre = nombres, correo = correos, dni = dnis, telefono = telefonos, direccion = direccions
+WHERE cod_persona = @cod_per;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ValidarLogin` (IN `usuarios` VARCHAR(20), IN `contrasena` VARCHAR(50))   BEGIN
+SELECT u.cod_usuario, p.nombre, p.estado
+FROM usuario u
+INNER JOIN persona p
+ON u.cod_persona = p.cod_persona
+WHERE u.usuario = usuarios AND u.password = SHA(contrasena);
 END$$
 
 DELIMITER ;
@@ -117,7 +179,7 @@ CREATE TABLE `cliente` (
 --
 
 INSERT INTO `cliente` (`cod_cliente`, `cod_persona`, `password`) VALUES
-(1, 1, 'user');
+(10000, 1, 'user');
 
 -- --------------------------------------------------------
 
@@ -156,9 +218,6 @@ INSERT INTO `detalle_permiso` (`cod_deta_permiso`, `cod_permiso`, `cod_usuario`)
 (4, 1, 2),
 (5, 2, 2),
 (6, 3, 2),
-(32, 1, 3),
-(33, 1, 3),
-(34, 2, 3);
 
 -- --------------------------------------------------------
 
@@ -216,11 +275,11 @@ CREATE TABLE `persona` (
 --
 
 INSERT INTO `persona` (`cod_persona`, `nombre`, `correo`, `dni`, `telefono`, `direccion`, `estado`) VALUES
-(1, 'Jesus Piscoya Bances', 'jesus@piscoya.com', '74644014', '921104614', 'Av. direccion 123', 1),
+(1, 'Jesus Piscoya Bances', 'jesus@piscoya.com', '74644014', '921104614', 'Av. direccion 123', 0),
 (2, 'Juan Espinoza Lopez', 'juan@gmail.com', '08965412', '985412365', 'Av. direccion 423', 1),
 (3, 'Luis Carranza', 'luis@gmail.com', '08545115', '978895612', 'av. los olivos 296', 1),
-(5, 'Carlos Mendoza', 'carlos@gmail.com', '09708495', '998745213', 'Av. Lima 156', 1),
-(7, 'Luz', 'luz@gmail.com', '09408566', '989988888', 'av lima 64', 1);
+(4, 'Carlos Mendoza', 'carlos@gmail.com', '09708495', '998745213', 'Av. Lima 156', 1),
+(5, 'Luz', 'luz@gmail.com', '09408566', '989988888', 'av lima 64', 1);
 
 -- --------------------------------------------------------
 
@@ -243,7 +302,13 @@ CREATE TABLE `producto` (
 --
 
 INSERT INTO `producto` (`cod_producto`, `cod_categoria`, `nombre`, `descripcion`, `precio`, `stock`, `estado`) VALUES
-(1, 1, 'INTEL CORE I5- 11400', 'INTEL CORE I5- 11400', 185, 10, b'1');
+(10000, 1, 'INTEL CORE I5- 11400', 'INTEL CORE I5- 11400', 185, 10, b'1'),
+(10001, 7, 'prueba', 'prueba descripcion', 234, 20, b'1'),
+(10002, 5, 'prueba 2', 'prueba 2', 15.5, 10, b'0'),
+(10003, 3, 'Prueba 3', 'decripcion prueba 3', 15, 32, b'0'),
+(10004, 6, 'Prueba 4', 'descripcion prueba 4', 150, 32, b'0'),
+(10005, 6, 'Prueba 4', 'prueba 4', 23.2, 51, b'0'),
+(10006, 6, 'Prueba 4', 'prueba 4', 23.2, 51, b'1');
 
 -- --------------------------------------------------------
 
@@ -263,11 +328,11 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`cod_usuario`, `cod_persona`, `usuario`, `password`) VALUES
-(1, 1, 'admin', 'admin'),
-(2, 2, 'juan', 'juan'),
-(3, 3, 'luis', 'faea5242a00c52da62a0f00df168c199b7ab748d'),
-(5, 5, 'carlos', 'ab5e2bca84933118bbc9d48ffaccce3bac4eeb64'),
-(7, 7, 'luz', 'c307b63565c069c7f841b112a6280a8de6fc9ef6');
+(10000, 1, 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997'),
+(10001, 2, 'juan', 'juan'),
+(10002, 3, 'luis', 'faea5242a00c52da62a0f00df168c199b7ab748d'),
+(10003, 5, 'carlos', 'ab5e2bca84933118bbc9d48ffaccce3bac4eeb64'),
+(10004, 7, 'luz', 'c307b63565c069c7f841b112a6280a8de6fc9ef6');
 
 --
 -- Índices para tablas volcadas
@@ -351,19 +416,19 @@ ALTER TABLE `categoria`
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `cod_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `cod_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10001;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_permiso`
 --
 ALTER TABLE `detalle_permiso`
-  MODIFY `cod_deta_permiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `cod_deta_permiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `pedido`
 --
 ALTER TABLE `pedido`
-  MODIFY `cod_pedido` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `cod_pedido` int(11) NOT NULL AUTO_INCREMENT=10000;
 
 --
 -- AUTO_INCREMENT de la tabla `permiso`
@@ -375,19 +440,19 @@ ALTER TABLE `permiso`
 -- AUTO_INCREMENT de la tabla `persona`
 --
 ALTER TABLE `persona`
-  MODIFY `cod_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `cod_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `cod_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `cod_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10007;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `cod_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `cod_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10005;
 
 --
 -- Restricciones para tablas volcadas
