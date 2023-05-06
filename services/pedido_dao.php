@@ -14,9 +14,9 @@ class PedidoDao
     public function listar()
     {
         $conexion = $this->conexion->getConexion();
-        $sql = 'SELECT p.cod_pedido,ps.nombre,p.cantidad,p.total,p.fecha,p.estado FROM pedido p INNER JOIN cliente c INNER JOIN persona ps ON p.cod_cliente = c.cod_cliente AND c.cod_persona = ps.cod_persona';
-        $array = array();
+        $sql = 'CALL ListarPedidos';
         $resultado = $conexion->query($sql);
+        $array = array();
 
         while ($row = $resultado->fetch_assoc()) {
             $pedido = new Pedido;
@@ -28,6 +28,7 @@ class PedidoDao
             $pedido->estado = $row['estado'];
             $array[] = $pedido;
         }
+
         $resultado->free_result();
         $conexion->next_result();
         $conexion->close();

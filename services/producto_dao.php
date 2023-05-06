@@ -84,8 +84,8 @@ class ProductoDao
     {
         $conexion = $this->conexion->getConexion();
         $sql = 'CALL ListarProductos';
-        $array = array();
         $resultado = mysqli_query($conexion, $sql);
+        $array = array();
 
         while ($row = mysqli_fetch_assoc($resultado)) {
             $producto = new Producto;
@@ -108,7 +108,6 @@ class ProductoDao
     {
         $conexion = $this->conexion->getConexion();
         $sql = 'CALL ListarCategorias';
-        $array = array();
         $resultado = mysqli_query($conexion, $sql);
 
         while ($row = mysqli_fetch_assoc($resultado)) {

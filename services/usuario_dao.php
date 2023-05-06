@@ -97,7 +97,6 @@ class UsuarioDao
         $conexion = $this->conexion->getConexion();
         $sql = "CALL BuscarPermiso('" . $codigo . "')";
         $resultado = $conexion->query($sql);
-        $permiso = array();
 
         while ($row = $resultado->fetch_assoc()) {
             $permiso[] = $row['cod_permiso'];
@@ -175,6 +174,7 @@ class UsuarioDao
         $conexion = $this->conexion->getConexion();
         $sql = "CALL ListarUsuarios";
         $resultado = $conexion->query($sql);
+        $array = array();
 
         while ($row = $resultado->fetch_assoc()) {
             $usuario = new Usuario;

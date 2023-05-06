@@ -7,6 +7,7 @@
 <?php $srcPage = '' ?>
 <?php require '../services/pedido_dao.php' ?>
 <?php require '../components/_validar_session.php' ?>
+<?php $pedidoDao = new PedidoDao ?>
 
 <body>
     <style>
@@ -38,8 +39,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php $pedidoDao = new PedidoDao();
-                                        $array = $pedidoDao->listar();
+                                        <?php $array = $pedidoDao->listar();
                                         for ($i = 0; $i < count($array); $i++) { ?>
                                             <tr class="text-light">
                                                 <td>
@@ -93,6 +93,12 @@
         </div>
     </div>
     <!-- Custom Bootstrap 5 Js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
     <script src="../assets/libraries/js/vendor.bundle.base.js"></script>
     <script src="../js/hoverable-collapse.js"></script>
     <script src="../js/off-canvas.js"></script>
@@ -111,6 +117,7 @@
     <script src="../assets/libraries/datatables/Buttons-2.3.6/js/buttons.print.min.js"></script>
     <!-- Custom Pedidos Js -->
     <script src="../js/datatables.js"></script>
+    <script src="../js/ajax-backend.js"></script>
 </body>
 
 </html>

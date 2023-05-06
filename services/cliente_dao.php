@@ -68,9 +68,9 @@ class ClienteDao
     public function listar()
     {
         $conexion = $this->conexion->getConexion();
-        $sql = 'SELECT c.cod_cliente, p.nombre, p.correo, p.dni, p.telefono, p.direccion, p.estado FROM persona p INNER JOIN cliente c ON c.cod_persona=p.cod_persona';
-        $array = array();
+        $sql = 'CALL ListarClientes';
         $resultado = $conexion->query($sql);
+        $array = array();
 
         while ($row = $resultado->fetch_assoc()) {
             $cliente = new Cliente;

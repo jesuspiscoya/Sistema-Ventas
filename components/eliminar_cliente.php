@@ -28,7 +28,7 @@
 
 <?php
 if (isset($_POST['eliminar'])) {
-    $respuesta = $usuarioDao->eliminar($_POST['codigo']);
+    $respuesta = $clienteDao->eliminar($_POST['codigo']);
 
     if ($respuesta) {
         $mensaje = 'Cliente eliminado con éxito.';
