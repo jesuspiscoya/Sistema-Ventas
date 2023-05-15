@@ -1,133 +1,66 @@
 <!DOCTYPE html>
 <html lang="es">
 
-<?php $tittle = "Dashboard"; ?>
-<?php $src = "" ?>
-<?php require 'components/_head.php' ?>
-<?php $srcPage = "pages/" ?>
-<?php require 'services/usuario_dao.php' ?>
-<?php require 'services/cliente_dao.php' ?>
-<?php require 'services/producto_dao.php' ?>
-<?php require 'services/pedido_dao.php' ?>
-<?php require 'components/_validar_session.php' ?>
-<?php $usuarioDao = new UsuarioDao ?>
-<?php $clienteDao = new ClienteDao ?>
+<?php $tittle = 'CompuCenter'; ?>
+<?php $src = 'client/' ?>
+<?php $inicio = '' ?>
+<?php require 'client/components/_head.php' ?>
+<?php require 'client/services/producto_dao.php' ?>
 <?php $productoDao = new ProductoDao ?>
-<?php $pedidoDao = new PedidoDao ?>
+
+<!-- <head>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/popper.min.js"></script>
+</head> -->
 
 <body>
-    <div class="container-scroller">
-        <?php require 'components/_sidebar.php'; ?>
-        <div class="container-fluid page-body-wrapper mr-0">
-            <?php require 'components/_navbar.php'; ?>
-            <div class="main-panel">
-                <div class="content-wrapper pt-4 pb-0">
-                    <div class="row">
-                        <div class="col-xl-3 col-sm-6 grid-margin">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-8 d-flex flex-column justify-content-center">
-                                            <h3>Usuarios</h3>
-                                            <div class="d-flex align-items-center">
-                                                <h3 class="mb-0"><?php echo count($usuarioDao->listar()) ?></h3>
-                                                <p class="text-success ml-2 mb-0 font-weight-medium">REGISTRADOS</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-4 d-flex justify-content-end align-items-center">
-                                            <i class="fa-solid fa-user-group text-primary icon-lg"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-sm-6 grid-margin">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-8 d-flex flex-column justify-content-center">
-                                            <h3>Clientes</h3>
-                                            <div class="d-flex align-items-center">
-                                                <h3 class="mb-0"><?php echo count($clienteDao->listar()) ?></h3>
-                                                <p class="text-success ml-2 mb-0 font-weight-medium">REGISTRADOS</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-4 d-flex justify-content-end align-items-center">
-                                            <i class="fa-solid fa-face-smile text-warning icon-lg"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-sm-6 grid-margin">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-8 d-flex flex-column justify-content-center">
-                                            <h3>Productos</h3>
-                                            <div class="d-flex align-items-center">
-                                                <h3 class="mb-0"><?php echo count($productoDao->listar()) ?></h3>
-                                                <p class="text-success ml-2 mb-0 font-weight-medium">REGISTRADOS</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-4 d-flex justify-content-end align-items-center">
-                                            <i class="fa-solid fa-tag text-info icon-lg"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-sm-6 grid-margin">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-8 d-flex flex-column justify-content-center">
-                                            <h3>Pedidos</h3>
-                                            <div class="d-flex align-items-center">
-                                                <h3 class="mb-0"><?php echo count($pedidoDao->listar()) ?></h3>
-                                                <p class="text-success ml-2 mb-0 font-weight-medium">REGISTRADAS</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-4 d-flex justify-content-end align-items-center">
-                                            <i class="fa-solid fa-receipt text-success icon-lg"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xl-6 grid-margin">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4 class="card-title">productos más vendidos</h4>
-                                    <canvas id="doughnutChart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-6 grid-margin">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4 class="card-title">total de ventas por mes</h4>
-                                    <canvas id="areaChart" style="height:250px"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <?php require 'components/_footer.php'; ?>
-            </div>
+    <?php require 'client/components/_navbar.php'; ?>
+    <main>
+        <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 my-4 mx-auto text-center">
+            <h1 class="display-4 mt-4">Lista de Productos</h1>
+            <p class="lead">Selecciona uno de nuestros productos y accede a un descuento</p>
         </div>
-    </div>
-    <!-- Custom Bootstrap 5 Js -->
-    <script src="assets/libraries/js/vendor.bundle.base.js"></script>
-    <script src="js/hoverable-collapse.js"></script>
-    <script src="js/off-canvas.js"></script>
-    <script src="js/misc.js"></script>
-    <!-- Custom Chart Js -->
-    <script src="assets/libraries/chart.js/Chart.min.js"></script>
-    <!-- Custom Dashboard Js -->
-    <script src="js/dashboard.js"></script>
+        <div class="content-wrapper" id="lista-productos">
+            <div class="mb-3 text-center row">
+                <?php $array = $productoDao->listar();
+                for ($i = 0; $i < count($array); $i++) { ?>
+                    <div class="grid-margin col-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="card mb-4 shadow-sm">
+                            <div class="card-header">
+                                <h4 class="my-0 font-weight-bold">
+                                    <?php echo $array[$i]->nombre ?>
+                                </h4>
+                            </div>
+                            <div class="card-body">
+                                <img src="data:image/jpg;base64,<?php echo base64_encode($array[$i]->imagen) ?>"
+                                    class="card-img-top" alt="Imagen producto">
+                                <h1 class="card-title pricing-card-title precio">S/.
+                                    <span>
+                                        <?php echo $array[$i]->precio ?>
+                                    </span>
+                                </h1>
+                                <ul class="list-unstyled mt-3 mb-4">
+                                    <?php echo $array[$i]->descripcion ?>
+                                    <!-- ${producto.detalles
+                                .map(
+                                (ele) => `
+                                <li>${ele}</li>
+                                `
+                                )
+                                .join("")} -->
+                                </ul>
+                                <a href="" class="btn btn-block btn-primary agregar-carrito"
+                                    data-id="<?php echo $array[$i]->codigo ?>">Comprar</a>
+                            </div>
+                        </div>
+                    </div>
+                <?php } ?>
+            </div>
+    </main>
+    <?php require 'client/components/_footer.php'; ?>
+
+    <script src="client/js/carrito.js"></script>
+    <script src="client/js/pedido.js"></script>
 </body>
 
 </html>
