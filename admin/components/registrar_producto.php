@@ -24,7 +24,8 @@
                         <div class="dropdown d-flex">
                             <button class="col btn btn-outline-primary dropdown-toggle py-2" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false" id="labelCategoria">Seleccione... </button>
-                            <div class="dropdown-menu" aria-labelledby="categoria" id="dropdownCategoria">
+                            <div class="dropdown-menu" aria-labelledby="categoria" id="dropdownCategoria"
+                                style="top: 60px !important; left: 40px !important; right: 40px;">
                                 <?php $array = $productoDao->categorias();
                                 foreach ($array as $key => $value) { ?>
                                     <option class="dropdown-item" value="<?php echo $value->cod_categoria ?>"><?php echo $value->categoria ?>

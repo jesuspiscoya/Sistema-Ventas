@@ -15836,6 +15836,7 @@ code {
 .footer {
   background: #000000;
   padding: 20px 1rem;
+  margin-left: 244px;
   transition: all 0.25s ease;
   -moz-transition: all 0.25s ease;
   -webkit-transition: all 0.25s ease;
@@ -20515,8 +20516,7 @@ div.tagsinput {
             .navbar .navbar-menu-wrapper .navbar-nav .nav-item.dropdown .navbar-dropdown {
               left: 20px;
               right: 20px;
-              top: 70px;
-              width: calc(100% - 40px); } }
+              top: 70px; } }
       .navbar .navbar-menu-wrapper .navbar-nav .nav-item.nav-profile .nav-link .nav-profile-img {
         position: relative;
         width: 32px;

@@ -1,7 +1,7 @@
 <nav class="navbar p-0 fixed-top d-flex flex-row">
   <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
     <a class="navbar-brand brand-logo-mini" href="dashboard_page.php">
-      <img src="../assets/img/logo-mini.svg" class="w-auto h-auto" alt="logo" />
+      <img src="<?php echo $src ?>assets/img/logo-mini.svg" class="w-auto h-auto" alt="logo" />
     </a>
   </div>
   <div class="navbar-menu-wrapper flex-grow d-flex">
@@ -19,7 +19,7 @@
       <li class="nav-item dropdown">
         <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
           <div class="navbar-profile">
-            <img class="img-xs rounded-circle" src="../assets/img/homer.png" alt="">
+            <img class="img-xs rounded-circle" src="<?php echo $src ?>assets/img/homer.png" alt="">
             <p class="mb-0 d-none d-sm-block navbar-profile-name">
               <?php echo $_SESSION['nombre'] ?>
             </p>

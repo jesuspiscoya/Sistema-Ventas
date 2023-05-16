@@ -6,29 +6,23 @@
 <?php $inicio = '../../' ?>
 <?php require '../components/_head.php' ?>
 
-<!-- <head>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/estilo.css">
-    <script src="js/popper.min.js"></script>
-</head> -->
-
 <body>
     <?php require '../components/_navbar.php'; ?>
     <main>
         <div class="container">
             <div class="row my-5 py-5">
                 <div class="col">
-                    <h2 class="d-flex justify-content-center mb-3">Realizar Compra</h2>
+                    <h2 class="text-center mb-3">Realizar Compra</h2>
                     <form id="procesar-pago">
                         <div class="form-group row">
-                            <label for="cliente" class="col-12 col-md-2 col-form-label h2">Cliente :</label>
+                            <label for="cliente" class="col-12 col-md-2 col-form-label h2">Cliente</label>
                             <div class="col-12 col-md-10">
                                 <input type="text" class="form-control" id="cliente"
                                     placeholder="Ingresa nombre cliente" name="destinatario">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="email" class="col-12 col-md-2 col-form-label h2">Correo :</label>
+                            <label for="email" class="col-12 col-md-2 col-form-label h2">Correo</label>
                             <div class="col-12 col-md-10">
                                 <input type="text" class="form-control" id="correo" placeholder="Ingresa tu correo"
                                     name="cc_to">
@@ -68,14 +62,16 @@
                                     </th>
                                     <th scope="col"></th>
                                 </tr>
-
                             </table>
                         </div>
-
                         <div class="row justify-content-center" id="loaders">
-                            <img id="cargando" src="../assets/img/cargando.gif" width="220">
+                            <div class="cargando">
+                                <div class="pelotas"></div>
+                                <div class="pelotas"></div>
+                                <div class="pelotas"></div>
+                                <span class="texto-cargando font-weight-bold">Cargando...</span>
+                            </div>
                         </div>
-
                         <div class="row justify-content-between">
                             <div class="col-12 col-md-4 mb-2">
                                 <a href="../../" class="btn btn-info btn-block py-3">Seguir comprando</a>

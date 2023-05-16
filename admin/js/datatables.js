@@ -283,11 +283,11 @@ let lenguaje = {
             dom: "Bfrtilp",
             buttons: botones,
             lengthMenu: [
-                [6, 12, 18, -1],
-                [6, 12, 18, "Todo"]
+                [4, 8, 12, -1],
+                [4, 8, 12, "Todo"]
             ],
             columnDefs: [
-                { searchable: false, target: [0, 7] },
+                { searchable: false, target: [0, 1, 2, 4, 5, 6, 7] },
                 { orderable: false, target: [7] },
             ],
             language: lenguaje
@@ -301,8 +301,8 @@ let lenguaje = {
                 [7, 14, 21, "Todo"]
             ],
             columnDefs: [
-                { searchable: false, target: [0, 7] },
-                { orderable: false, target: [7] },
+                { searchable: false, target: [0, 1, 5, 6, 7] },
+                { orderable: false, target: [1, 3, 4, 5, 6, 7] },
             ],
             language: lenguaje
         });

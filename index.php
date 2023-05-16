@@ -16,8 +16,8 @@
 <body>
     <?php require 'client/components/_navbar.php'; ?>
     <main>
-        <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 my-4 mx-auto text-center">
-            <h1 class="display-4 mt-4">Lista de Productos</h1>
+        <div class="pricing-header my-4 pt-5 text-center">
+            <h2 class="mt-4">Lista de Productos</h2>
             <p class="lead">Selecciona uno de nuestros productos y accede a un descuento</p>
         </div>
         <div class="content-wrapper" id="lista-productos">
