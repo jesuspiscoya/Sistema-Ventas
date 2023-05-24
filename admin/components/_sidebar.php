@@ -1,6 +1,6 @@
 <nav class="sidebar sidebar-offcanvas vh-100 position-fixed" id="sidebar">
   <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-    <a class="sidebar-brand brand-logo" href="dashboard_page.php">
+    <a class="sidebar-brand brand-logo" href="<?php echo $src ?>">
       <img src="<?php echo $src ?>assets/img/logo.svg" class="w-auto h-auto" alt="logo" />
     </a>
   </div>

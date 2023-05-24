@@ -230,18 +230,18 @@ CREATE TABLE `detalle_permiso` (
 --
 
 INSERT INTO `detalle_permiso` (`cod_deta_permiso`, `cod_permiso`, `cod_usuario`) VALUES
-(1, 1, 1),
-(2, 2, 1),
-(4, 1, 2),
-(5, 2, 2),
-(6, 3, 2),
-(7, 1, 3),
-(8, 1, 3),
-(9, 2, 3),
-(10, 1, 1),
-(11, 2, 1),
-(12, 1, 1),
-(13, 2, 1);
+(1, 1, 10000),
+(2, 2, 10000),
+(4, 1, 10001),
+(5, 2, 10001),
+(6, 3, 10001),
+(7, 1, 10002),
+(8, 1, 10002),
+(9, 2, 10002),
+(10, 1, 10000),
+(11, 2, 10000),
+(12, 1, 10000),
+(13, 2, 10000);
 
 -- --------------------------------------------------------
 
@@ -459,7 +459,7 @@ ALTER TABLE `detalle_permiso`
 -- AUTO_INCREMENT de la tabla `pedido`
 --
 ALTER TABLE `pedido`
-  MODIFY `cod_pedido` int(11) NOT NULL AUTO_INCREMENT=9999;
+  MODIFY `cod_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9999;
 
 --
 -- AUTO_INCREMENT de la tabla `permiso`
