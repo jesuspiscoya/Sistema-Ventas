@@ -10,7 +10,7 @@
             </div>
             <form action="" method="post">
                 <div class="modal-body card">
-                    <input type="hidden" id="cod_permiso" name="cod_permiso">
+                    <input type="hidden" id="cod_usuario" name="cod_usuario">
                     <div class="form-group mb-0">
                         <label>Permisos</label>
                         <div class="row">
@@ -48,7 +48,7 @@
                     </div>
                 </div>
                 <div class="modal-footer justify-content-center">
-                    <button type="submit" name="permisos" class="btn btn-inverse-primary btn-rounded px-4 py-2">
+                    <button type="submit" name="actualizar" class="btn btn-inverse-primary btn-rounded px-4 py-2">
                         <i class="fa-solid fa-user-shield my-1"></i>Actualizar
                     </button>
                 </div>
@@ -58,21 +58,21 @@
 </div>
 
 <?php
-if (isset($_POST['permisos'])) {
+if (isset($_POST['actualizar'])) {
     if (isset($_POST['usuarios'])) {
-        $respuesta = $usuarioDao->insertarPermiso($_POST['usuarios'], $_POST['cod_permiso']);
+        $respuesta = $usuarioDao->insertarPermiso($_POST['usuarios'], $_POST['cod_usuario']);
     } else {
-        $respuesta = $usuarioDao->eliminarPermiso(1, $_POST['cod_permiso']);
+        $respuesta = $usuarioDao->eliminarPermiso(1, $_POST['cod_usuario']);
     }
     if (isset($_POST['clientes'])) {
-        $respuesta = $usuarioDao->insertarPermiso($_POST['clientes'], $_POST['cod_permiso']);
+        $respuesta = $usuarioDao->insertarPermiso($_POST['clientes'], $_POST['cod_usuario']);
     } else {
-        $respuesta = $usuarioDao->eliminarPermiso(2, $_POST['cod_permiso']);
+        $respuesta = $usuarioDao->eliminarPermiso(2, $_POST['cod_usuario']);
     }
     if (isset($_POST['productos'])) {
-        $respuesta = $usuarioDao->insertarPermiso($_POST['productos'], $_POST['cod_permiso']);
+        $respuesta = $usuarioDao->insertarPermiso($_POST['productos'], $_POST['cod_usuario']);
     } else {
-        $respuesta = $usuarioDao->eliminarPermiso(3, $_POST['cod_permiso']);
+        $respuesta = $usuarioDao->eliminarPermiso(3, $_POST['cod_usuario']);
     }
 
     if ($respuesta) {

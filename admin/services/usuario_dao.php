@@ -73,7 +73,7 @@ class UsuarioDao
         $sql = "CALL BuscarUsuario('" . $codigo . "')";
         $resultado = $conexion->query($sql);
 
-        while ($row = $resultado->fetch_assoc()) {
+        if ($row = $resultado->fetch_assoc()) {
             $usuario = new Usuario;
             $usuario->codigo = $row['cod_usuario'];
             $usuario->nombre = $row['nombre'];

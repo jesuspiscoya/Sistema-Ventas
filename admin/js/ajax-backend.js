@@ -5,7 +5,6 @@ function modificarProducto(codigo) {
         url: '../controller/producto_controller.php', //archivo que recibe la peticion
         type: 'post', //método de envio
         success: function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
-            console.log('aaaa: '+response);
             var datos = JSON.parse(response); //se parcea la respuesta como json
             $('#cod_producto').val(datos.codigo);
             $('#nombre').val(datos.nombre);
@@ -14,7 +13,6 @@ function modificarProducto(codigo) {
             $('#labelModificarCategoria').text(datos.categoria);
             $('#precio').val(datos.precio);
             $('#stock').val(datos.stock);
-            $('#bd_imagen').val(datos.imagen);
             datos.estado == 1 ? $('#estado').prop('checked', true) : $('#estado').prop('checked', false);
         }
     });
@@ -59,8 +57,8 @@ function permisosUsuario(codigo) {
         url: '../controller/usuario_controller.php', //archivo que recibe la peticion
         type: 'post', //método de envio
         success: function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
-            document.getElementById('cod_permiso').value = codigo;
             var datos = JSON.parse(response); //se parcea la respuesta como json
+            $('#cod_usuario').val(codigo);
             if (datos.length > 0) {
                 datos.forEach(e => {
                     if (e == 1) $('#usuarios').prop('checked', true);

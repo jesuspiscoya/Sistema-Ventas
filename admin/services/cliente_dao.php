@@ -17,7 +17,7 @@ class ClienteDao
         $sql = "CALL BuscarCliente('" . $codigo . "')";
         $resultado = $conexion->query($sql);
 
-        while ($row = $resultado->fetch_assoc()) {
+        if ($row = $resultado->fetch_assoc()) {
             $cliente = new Cliente;
             $cliente->codigo = $row['cod_cliente'];
             $cliente->nombre = $row['nombre'];

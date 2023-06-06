@@ -32,7 +32,7 @@ class ProductoDao
         $sql = "CALL BuscarProducto('" . $codigo . "')";
         $resultado = $conexion->query($sql);
 
-        while ($row = $resultado->fetch_assoc()) {
+        if ($row = $resultado->fetch_assoc()) {
             $producto = new Producto;
             $producto->codigo = $row['cod_producto'];
             $producto->nombre = $row['nombre'];
@@ -41,7 +41,6 @@ class ProductoDao
             $producto->categoria = $row['nom_categoria'];
             $producto->precio = $row['precio'];
             $producto->stock = $row['stock'];
-            $producto->imagen = base64_encode($row['imagen']);
             $producto->estado = $row['estado'];
         }
 
@@ -49,6 +48,18 @@ class ProductoDao
         $conexion->next_result();
         $conexion->close();
         return $producto;
+    }
+
+    public function buscarImagen(int $codigo)
+    {
+        $conexion = $this->conexion->getConexion();
+        $sql = "CALL BuscarProducto('" . $codigo . "')";
+        $resultado = $conexion->query($sql);
+        $row = $resultado->fetch_assoc();
+        $resultado->free_result();
+        $conexion->next_result();
+        $conexion->close();
+        return addslashes($row['imagen']);
     }
 
     public function modificar(Producto $producto)
@@ -85,10 +96,10 @@ class ProductoDao
     {
         $conexion = $this->conexion->getConexion();
         $sql = 'CALL ListarProductos';
-        $resultado = mysqli_query($conexion, $sql);
+        $resultado = $conexion->query($sql);;
         $array = array();
 
-        while ($row = mysqli_fetch_assoc($resultado)) {
+        while ($row = $resultado->fetch_assoc()) {
             $producto = new Producto;
             $producto->codigo = $row['cod_producto'];
             $producto->nombre = $row['nombre'];
@@ -97,7 +108,7 @@ class ProductoDao
             $producto->stock = $row['stock'];
             $producto->estado = $row['estado'];
             $producto->categoria = $row['nom_categoria'];
-            $producto->imagen = $row['imagen'];
+            $producto->imagen = base64_encode($row['imagen']);
             $array[] = $producto;
         }
 
@@ -111,9 +122,9 @@ class ProductoDao
     {
         $conexion = $this->conexion->getConexion();
         $sql = 'CALL ListarCategorias';
-        $resultado = mysqli_query($conexion, $sql);
+        $resultado = $conexion->query($sql);;
 
-        while ($row = mysqli_fetch_assoc($resultado)) {
+        while ($row = $resultado->fetch_assoc()) {
             $producto = new Producto;
             $producto->cod_categoria = $row['cod_categoria'];
             $producto->categoria = $row['nom_categoria'];

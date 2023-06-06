@@ -91,11 +91,9 @@ if (isset($_POST['actualizar'])) {
     $producto->precio = $_POST['precio'];
     $producto->stock = $_POST['stock'];
     if (is_uploaded_file($_FILES['imagen']['tmp_name'])) {
-        echo "<script>alert('IMAGENNN');</script>";
         $producto->imagen = addslashes(file_get_contents($_FILES['imagen']['tmp_name']));
     } else {
-        echo "<script>alert('NOOOO');</script>";
-        $producto->imagen = base64_decode($_POST['bd_imagen']);
+        $producto->imagen = $productoDao->buscarImagen($_POST['cod_producto']);
     }
 
     isset($_POST['estado']) ? $producto->estado = $_POST['estado'] : $producto->estado = 0;

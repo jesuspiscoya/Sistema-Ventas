@@ -62,7 +62,7 @@
                                                     <?php echo $array[$i]->categoria ?>
                                                 </td>
                                                 <td>
-                                                    <img src="data:image/jpg;base64,<?php echo base64_encode($array[$i]->imagen) ?>"
+                                                    <img src="data:image/jpg;base64,<?php echo $array[$i]->imagen ?>"
                                                         alt="Imagen producto" class="mr-2"
                                                         style="width: 50px; height: 50px;">
                                                     <?php echo $array[$i]->nombre ?>
