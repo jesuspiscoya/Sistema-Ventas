@@ -10,7 +10,7 @@
             </div>
             <form action="" method="post">
                 <div class="modal-body card">
-                    <input type="hidden" id="cod_modificar" name="codigo" class="form-control p_input">
+                    <input type="hidden" id="cod_cliente" name="cod_cliente">
                     <div class="form-group">
                         <label>Nombre completo</label>
                         <input type="text" id="nombre" name="nombre" class="form-control p_input" required>
@@ -20,10 +20,9 @@
                         <input type="email" id="correo" name="correo" class="form-control p_input" required>
                     </div>
                     <div class="row">
-                        <input type="hidden" id="dni" name="dni" required>
                         <div class="form-group col-12 col-sm-6">
                             <label>DNI</label>
-                            <input type="text" id="dni2" class="form-control p_input" disabled>
+                            <input type="text" id="dni" class="form-control p_input" disabled>
                         </div>
                         <div class="form-group col-12 col-sm-6">
                             <label>Teléfono</label>
@@ -53,10 +52,9 @@
 <?php
 if (isset($_POST['actualizar'])) {
     $cliente = new Cliente;
-    $cliente->codigo = $_POST['codigo'];
+    $cliente->codigo = $_POST['cod_cliente'];
     $cliente->nombre = $_POST['nombre'];
     $cliente->correo = $_POST['correo'];
-    $cliente->dni = $_POST['dni'];
     $cliente->telefono = $_POST['telefono'];
     $cliente->direccion = $_POST['direccion'];
     // $cliente->password = $_POST['password'];

@@ -38,7 +38,7 @@ class ClienteDao
     public function modificar(Cliente $cliente)
     {
         $conexion = $this->conexion->getConexion();
-        $sql = "CALL ModificarCliente('" . $cliente->codigo . "','" . $cliente->nombre . "','" . $cliente->correo . "','" . $cliente->dni . "','" . $cliente->telefono . "','" . $cliente->direccion . "','" . $cliente->estado . "')";
+        $sql = "CALL ModificarCliente('" . $cliente->codigo . "','" . $cliente->nombre . "','" . $cliente->correo . "','" . $cliente->telefono . "','" . $cliente->direccion . "','" . $cliente->estado . "')";
 
         try {
             $conexion->query($sql);

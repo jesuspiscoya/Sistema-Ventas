@@ -112,7 +112,7 @@ class UsuarioDao
     public function modificar(Usuario $usuario)
     {
         $conexion = $this->conexion->getConexion();
-        $sql = "CALL ModificarUsuario('" . $usuario->codigo . "','" . $usuario->nombre . "','" . $usuario->correo . "','" . $usuario->dni . "','" . $usuario->telefono . "','" . $usuario->direccion . "')";
+        $sql = "CALL ModificarUsuario('" . $usuario->codigo . "','" . $usuario->nombre . "','" . $usuario->correo . "','" . $usuario->telefono . "','" . $usuario->direccion . "')";
 
         try {
             $conexion->query($sql);
@@ -127,13 +127,26 @@ class UsuarioDao
     public function modificarPassword(int $codigo, string $oldPassword, string $newPassword)
     {
         $conexion = $this->conexion->getConexion();
-        $sql = "CALL ModificarPasswordUsuario('" . $codigo . "','" . $newPassword . "')";
+        $sql1 = "CALL ValidarPasswordUsuario('" . $codigo . "','" . $oldPassword . "')";
+        $sql2 = "CALL ModificarPasswordUsuario('" . $codigo . "','" . $newPassword . "')";
 
-        try {
-            $conexion->query($sql);
-            $conexion->close();
-            return true;
-        } catch (\Throwable $th) {
+        $resultado = $conexion->query($sql1);
+        $row = $resultado->fetch_assoc();
+
+        if ($row['validar'] == '1') {
+            $resultado->free_result();
+            $conexion->next_result();
+            try {
+                $conexion->query($sql2);
+                $conexion->close();
+                return true;
+            } catch (\Throwable $th) {
+                $conexion->close();
+                return false;
+            }
+        } else {
+            $resultado->free_result();
+            $conexion->next_result();
             $conexion->close();
             return false;
         }

@@ -14,7 +14,7 @@ class ProductoDao
     public function insertar(Producto $producto)
     {
         $conexion = $this->conexion->getConexion();
-        $sql = "CALL InsertarProducto('" . $producto->cod_categoria . "','" . $producto->nombre . "','" . $producto->descripcion . "','" . $producto->precio . "','" . $producto->stock . "')";
+        $sql = "CALL InsertarProducto('" . $producto->cod_categoria . "','" . $producto->nombre . "','" . $producto->descripcion . "','" . $producto->precio . "','" . $producto->stock . "','" . $producto->imagen . "')";
 
         try {
             $conexion->query($sql);
@@ -41,6 +41,7 @@ class ProductoDao
             $producto->categoria = $row['nom_categoria'];
             $producto->precio = $row['precio'];
             $producto->stock = $row['stock'];
+            $producto->imagen = base64_encode($row['imagen']);
             $producto->estado = $row['estado'];
         }
 
@@ -53,7 +54,7 @@ class ProductoDao
     public function modificar(Producto $producto)
     {
         $conexion = $this->conexion->getConexion();
-        $sql = "CALL ModificarProducto('" . $producto->codigo . "','" . $producto->cod_categoria . "','" . $producto->nombre . "','" . $producto->descripcion . "','" . $producto->precio . "','" . $producto->stock . "','" . $producto->estado . "')";
+        $sql = "CALL ModificarProducto('" . $producto->codigo . "','" . $producto->cod_categoria . "','" . $producto->nombre . "','" . $producto->descripcion . "','" . $producto->precio . "','" . $producto->stock . "','" . $producto->imagen . "','" . $producto->estado . "')";
 
         try {
             $conexion->query($sql);

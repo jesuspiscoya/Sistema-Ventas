@@ -27,16 +27,14 @@
           </div>
         </a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="profileDropdown">
-          <h6 class="p-3 mb-0">Profile</h6>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item preview-item">
+          <a class="dropdown-item preview-item" href="<?php echo $srcPage ?>settings_page.php">
             <div class="preview-thumbnail">
               <div class="preview-icon bg-dark rounded-circle">
-                <i class="fa-solid fa-gear text-success"></i>
+                <i class="fa-solid fa-user-gear text-success"></i>
               </div>
             </div>
             <div class="preview-item-content">
-              <p class="preview-subject mb-1">Settings</p>
+              <p class="preview-subject mb-0">Perfil</p>
             </div>
           </a>
           <div class="dropdown-divider"></div>
@@ -47,7 +45,7 @@
               </div>
             </div>
             <div class="preview-item-content">
-              <p class="preview-subject mb-1">Salir</p>
+              <p class="preview-subject mb-0">Salir</p>
             </div>
           </a>
         </div>

@@ -10,7 +10,7 @@
             </div>
             <form action="" method="post">
                 <div class="modal-body card text-danger">
-                    <input type="hidden" id="cod_eliminar" name="codigo" class="form-control p_input">
+                    <input type="hidden" id="cod_producto" name="cod_producto">
                     <label id="mensaje"></label>
                 </div>
                 <div class="modal-footer justify-content-center">
@@ -28,7 +28,7 @@
 
 <?php
 if (isset($_POST['eliminar'])) {
-    $respuesta = $productoDao->eliminar($_POST['codigo']);
+    $respuesta = $productoDao->eliminar($_POST['cod_producto']);
 
     if ($respuesta) {
         $mensaje = 'Producto eliminado con éxito.';

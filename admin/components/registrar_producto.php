@@ -8,7 +8,7 @@
                     <i class="fa-solid fa-xmark m-0 h4"></i>
                 </div>
             </div>
-            <form action="" method="post">
+            <form action="" method="post" enctype="multipart/form-data">
                 <div class="modal-body card">
                     <div class="form-group">
                         <label>Producto</label>
@@ -20,7 +20,7 @@
                     </div>
                     <div class="form-group">
                         <label>Categoría</label>
-                        <input type="hidden" name="categoria" id="categoria">
+                        <input type="hidden" id="categoria" name="categoria">
                         <div class="dropdown d-flex">
                             <button class="col btn btn-outline-primary dropdown-toggle py-2" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false" id="labelCategoria">Seleccione... </button>
@@ -48,7 +48,7 @@
                     </div>
                     <div class="form-group">
                         <label>File upload</label>
-                        <input type="file" name="imagen" class="file-upload-default" accept="image/*" required>
+                        <input type="file" name="imagen" class="file-upload-default" accept="image/*">
                         <div class="input-group col-xs-12">
                             <input type="text" class="form-control" placeholder="Upload Image" disabled>
                             <span class="input-group-append">
@@ -72,9 +72,10 @@ if (isset($_POST['registrar'])) {
     $producto = new Producto;
     $producto->nombre = $_POST['nombre'];
     $producto->descripcion = $_POST['descripcion'];
+    $producto->cod_categoria = $_POST['categoria'];
     $producto->precio = $_POST['precio'];
     $producto->stock = $_POST['stock'];
-    $producto->cod_categoria = $_POST['categoria'];
+    $producto->imagen = addslashes(file_get_contents($_FILES['imagen']['tmp_name']));
 
     $respuesta = $productoDao->insertar($producto);
 

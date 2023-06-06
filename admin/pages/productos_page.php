@@ -15,7 +15,7 @@
         <div class="container-fluid page-body-wrapper mr-0">
             <?php include '../components/_navbar.php'; ?>
             <div class="main-panel">
-                <div class="content-wrapper pt-4 pb-0">
+                <div class="content-wrapper py-4 mb-5 pb-sm-1">
                     <!-- Modals de botones -->
                     <?php include '../components/registrar_producto.php' ?>
                     <?php include '../components/modificar_producto.php' ?>
@@ -31,7 +31,7 @@
                             </div>
                         </div>
                     <?php } ?>
-                    <div class="card border-0 mb-4">
+                    <div class="card mb-2">
                         <div class="card-body">
                             <h3 class="card-title position-absolute mb-3">Productos</h3>
                             <div class="table-responsive">
@@ -62,7 +62,9 @@
                                                     <?php echo $array[$i]->categoria ?>
                                                 </td>
                                                 <td>
-                                                    <img src="data:image/jpg;base64,<?php echo base64_encode($array[$i]->imagen) ?>" alt="Imagen producto" class="mr-2" style="width: 50px; height: 50px;">
+                                                    <img src="data:image/jpg;base64,<?php echo base64_encode($array[$i]->imagen) ?>"
+                                                        alt="Imagen producto" class="mr-2"
+                                                        style="width: 50px; height: 50px;">
                                                     <?php echo $array[$i]->nombre ?>
                                                 </td>
                                                 <td>S/

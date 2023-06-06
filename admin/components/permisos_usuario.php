@@ -10,7 +10,7 @@
             </div>
             <form action="" method="post">
                 <div class="modal-body card">
-                    <input type="hidden" id="cod_permiso" name="codigo" class="form-control p_input">
+                    <input type="hidden" id="cod_permiso" name="cod_permiso">
                     <div class="form-group mb-0">
                         <label>Permisos</label>
                         <div class="row">
@@ -60,19 +60,19 @@
 <?php
 if (isset($_POST['permisos'])) {
     if (isset($_POST['usuarios'])) {
-        $respuesta = $usuarioDao->insertarPermiso($_POST['usuarios'], $_POST['codigo']);
+        $respuesta = $usuarioDao->insertarPermiso($_POST['usuarios'], $_POST['cod_permiso']);
     } else {
-        $respuesta = $usuarioDao->eliminarPermiso(1, $_POST['codigo']);
+        $respuesta = $usuarioDao->eliminarPermiso(1, $_POST['cod_permiso']);
     }
     if (isset($_POST['clientes'])) {
-        $respuesta = $usuarioDao->insertarPermiso($_POST['clientes'], $_POST['codigo']);
+        $respuesta = $usuarioDao->insertarPermiso($_POST['clientes'], $_POST['cod_permiso']);
     } else {
-        $respuesta = $usuarioDao->eliminarPermiso(2, $_POST['codigo']);
+        $respuesta = $usuarioDao->eliminarPermiso(2, $_POST['cod_permiso']);
     }
     if (isset($_POST['productos'])) {
-        $respuesta = $usuarioDao->insertarPermiso($_POST['productos'], $_POST['codigo']);
+        $respuesta = $usuarioDao->insertarPermiso($_POST['productos'], $_POST['cod_permiso']);
     } else {
-        $respuesta = $usuarioDao->eliminarPermiso(3, $_POST['codigo']);
+        $respuesta = $usuarioDao->eliminarPermiso(3, $_POST['cod_permiso']);
     }
 
     if ($respuesta) {

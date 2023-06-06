@@ -5,14 +5,16 @@ function modificarProducto(codigo) {
         url: '../controller/producto_controller.php', //archivo que recibe la peticion
         type: 'post', //método de envio
         success: function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
+            console.log('aaaa: '+response);
             var datos = JSON.parse(response); //se parcea la respuesta como json
-            $('#cod_modificar').val(datos.codigo);
+            $('#cod_producto').val(datos.codigo);
             $('#nombre').val(datos.nombre);
             $('#descripcion').val(datos.descripcion);
             $('#cod_categoria').val(datos.cod_categoria);
             $('#labelModificarCategoria').text(datos.categoria);
             $('#precio').val(datos.precio);
             $('#stock').val(datos.stock);
+            $('#bd_imagen').val(datos.imagen);
             datos.estado == 1 ? $('#estado').prop('checked', true) : $('#estado').prop('checked', false);
         }
     });
@@ -26,7 +28,7 @@ function eliminarProducto(codigo) {
         type: 'post', //método de envio
         success: function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
             var datos = JSON.parse(response); //se parcea la respuesta como json
-            $('#cod_eliminar').val(datos.codigo);
+            $('#cod_producto').val(datos.codigo);
             $('#mensaje').html('¿Está seguro de eliminar ' + datos.nombre + '?');
         }
     });
@@ -39,14 +41,11 @@ function modificarUsuario(codigo) {
         url: '../controller/usuario_controller.php', //archivo que recibe la peticion
         type: 'post', //método de envio
         success: function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
-            console.log(response);
             var datos = JSON.parse(response); //se parcea la respuesta como json
-            console.log(datos);
-            $('#cod_modificar').val(datos.codigo);
+            $('#cod_usuario').val(datos.codigo);
             $('#nombre').val(datos.nombre);
             $('#correo').val(datos.correo);
             $('#dni').val(datos.dni);
-            $('#dni2').val(datos.dni);
             $('#telefono').val(datos.telefono);
             $('#direccion').val(datos.direccion);
         }
@@ -62,7 +61,6 @@ function permisosUsuario(codigo) {
         success: function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
             document.getElementById('cod_permiso').value = codigo;
             var datos = JSON.parse(response); //se parcea la respuesta como json
-            console.log(datos);
             if (datos.length > 0) {
                 datos.forEach(e => {
                     if (e == 1) $('#usuarios').prop('checked', true);
@@ -86,7 +84,7 @@ function eliminarUsuario(codigo) {
         type: 'post', //método de envio
         success: function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
             var datos = JSON.parse(response); //se parcea la respuesta como json
-            $('#cod_eliminar').val(datos.codigo);
+            $('#cod_usuario').val(datos.codigo);
             $('#mensaje').html('¿Está seguro de eliminar a ' + datos.nombre + '?');
         }
     });
@@ -99,14 +97,11 @@ function modificarCliente(codigo) {
         url: '../controller/cliente_controller.php', //archivo que recibe la peticion
         type: 'post', //método de envio
         success: function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
-            console.log(response);
             var datos = JSON.parse(response); //se parcea la respuesta como json
-            console.log(datos);
-            $('#cod_modificar').val(datos.codigo);
+            $('#cod_cliente').val(datos.codigo);
             $('#nombre').val(datos.nombre);
             $('#correo').val(datos.correo);
             $('#dni').val(datos.dni);
-            $('#dni2').val(datos.dni);
             $('#telefono').val(datos.telefono);
             $('#direccion').val(datos.direccion);
             datos.estado == 1 ? $('#estado').prop('checked', true) : $('#estado').prop('checked', false);
@@ -122,7 +117,7 @@ function eliminarCliente(codigo) {
         type: 'post', //método de envio
         success: function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
             var datos = JSON.parse(response); //se parcea la respuesta como json
-            $('#cod_eliminar').val(datos.codigo);
+            $('#cod_cliente').val(datos.codigo);
             $('#mensaje').html('¿Está seguro de eliminar a ' + datos.nombre + '?');
         }
     });

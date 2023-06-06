@@ -23,37 +23,39 @@
         <div class="content-wrapper" id="lista-productos">
             <div class="mb-3 text-center row">
                 <?php $array = $productoDao->listar();
-                for ($i = 0; $i < count($array); $i++) { ?>
-                    <div class="grid-margin col-12 col-sm-6 col-md-4 col-lg-3">
-                        <div class="card mb-4 shadow-sm">
-                            <div class="card-header">
-                                <h4 class="my-0 font-weight-bold">
-                                    <?php echo $array[$i]->nombre ?>
-                                </h4>
-                            </div>
-                            <div class="card-body">
-                                <img src="data:image/jpg;base64,<?php echo base64_encode($array[$i]->imagen) ?>"
-                                    class="card-img-top" alt="Imagen producto">
-                                <h1 class="card-title pricing-card-title precio">S/.
-                                    <span>
-                                        <?php echo $array[$i]->precio ?>
-                                    </span>
-                                </h1>
-                                <ul class="list-unstyled mt-3 mb-4">
-                                    <?php echo $array[$i]->descripcion ?>
-                                    <!-- ${producto.detalles
+                for ($i = 0; $i < count($array); $i++) {
+                    if ($array[$i]->estado) { ?>
+                        <div class="grid-margin col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="card mb-4 shadow-sm">
+                                <div class="card-header">
+                                    <h4 class="my-0 font-weight-bold">
+                                        <?php echo $array[$i]->nombre ?>
+                                    </h4>
+                                </div>
+                                <div class="card-body">
+                                    <img src="data:image/jpg;base64,<?php echo base64_encode($array[$i]->imagen) ?>"
+                                        class="card-img-top" alt="Imagen producto">
+                                    <h1 class="card-title pricing-card-title precio">S/.
+                                        <span>
+                                            <?php echo $array[$i]->precio ?>
+                                        </span>
+                                    </h1>
+                                    <ul class="list-unstyled mt-3 mb-4">
+                                        <?php echo $array[$i]->descripcion ?>
+                                        <!-- ${producto.detalles
                                 .map(
                                 (ele) => `
                                 <li>${ele}</li>
                                 `
                                 )
                                 .join("")} -->
-                                </ul>
-                                <a href="" class="btn btn-block btn-primary agregar-carrito"
-                                    data-id="<?php echo $array[$i]->codigo ?>">Comprar</a>
+                                    </ul>
+                                    <a href="" class="btn btn-block btn-primary agregar-carrito"
+                                        data-id="<?php echo $array[$i]->codigo ?>">Comprar</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    <?php } ?>
                 <?php } ?>
             </div>
     </main>

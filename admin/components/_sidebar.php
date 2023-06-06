@@ -9,7 +9,7 @@
       <div class="profile-desc">
         <div class="profile-pic">
           <div class="count-indicator">
-            <img class="img-xs rounded-circle " src="<?php echo $src ?>assets/img/homer.png" alt="">
+            <img class="img-xs rounded-circle " src="<?php echo $src ?>assets/img/homer.png" alt="Image Profile">
             <span class="count bg-success"></span>
           </div>
           <div class="profile-name">
@@ -23,25 +23,25 @@
           <i class="fa-solid fa-ellipsis-vertical px-2"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list" aria-labelledby="profile-dropdown">
-          <a href="#" class="dropdown-item preview-item">
+          <a href="<?php echo $srcPage ?>settings_page.php" class="dropdown-item preview-item">
             <div class="preview-thumbnail">
               <div class="preview-icon bg-dark rounded-circle">
                 <i class="fa-solid fa-gear text-primary"></i>
               </div>
             </div>
             <div class="preview-item-content">
-              <p class="preview-subject ellipsis mb-1 text-small">Account settings</p>
+              <p class="preview-subject ellipsis mb-1 text-small">Configuración</p>
             </div>
           </a>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item preview-item">
+          <a href="<?php echo $srcPage ?>password_page.php" class="dropdown-item preview-item">
             <div class="preview-thumbnail">
               <div class="preview-icon bg-dark rounded-circle">
                 <i class="fa-solid fa-key text-info"></i>
               </div>
             </div>
             <div class="preview-item-content">
-              <p class="preview-subject ellipsis mb-1 text-small">Change Password</p>
+              <p class="preview-subject ellipsis mb-1 text-small">Password</p>
             </div>
           </a>
         </div>
@@ -68,8 +68,12 @@
       </a>
       <div class="collapse" id="perfil">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="#">Configuración</a></li>
-          <li class="nav-item"> <a class="nav-link" href="#">Contraseña</a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="<?php echo $srcPage ?>settings_page.php">Configuración</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="<?php echo $srcPage ?>password_page.php">Contraseña</a>
+          </li>
         </ul>
       </div>
     </li>

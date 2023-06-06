@@ -8,9 +8,9 @@
                     <i class="fa-solid fa-xmark m-0 h4"></i>
                 </div>
             </div>
-            <form action="" method="post">
+            <form action="" method="post" enctype="multipart/form-data">
                 <div class="modal-body card">
-                    <input type="hidden" id="cod_modificar" name="codigo" class="form-control p_input">
+                    <input type="hidden" id="cod_producto" name="cod_producto">
                     <div class="form-group">
                         <label>Producto</label>
                         <input type="text" id="nombre" name="nombre" class="form-control p_input" required>
@@ -22,10 +22,11 @@
                     </div>
                     <div class="form-group">
                         <label>Categoría</label>
-                        <input type="hidden" name="cod_categoria" id="cod_categoria">
+                        <input type="hidden" id="cod_categoria" name="cod_categoria">
                         <div class="dropdown d-flex">
                             <button class="col btn btn-outline-primary dropdown-toggle py-2" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false" id="labelModificarCategoria">Seleccione... </button>
+                                aria-haspopup="true" aria-expanded="false" id="labelModificarCategoria">Seleccione...
+                            </button>
                             <div class="dropdown-menu" aria-labelledby="categoria" id="dropdownModificarCategoria">
                                 <?php $array = $productoDao->categorias();
                                 foreach ($array as $key => $value) { ?>
@@ -45,6 +46,17 @@
                             <label>Stock</label>
                             <input type="tel" id="stock" name="stock" class="form-control p_input" required
                                 maxlength="4">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>File upload</label>
+                        <input type="hidden" id="bd_imagen" name="bd_imagen">
+                        <input type="file" name="imagen" class="file-upload-default" accept="image/*">
+                        <div class="input-group col-xs-12">
+                            <input type="text" class="form-control" placeholder="Upload Image" disabled>
+                            <span class="input-group-append">
+                                <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+                            </span>
                         </div>
                     </div>
                     <div class="form-group mb-1">
@@ -72,14 +84,21 @@
 <?php
 if (isset($_POST['actualizar'])) {
     $producto = new producto;
-    $producto->codigo = $_POST['codigo'];
+    $producto->codigo = $_POST['cod_producto'];
     $producto->nombre = $_POST['nombre'];
     $producto->descripcion = $_POST['descripcion'];
     $producto->cod_categoria = $_POST['cod_categoria'];
     $producto->precio = $_POST['precio'];
     $producto->stock = $_POST['stock'];
-    isset($_POST['estado']) ?
-        $producto->estado = $_POST['estado'] : $producto->estado = 0;
+    if (is_uploaded_file($_FILES['imagen']['tmp_name'])) {
+        echo "<script>alert('IMAGENNN');</script>";
+        $producto->imagen = addslashes(file_get_contents($_FILES['imagen']['tmp_name']));
+    } else {
+        echo "<script>alert('NOOOO');</script>";
+        $producto->imagen = base64_decode($_POST['bd_imagen']);
+    }
+
+    isset($_POST['estado']) ? $producto->estado = $_POST['estado'] : $producto->estado = 0;
 
     $respuesta = $productoDao->modificar($producto);
 
