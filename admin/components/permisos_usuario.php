@@ -10,15 +10,14 @@
             </div>
             <form action="" method="post">
                 <div class="modal-body card">
-                    <input type="hidden" id="cod_usuario" name="cod_usuario">
+                    <input type="hidden" id="cod_permiso" name="cod_permiso">
                     <div class="form-group mb-0">
                         <label>Permisos</label>
                         <div class="row">
                             <div class="form-group col mb-0">
                                 <div class="d-flex flex-column flex-sm-row">
                                     <label class="switch">
-                                        <input type="checkbox" id="usuarios" name="usuarios" class="input-switch"
-                                            value="1">
+                                        <input type="checkbox" id="usuarios" name="usuarios" class="input-switch">
                                         <span class="slider round"></span>
                                     </label>
                                     <span>Usuarios</span>
@@ -27,8 +26,7 @@
                             <div class="form-group col mb-0">
                                 <div class="d-flex flex-column flex-sm-row align-items-center">
                                     <label class="switch">
-                                        <input type="checkbox" id="clientes" name="clientes" class="input-switch"
-                                            value="2">
+                                        <input type="checkbox" id="clientes" name="clientes" class="input-switch">
                                         <span class="slider round"></span>
                                     </label>
                                     <span>Clientes</span>
@@ -37,8 +35,7 @@
                             <div class="form-group col mb-0">
                                 <div class="d-flex flex-column flex-sm-row align-items-end">
                                     <label class="switch">
-                                        <input type="checkbox" id="productos" name="productos" class="input-switch"
-                                            value="3">
+                                        <input type="checkbox" id="productos" name="productos" class="input-switch">
                                         <span class="slider round"></span>
                                     </label>
                                     <span>Productos</span>
@@ -48,7 +45,7 @@
                     </div>
                 </div>
                 <div class="modal-footer justify-content-center">
-                    <button type="submit" name="actualizar" class="btn btn-inverse-primary btn-rounded px-4 py-2">
+                    <button type="submit" name="modificar" class="btn btn-inverse-primary btn-rounded px-4 py-2">
                         <i class="fa-solid fa-user-shield my-1"></i>Actualizar
                     </button>
                 </div>
@@ -58,21 +55,24 @@
 </div>
 
 <?php
-if (isset($_POST['actualizar'])) {
+if (isset($_POST['modificar'])) {
     if (isset($_POST['usuarios'])) {
-        $respuesta = $usuarioDao->insertarPermiso($_POST['usuarios'], $_POST['cod_usuario']);
+        $usuarioDao->eliminarPermiso(1, $_POST['cod_permiso']);
+        $respuesta = $usuarioDao->insertarPermiso(1, $_POST['cod_permiso']);
     } else {
-        $respuesta = $usuarioDao->eliminarPermiso(1, $_POST['cod_usuario']);
+        $respuesta = $usuarioDao->eliminarPermiso(1, $_POST['cod_permiso']);
     }
     if (isset($_POST['clientes'])) {
-        $respuesta = $usuarioDao->insertarPermiso($_POST['clientes'], $_POST['cod_usuario']);
+        $usuarioDao->eliminarPermiso(2, $_POST['cod_permiso']);
+        $respuesta = $usuarioDao->insertarPermiso(2, $_POST['cod_permiso']);
     } else {
-        $respuesta = $usuarioDao->eliminarPermiso(2, $_POST['cod_usuario']);
+        $respuesta = $usuarioDao->eliminarPermiso(2, $_POST['cod_permiso']);
     }
     if (isset($_POST['productos'])) {
-        $respuesta = $usuarioDao->insertarPermiso($_POST['productos'], $_POST['cod_usuario']);
+        $usuarioDao->eliminarPermiso(3, $_POST['cod_permiso']);
+        $respuesta = $usuarioDao->insertarPermiso(3, $_POST['cod_permiso']);
     } else {
-        $respuesta = $usuarioDao->eliminarPermiso(3, $_POST['cod_usuario']);
+        $respuesta = $usuarioDao->eliminarPermiso(3, $_POST['cod_permiso']);
     }
 
     if ($respuesta) {

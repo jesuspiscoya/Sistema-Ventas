@@ -58,17 +58,23 @@ function permisosUsuario(codigo) {
         type: 'post', //método de envio
         success: function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
             var datos = JSON.parse(response); //se parcea la respuesta como json
-            $('#cod_usuario').val(codigo);
+            $('#cod_permiso').val(codigo);
+            var usuarios = false;
+            var clientes = false;
+            var productos = false;
             if (datos.length > 0) {
                 datos.forEach(e => {
-                    if (e == 1) $('#usuarios').prop('checked', true);
-                    if (e == 2) $('#clientes').prop('checked', true);
-                    if (e == 3) $('#productos').prop('checked', true);
+                    if (e == 1) usuarios = true;
+                    if (e == 2) clientes = true;
+                    if (e == 3) productos = true;
                 });
+                $('#usuarios').prop('checked', usuarios);
+                $('#clientes').prop('checked', clientes);
+                $('#productos').prop('checked', productos);
             } else {
-                $('#usuarios').prop('checked', false);
-                $('#clientes').prop('checked', false);
-                $('#productos').prop('checked', false);
+                $('#usuarios').prop('checked', usuarios);
+                $('#clientes').prop('checked', clientes);
+                $('#productos').prop('checked', productos);
             }
         }
     });

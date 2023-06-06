@@ -62,6 +62,7 @@ class UsuarioDao
             $conexion->close();
             return true;
         } catch (\Throwable $th) {
+            echo $conexion->error;
             $conexion->close();
             return false;
         }
@@ -91,18 +92,17 @@ class UsuarioDao
         return $usuario;
     }
 
-    // Corregir
     public function buscarPermisos(int $codigo)
     {
         $conexion = $this->conexion->getConexion();
         $sql = "CALL BuscarPermiso('" . $codigo . "')";
         $resultado = $conexion->query($sql);
+        $array = array();
 
         while ($row = $resultado->fetch_assoc()) {
-            $permiso[] = $row['cod_permiso'];
+            $array[] = $row['cod_permiso'];
         }
 
-        $array = $permiso;
         $resultado->free_result();
         $conexion->next_result();
         $conexion->close();
