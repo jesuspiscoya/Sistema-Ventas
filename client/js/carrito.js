@@ -189,7 +189,7 @@ class Carrito {
             })
         }
         else {
-            location.href = "client/pages/compra_page.php";
+            location.href = "client/pages/carrito.php";
         }
     }
 

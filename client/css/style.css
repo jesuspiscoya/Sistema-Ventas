@@ -20572,10 +20572,8 @@ div.tagsinput {
     margin-top: 0.5rem; } }
 
 @media (max-width: 480px) {
-  .navbar .navbar-brand-wrapper {
-    width: 55px; }
-    .navbar .navbar-brand-wrapper .brand-logo-mini {
-      padding-top: 0px; } }
+  .navbar .navbar-brand-wrapper .brand-logo-mini {
+    padding-top: 0px; } }
 
 .sidebar-tinted .navbar .navbar-brand-wrapper {
   background: #fa424a; }

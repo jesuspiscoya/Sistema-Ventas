@@ -47,6 +47,7 @@ if (!empty($_SESSION['uid'])) {
                                         <div class="wrap-input100">
                                             <input class="input100" type="text" id="usuario" name="usuario"
                                                 placeholder="Ingrese su usuario" required>
+                                            <span class="focus-efecto"></span>
                                         </div>
                                     </div>
                                     <div class="form-group">

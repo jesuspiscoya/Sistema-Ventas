@@ -21,11 +21,13 @@
                     <div class="row">
                         <div class="form-group col-12 col-sm-6">
                             <label>DNI</label>
-                            <input type="text" name="dni" class="form-control p_input" required maxlength="8">
+                            <input type="text" name="dni" class="form-control p_input" required maxlength="8"
+                                onkeypress="return soloNumeros(event)">
                         </div>
                         <div class="form-group col-12 col-sm-6">
                             <label>Teléfono</label>
-                            <input type="tel" name="telefono" class="form-control p_input" required maxlength="9">
+                            <input type="tel" name="telefono" class="form-control p_input" required maxlength="9"
+                                onkeypress="return soloNumeros(event)">
                         </div>
                     </div>
                     <div class="form-group">

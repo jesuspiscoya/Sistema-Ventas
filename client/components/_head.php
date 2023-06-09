@@ -14,4 +14,6 @@
     <link rel="stylesheet" href="<?php echo $src ?>assets/libraries/sweetalert2/css/sweetalert2.min.css">
     <!-- CSS Custom -->
     <link rel="stylesheet" href="<?php echo $src ?>css/loader.css">
+    <!-- CSS login -->
+    <link rel="stylesheet" href="<?php echo $src ?>css/login.css">
 </head>

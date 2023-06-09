@@ -11,6 +11,46 @@ class ClienteDao
         $this->conexion = new Conexion;
     }
 
+    public function validar(string $email, string $pass)
+    {
+        $conexion = $this->conexion->getConexion();
+        $correo = $conexion->real_escape_string($email);
+        $password = $conexion->real_escape_string($pass);
+        $sql = "CALL ValidarLoginCliente('" . $correo . "','" . $password . "')";
+        $resultado = $conexion->query($sql);
+
+        if ($row = $resultado->fetch_assoc()) {
+            $cliente = new Cliente;
+            $cliente->codigo = $row['cod_cliente'];
+            $cliente->nombre = $row['nombre'];
+            $cliente->estado = $row['estado'];
+            $resultado->free_result();
+            $conexion->next_result();
+            $conexion->close();
+            return $cliente;
+        } else {
+            $resultado->free_result();
+            $conexion->next_result();
+            $conexion->close();
+            return null;
+        }
+    }
+
+    public function insertar(Cliente $cliente)
+    {
+        $conexion = $this->conexion->getConexion();
+        $sql = "CALL InsertarCliente('" . $cliente->nombre . "','" . $cliente->correo . "','" . $cliente->dni . "','" . $cliente->telefono . "','" . $cliente->direccion . "','" . $cliente->password . "')";
+
+        try {
+            $conexion->query($sql);
+            $conexion->close();
+            return true;
+        } catch (\Throwable $th) {
+            $conexion->close();
+            return false;
+        }
+    }
+
     public function buscar(int $codigo)
     {
         $conexion = $this->conexion->getConexion();

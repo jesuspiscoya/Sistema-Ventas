@@ -3,8 +3,10 @@
 
 <?php $tittle = 'Carrito'; ?>
 <?php $src = '../' ?>
+<?php $srcPage = '' ?>
 <?php $inicio = '../../' ?>
 <?php require '../components/_head.php' ?>
+<?php require '../components/_validar_session.php' ?>
 
 <body>
     <?php require '../components/_navbar.php'; ?>
@@ -12,22 +14,8 @@
         <div class="container">
             <div class="row my-5 py-5">
                 <div class="col">
-                    <h2 class="text-center mb-3">Realizar Compra</h2>
+                    <h2 class="text-center mb-4">Realizar Compra</h2>
                     <form id="procesar-pago">
-                        <div class="form-group row">
-                            <label for="cliente" class="col-12 col-md-2 col-form-label h2">Cliente</label>
-                            <div class="col-12 col-md-10">
-                                <input type="text" class="form-control" id="cliente"
-                                    placeholder="Ingresa nombre cliente" name="destinatario">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="email" class="col-12 col-md-2 col-form-label h2">Correo</label>
-                            <div class="col-12 col-md-10">
-                                <input type="text" class="form-control" id="correo" placeholder="Ingresa tu correo"
-                                    name="cc_to">
-                            </div>
-                        </div>
                         <div id="carrito" class="form-group table-responsive">
                             <table class="form-group table" id="lista-compra">
                                 <thead>

@@ -17,7 +17,7 @@ class UsuarioDao
         $conexion = $this->conexion->getConexion();
         $usuario = $conexion->real_escape_string($user);
         $password = $conexion->real_escape_string($pass);
-        $sql = "CALL ValidarLogin('" . $usuario . "','" . $password . "')";
+        $sql = "CALL ValidarLoginUsuario('" . $usuario . "','" . $password . "')";
         $resultado = $conexion->query($sql);
 
         if ($row = $resultado->fetch_assoc()) {
@@ -40,7 +40,7 @@ class UsuarioDao
     public function insertar(Usuario $usuario)
     {
         $conexion = $this->conexion->getConexion();
-        $sql = "CALL RegistrarUsuario('" . $usuario->nombre . "','" . $usuario->correo . "','" . $usuario->dni . "','" . $usuario->telefono . "','" . $usuario->direccion . "','" . $usuario->usuario . "','" . $usuario->password . "')";
+        $sql = "CALL InsertarUsuario('" . $usuario->nombre . "','" . $usuario->correo . "','" . $usuario->dni . "','" . $usuario->telefono . "','" . $usuario->direccion . "','" . $usuario->usuario . "','" . $usuario->password . "')";
 
         try {
             $conexion->query($sql);

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-06-2023 a las 11:08:08
+-- Tiempo de generación: 09-06-2023 a las 06:47:59
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -72,6 +72,12 @@ SET @cod_per = (SELECT cod_persona FROM usuario WHERE cod_usuario = codigo);
 DELETE FROM detalle_permiso WHERE cod_usuario = codigo;
 DELETE FROM usuario WHERE cod_usuario = codigo;
 DELETE FROM persona WHERE cod_persona = @cod_per;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarCliente` (IN `nombre` VARCHAR(200), IN `correo` VARCHAR(200), IN `dni` VARCHAR(8), IN `telefono` VARCHAR(9), IN `direccion` VARCHAR(300), IN `contrasena` VARCHAR(50))   BEGIN
+INSERT INTO persona VALUES(null, nombre, correo, dni, telefono, direccion, 1);
+SET @cod_per = (SELECT cod_persona FROM persona ORDER BY cod_persona DESC LIMIT 1);
+INSERT INTO cliente VALUES(null, @cod_per, SHA(contrasena));
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarPermiso` (IN `cod_permiso` INT, IN `cod_usuario` INT)   BEGIN
@@ -143,7 +149,15 @@ UPDATE persona SET nombre = nombres, correo = correos, telefono = telefonos, dir
 WHERE cod_persona = @cod_per;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ValidarLogin` (IN `usuarios` VARCHAR(20), IN `contrasena` VARCHAR(50))   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ValidarLoginCliente` (IN `correos` VARCHAR(200), IN `contrasena` VARCHAR(50))   BEGIN
+SELECT c.cod_cliente, p.nombre, p.estado
+FROM cliente c
+INNER JOIN persona p
+ON c.cod_persona = p.cod_persona
+WHERE p.correo = correos AND c.password = SHA(contrasena);
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ValidarLoginUsuario` (IN `usuarios` VARCHAR(20), IN `contrasena` VARCHAR(50))   BEGIN
 SELECT u.cod_usuario, p.nombre, p.estado
 FROM usuario u
 INNER JOIN persona p
@@ -201,7 +215,11 @@ CREATE TABLE `cliente` (
 --
 
 INSERT INTO `cliente` (`cod_cliente`, `cod_persona`, `password`) VALUES
-(10000, 1, 'jesus');
+(10000, 1, '8d5004c9c74259ab775f63f7131da077814a7636'),
+(10001, 8, '97babebea08350541c823fb207608af26eacdc6d'),
+(10002, 9, '2dff4fc90e2973f54d62e257480de234bc59e2c4'),
+(10003, 10, 'faea5242a00c52da62a0f00df168c199b7ab748d'),
+(10004, 11, '0a589da583cfeed1971eca6091a76bbaaf09d6f3');
 
 -- --------------------------------------------------------
 
@@ -234,18 +252,13 @@ CREATE TABLE `detalle_permiso` (
 --
 
 INSERT INTO `detalle_permiso` (`cod_deta_permiso`, `cod_permiso`, `cod_usuario`) VALUES
-(1, 1, 10000),
-(2, 2, 10000),
 (4, 1, 10001),
 (5, 2, 10001),
 (6, 3, 10001),
 (7, 1, 10002),
-(8, 1, 10002),
 (9, 2, 10002),
-(10, 1, 10000),
-(11, 2, 10000),
-(12, 1, 10000),
-(13, 2, 10000);
+(58, 1, 10000),
+(59, 3, 10000);
 
 -- --------------------------------------------------------
 
@@ -303,11 +316,15 @@ CREATE TABLE `persona` (
 --
 
 INSERT INTO `persona` (`cod_persona`, `nombre`, `correo`, `dni`, `telefono`, `direccion`, `estado`) VALUES
-(1, 'Jesus Piscoya', 'jesuspiscoya@piscoya.com', '74644014', '921104614', 'Av. direccion 123', 0),
+(1, 'Jesus Piscoya', 'jesus@gmail.com', '74644014', '921104614', 'Av. direccion 123', 0),
 (2, 'Juan Espinoza Lopez', 'juan@gmail.com', '08965412', '985412365', 'Av. direccion 423', 1),
 (3, 'Luis Carranza', 'luis@gmail.com', '08545115', '978895612', 'av. los olivos 296', 1),
 (5, 'Carlos Mendoza', 'carlos@gmail.com', '09708495', '998745213', 'Av. Lima 156', 1),
-(7, 'Luz', 'luz@gmail.com', '09408566', '989988888', 'av lima 64', 1);
+(7, 'Luz', 'luz@gmail.com', '09408566', '989988888', 'av lima 64', 1),
+(8, 'Yadira Cortez Espinoza', 'yadira@gmail.com', '76785239', '935958485', 'av. los olivos 296', 1),
+(9, 'Oscar Piscoya Bances', 'oscar@gmail.com', '08654122', '998545121', 'av. los olivos 895', 1),
+(10, 'Luis Carranza', 'luis@gmail.com', '09408984', '989878954', 'Av. Independencia 3849', 1),
+(11, 'Leslie Garro', 'leslie@gmail.com', '09784098', '987987546', 'Av. Independencia 3849', 1);
 
 -- --------------------------------------------------------
 
@@ -453,13 +470,13 @@ ALTER TABLE `categoria`
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `cod_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10001;
+  MODIFY `cod_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10005;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_permiso`
 --
 ALTER TABLE `detalle_permiso`
-  MODIFY `cod_deta_permiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `cod_deta_permiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT de la tabla `pedido`
@@ -477,7 +494,7 @@ ALTER TABLE `permiso`
 -- AUTO_INCREMENT de la tabla `persona`
 --
 ALTER TABLE `persona`
-  MODIFY `cod_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `cod_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `producto`

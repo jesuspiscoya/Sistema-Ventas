@@ -3,19 +3,29 @@
 
 <?php $tittle = 'CompuCenter'; ?>
 <?php $src = 'client/' ?>
+<?php $srcPage = 'client/pages/' ?>
 <?php $inicio = '' ?>
 <?php require 'client/components/_head.php' ?>
 <?php require 'client/services/producto_dao.php' ?>
+<?php require 'client/components/_validar_session.php' ?>
 <?php $productoDao = new ProductoDao ?>
-
-<!-- <head>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <script src="js/popper.min.js"></script>
-</head> -->
 
 <body>
     <?php require 'client/components/_navbar.php'; ?>
     <main>
+        <?php if (!empty($mensaje)) { ?>
+            <div class="d-flex position-absolute w-100 justify-content-center" style="margin-top: 60px;">
+                <div class="alert alert-<?php echo $alert ?> alert-dismissible fade show d-flex justify-content-between w-50"
+                    role="alert">
+                    <span class="">
+                        <?php echo $mensaje ?>
+                    </span>
+                    <div class="btn p-0" data-bs-dismiss="alert" aria-label="Close">
+                        <i class="fa-solid fa-xmark text-<?php echo $alert ?> m-0 h3"></i>
+                    </div>
+                </div>
+            </div>
+        <?php } ?>
         <div class="pricing-header my-4 pt-5 text-center">
             <h2 class="mt-4">Lista de Productos</h2>
             <p class="lead">Selecciona uno de nuestros productos y accede a un descuento</p>

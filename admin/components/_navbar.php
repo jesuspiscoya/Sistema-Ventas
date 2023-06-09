@@ -19,7 +19,7 @@
       <li class="nav-item dropdown">
         <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
           <div class="navbar-profile">
-            <img class="img-xs rounded-circle" src="<?php echo $src ?>assets/img/homer.png" alt="">
+            <img class="img-xs rounded-circle" src="<?php echo $src ?>assets/img/homer.png" alt="Profile Image">
             <p class="mb-0 d-none d-sm-block navbar-profile-name">
               <?php echo $_SESSION['nombre'] ?>
             </p>
@@ -38,7 +38,7 @@
             </div>
           </a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item preview-item" href="<?php echo $src ?>components/salir.php">
+          <a class="dropdown-item preview-item" href="<?php echo $src ?>components/_logout.php">
             <div class="preview-thumbnail">
               <div class="preview-icon bg-dark rounded-circle">
                 <i class="fa-solid fa-right-from-bracket text-danger"></i>
