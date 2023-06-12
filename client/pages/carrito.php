@@ -19,46 +19,37 @@
                         <table class="table table-hover">
                             <thead class="thead-dark">
                                 <tr class="text-uppercase">
-                                    <th>Imagen</th>
+                                    <th style="width: 100px;">Imagen</th>
                                     <th>Nombre</th>
-                                    <th>Precio</th>
-                                    <th>Cantidad</th>
-                                    <th>Sub Total</th>
-                                    <th>Eliminar</th>
+                                    <th style="width: 120px;">Precio</th>
+                                    <th style="width: 170px;">Cantidad</th>
+                                    <th style="width: 140px;">Sub Total</th>
+                                    <th style="width: 70px;">Eliminar</th>
                                 </tr>
                             </thead>
                             <tbody id="lista-pedido"></tbody>
-                            <!-- <tr>
-                                    <th colspan="4" class="text-right text-white">SUB TOTAL :</th>
-                                    <th>
-                                        <p id="subtotal" class="my-auto text-white"></p>
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th colspan="4" class="text-right text-white">IGV :</th>
-                                    <th>
-                                        <p id="igv" class="my-auto text-white"></p>
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th colspan="4" class="text-right text-success">TOTAL :</th>
-                                    <th>
-                                        <p id="total" class="my-auto text-success"></p>
-                                    </th>
-                                </tr> -->
+                            <tr>
+                                <th colspan="4" class="text-right text-white border-0">SUB TOTAL :</th>
+                                <th class="border-0">
+                                    <p id="subtotal" class="my-auto text-white"></p>
+                                </th>
+                                <th class="border-0"></th>
+                            </tr>
+                            <tr>
+                                <th colspan="4" class="text-right text-white border-0">IGV :</th>
+                                <th class="border-0">
+                                    <p id="igv" class="my-auto text-white"></p>
+                                </th>
+                                <th class="border-0"></th>
+                            </tr>
+                            <tr>
+                                <th colspan="4" class="text-right text-success border-0">TOTAL :</th>
+                                <th class="border-0">
+                                    <p id="total" class="my-auto text-success"></p>
+                                </th>
+                                <th class="border-0"></th>
+                            </tr>
                         </table>
-                        <div class="d-flex justify-content-center ml-auto w-50 mr-4 pr-5 mt-3">
-                            <div class="d-flex flex-column align-items-end mr-5">
-                                <p class="font-weight-bold text-white">SUBTOTAL :</p>
-                                <p class="font-weight-bold text-white">IGV :</p>
-                                <p class="font-weight-bold text-success">TOTAL :</p>
-                            </div>
-                            <div class="d-flex flex-column align-items-start">
-                                <p id="subtotal" class="font-weight-bold text-white"></p>
-                                <p id="igv" class="font-weight-bold text-white"></p>
-                                <p id="total" class="font-weight-bold text-success"></p>
-                            </div>
-                        </div>
                     </div>
                     <div class="row justify-content-center" id="loaders">
                         <div class="cargando" id="cargando">
@@ -73,7 +64,8 @@
                             <a href="../../" class="btn btn-info btn-block py-3">Seguir navegando</a>
                         </div>
                         <div class="col-12 col-md-4">
-                            <button class="btn btn-success btn-block py-3" onclick="realizarPedido()">Realizar pedido</button>
+                            <button class="btn btn-success btn-block py-3" onclick="realizarPedido()">Realizar
+                                pedido</button>
                         </div>
                     </div>
                 </div>

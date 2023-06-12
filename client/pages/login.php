@@ -62,15 +62,15 @@ if (!empty($_SESSION['uid'])) {
                                     <?php echo $mensaje ?>
                                 </span>
                             </div>
-                            <div class="wrap-login-form-btn text-center mt-4">
+                            <button type="submit" name="ingresar" class="wrap-login-form-btn text-center py-2">
                                 <div class="login-form-bgbtn"></div>
-                                <button type="submit" name="ingresar" class="h4 my-2 text-white">Ingresar</button>
-                            </div>
+                                <span class="h5 text-white text-uppercase">Ingresar</span>
+                            </button>
                         </form>
                         <div class="d-flex justify-content-center mt-4">
                             <span class="fw-normal text-center">
                                 ¿No tienes una cuenta?
-                                <a href="register.php" class="fw-bold">Registrarse</a>
+                                <a href="register.php">Registrarse</a>
                             </span>
                         </div>
                     </div>

@@ -115,7 +115,7 @@ if (!empty($_SESSION['uid'])) {
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" id="remember" required>
                                         <label class="form-check-label fw-normal mb-0" for="remember">
-                                            Acepto los <a href="#" class="fw-bold">términos y condiciones</a>
+                                            Acepto los <a href="#">términos y condiciones</a>
                                         </label>
                                     </div>
                                 </div>
@@ -128,7 +128,7 @@ if (!empty($_SESSION['uid'])) {
                         <div class="d-flex justify-content-center mt-4">
                             <span class="fw-normal">
                                 ¿Ya tienes una cuenta?
-                                <a href="login.php" class="fw-bold">Inicia Sesión</a>
+                                <a href="login.php">Inicia Sesión</a>
                             </span>
                         </div>
                     </div>

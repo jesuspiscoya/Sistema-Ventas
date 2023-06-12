@@ -172,7 +172,7 @@ function leerLocalStoragePedido() {
                 </button>
             </td>
             <td id="monto" class="text-white">S/ ${producto.precio * producto.cantidad}</td>
-            <td>
+            <td class="text-center">
                 <button id="eliminar" class="btn btn-rounded btn-icon btn-inverse-danger" onclick="eliminarProducto(${producto.codigo})" style="width: 35px; height: 35px">
                     <i class="fa-solid fa-xmark h4 m-0"></i>
                 </button>
@@ -242,16 +242,36 @@ function realizarPedido() {
             text: 'No hay productos, selecciona alguno.',
             showConfirmButton: false,
             timer: 1500
-        }).then(function () {
+        }).then(() => {
             window.location = '../../';
-        })
+        });
     } else {
-        const cargandoCss = document.querySelector('#cargando');
-        cargandoCss.style.display = 'flex';
-        setTimeout(() => {
-            cargandoCss.style.display = 'none';
-            vaciarLocalStorage();
-            window.location = '../../';
-        }, 4000);
+        if ($('#nombre').length) {
+            const cargandoCss = document.querySelector('#cargando');
+            cargandoCss.style.display = 'flex';
+            setTimeout(() => {
+                cargandoCss.style.display = 'none';
+                vaciarLocalStorage();
+                Swal.fire({
+                    type: 'success',
+                    title: 'Mensaje',
+                    text: 'Muchas gracias por su compra.',
+                    showConfirmButton: false,
+                    timer: 2000
+                }).then(() => {
+                    window.location = '../../';
+                });
+            }, 3500);
+        } else {
+            Swal.fire({
+                type: 'info',
+                title: 'Oops...',
+                text: 'Ingrese a su cuenta para realizar pedido.',
+                showConfirmButton: false,
+                timer: 2000
+            }).then(() => {
+                window.location = '../pages/login.php';
+            });
+        }
     }
 }

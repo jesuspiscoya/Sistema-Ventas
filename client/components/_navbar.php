@@ -44,7 +44,7 @@
                     <i class="fa-solid fa-circle-user text-muted icon-md"></i>
                 <?php } else { ?>
                     <img class="img-xs rounded-circle" src="<?php echo $src ?>assets/img/homer.png" alt="Profile Image">
-                    <p class="mb-0 ml-2 d-none d-sm-block navbar-profile-name text-white">
+                    <p class="mb-0 ml-2 d-none d-sm-block navbar-profile-name text-white" id="nombre">
                         <?php echo $nombre ?>
                     </p>
                 <?php } ?>
