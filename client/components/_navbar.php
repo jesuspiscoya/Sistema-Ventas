@@ -1,3 +1,4 @@
+<?php $_SESSION['carrito'] = array() ?>
 <header class="container-scroller">
     <nav class="navbar p-0 d-flex flex-row fixed-top bg-dark" style="left: 0;">
         <div class="navbar-brand-wrapper d-flex d-sm-none align-items-center bg-dark">
@@ -18,23 +19,20 @@
                     </button>
                     <div id="carrito" class="dropdown-menu dropdown-menu-right navbar-dropdown p-3 m-sm-3 m-lg-0"
                         aria-labelledby="cartDropdown">
-                        <h6 class="pb-2 mb-0 text-center">Carrito de Compras</h6>
-                        <div class="dropdown-divider"></div>
-                        <table id="lista-carrito" class="table">
-                            <thead>
-                                <tr>
+                        <h6 class="pb-1 text-center">Carrito de Compras</h6>
+                        <table class="table table-hover">
+                            <thead class="thead-dark">
+                                <tr class="text-uppercase">
                                     <th>Imagen</th>
                                     <th>Nombre</th>
                                     <th>Precio</th>
                                     <th></th>
                                 </tr>
                             </thead>
-                            <tbody></tbody>
+                            <tbody id="lista-carrito"></tbody>
                         </table>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" id="vaciar-carrito" class="btn btn-primary btn-block mt-3">Vaciar Carrito</a>
-                        <a href="#" id="procesar-pedido" class="btn btn-danger btn-block">Procesar
-                            Compra</a>
+                        <button class="btn btn-primary btn-block mt-3" onclick="vaciarCarrito()">Vaciar Carrito</button>
+                        <button class="btn btn-danger btn-block" onclick="procesarPedido()">Procesar Pedido</button>
                     </div>
                 </li>
             </ul>
@@ -53,10 +51,6 @@
                 <i class="fa-solid fa-caret-down text-muted ml-2 d-none d-sm-flex"></i>
             </button>
         </div>
-        <!-- <button class="navbar-toggler navbar-toggler-right d-block mr-2" type="button" data-bs-toggle="collapse"
-            data-bs-target="#collapse" aria-expanded="false" aria-controls="collapse">
-            <i class="fa-solid fa-circle-user text-muted icon-md"></i>
-        </button> -->
         <?php if (empty($nombre)) { ?>
             <div class="collapse bg-dark w-100" id="collapse">
                 <div class="card px-4 bg-dark align-items-end">

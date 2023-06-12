@@ -11,21 +11,6 @@ class ProductoDao
         $this->conexion = new Conexion;
     }
 
-    public function insertar(Producto $producto)
-    {
-        $conexion = $this->conexion->getConexion();
-        $sql = "CALL InsertarProducto('" . $producto->cod_categoria . "','" . $producto->nombre . "','" . $producto->descripcion . "','" . $producto->precio . "','" . $producto->stock . "')";
-
-        try {
-            $conexion->query($sql);
-            $conexion->close();
-            return true;
-        } catch (\Throwable $th) {
-            $conexion->close();
-            return false;
-        }
-    }
-
     public function buscar(int $codigo)
     {
         $conexion = $this->conexion->getConexion();
@@ -36,48 +21,14 @@ class ProductoDao
             $producto = new Producto;
             $producto->codigo = $row['cod_producto'];
             $producto->nombre = $row['nombre'];
-            $producto->descripcion = $row['descripcion'];
-            $producto->cod_categoria = $row['cod_categoria'];
-            $producto->categoria = $row['nom_categoria'];
             $producto->precio = $row['precio'];
-            $producto->stock = $row['stock'];
-            $producto->estado = $row['estado'];
+            $producto->imagen = base64_encode($row['imagen']);
         }
 
         $resultado->free_result();
         $conexion->next_result();
         $conexion->close();
         return $producto;
-    }
-
-    public function modificar(Producto $producto)
-    {
-        $conexion = $this->conexion->getConexion();
-        $sql = "CALL ModificarProducto('" . $producto->codigo . "','" . $producto->cod_categoria . "','" . $producto->nombre . "','" . $producto->descripcion . "','" . $producto->precio . "','" . $producto->stock . "','" . $producto->estado . "')";
-
-        try {
-            $conexion->query($sql);
-            $conexion->close();
-            return true;
-        } catch (\Throwable $th) {
-            $conexion->close();
-            return false;
-        }
-    }
-
-    public function eliminar(int $codigo)
-    {
-        $conexion = $this->conexion->getConexion();
-        $sql = "CALL EliminarProducto('" . $codigo . "')";
-
-        try {
-            $conexion->query($sql);
-            $conexion->close();
-            return true;
-        } catch (\Throwable $th) {
-            $conexion->close();
-            return false;
-        }
     }
 
     public function listar()

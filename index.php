@@ -26,42 +26,40 @@
                 </div>
             </div>
         <?php } ?>
-        <div class="pricing-header my-4 pt-5 text-center">
+        <div class="my-4 pt-5 text-center">
             <h2 class="mt-4">Lista de Productos</h2>
             <p class="lead">Selecciona uno de nuestros productos y accede a un descuento</p>
         </div>
-        <div class="content-wrapper" id="lista-productos">
-            <div class="mb-3 text-center row">
+        <div class="content-wrapper">
+            <div class="mb-3 text-center row px-lg-5">
                 <?php $array = $productoDao->listar();
                 for ($i = 0; $i < count($array); $i++) {
                     if ($array[$i]->estado) { ?>
                         <div class="grid-margin col-12 col-sm-6 col-md-4 col-lg-3">
                             <div class="card mb-4 shadow-sm">
                                 <div class="card-header">
-                                    <h4 class="my-0 font-weight-bold">
+                                    <h4 class="mt-2 font-weight-bold">
                                         <?php echo $array[$i]->nombre ?>
                                     </h4>
                                 </div>
-                                <div class="card-body">
+                                <div class="card-body pt-0">
                                     <img src="data:image/jpg;base64,<?php echo base64_encode($array[$i]->imagen) ?>"
                                         class="card-img-top" alt="Imagen producto">
-                                    <h1 class="card-title pricing-card-title precio">S/.
-                                        <span>
-                                            <?php echo $array[$i]->precio ?>
-                                        </span>
+                                    <h1 class="h2 text-success my-3">S/.
+                                        <?php echo $array[$i]->precio ?>
                                     </h1>
-                                    <ul class="list-unstyled mt-3 mb-4">
+                                    <ul>
                                         <?php echo $array[$i]->descripcion ?>
                                         <!-- ${producto.detalles
-                                .map(
-                                (ele) => `
-                                <li>${ele}</li>
-                                `
-                                )
-                                .join("")} -->
+                                        .map(
+                                        (ele) => `
+                                        <li>${ele}</li>
+                                        `
+                                        )
+                                        .join("")} -->
                                     </ul>
-                                    <a href="" class="btn btn-block btn-primary agregar-carrito"
-                                        data-id="<?php echo $array[$i]->codigo ?>">Comprar</a>
+                                    <button class="btn btn-block btn-primary"
+                                        onclick="agregarProducto(<?php echo $array[$i]->codigo ?>)">Agregar</button>
                                 </div>
                             </div>
                         </div>
@@ -72,7 +70,9 @@
     <?php require 'client/components/_footer.php'; ?>
 
     <script src="client/js/carrito.js"></script>
-    <script src="client/js/pedido.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", leerLocalStorage());
+    </script>
 </body>
 
 </html>

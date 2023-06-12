@@ -5,12 +5,12 @@ body {
 /* ======================== */
 .cargando {
     width: 120px;
-    display: flex;
+    display: none;
     flex-wrap: wrap;
     align-items: flex-end;
     justify-content: space-between;
     padding-top: 60px;
-    padding-bottom: 20px;
+    padding-bottom: 5px;
 }
 
 .texto-cargando {
