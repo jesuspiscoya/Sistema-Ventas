@@ -15,4 +15,4 @@
   integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 <script src="<?php echo $src ?>assets/libraries/js/vendor.bundle.base.js"></script>
 <!-- Plugin SweetAlert 2 Js -->
-<script src="<?php echo $src ?>assets/libraries/sweetalert2/js/sweetalert2.min.js"></script>
+<script src="<?php echo $src ?>assets/libraries/sweetalert2/js/sweetalert2.all.min.js"></script>

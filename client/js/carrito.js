@@ -55,26 +55,28 @@ function agregarProducto(codigo) {
             });
 
             if (productosLS === datos.codigo) {
-                Swal.fire({
-                    type: 'info',
-                    title: 'Oops...',
-                    text: 'El producto ya está agregado.',
-                    showConfirmButton: false,
-                    timer: 1000
-                });
+                mostrarToast('info', 'El producto ya está agregado.', '#00395dce');
             } else {
                 mostrarProducto(datos);
                 datos.cantidad = 1;
                 guardarProductoLocalStorage(datos);
-                Swal.fire({
-                    type: 'success',
-                    title: 'Mensaje',
-                    text: 'Producto agregado con éxito.',
-                    showConfirmButton: false,
-                    timer: 1000
-                });
+                mostrarToast('success', 'Producto agregado al carrito.', '#005d43ce');
             }
         }
+    });
+}
+
+function mostrarToast(icon, mensaje, background) {
+    Swal.mixin({
+        toast: true,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 1500
+    }).fire({
+        icon: icon,
+        title: mensaje,
+        color: '#ffffff',
+        background: background,
     });
 }
 
@@ -111,22 +113,25 @@ function eliminarProductoLocalStorage(codigo) {
 //Elimina todos los productos
 function vaciarCarrito() {
     if (obtenerProductosLocalStorage().length === 0) {
-        Swal.fire({
-            type: 'error',
-            title: 'Oops...',
-            text: 'El carrito está vacío.',
-            showConfirmButton: false,
-            timer: 1500
-        });
+        mostrarToast('error', 'El carrito está vacío.', '#820000ce');
     } else {
-        $('#lista-carrito > tr').remove();
-        vaciarLocalStorage();
         Swal.fire({
-            type: 'success',
-            title: 'Mensaje',
-            text: 'Se ha restablecido el carrito.',
-            showConfirmButton: false,
-            timer: 1500
+            title: 'Confirmar acción',
+            text: '¿Está seguro de restablecer su carrito?',
+            icon: 'warning',
+            color: '#ffffff',
+            background: '#2a3646f6',
+            backdrop: '#000000ae',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Aceptar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $('#lista-carrito > tr').remove();
+                vaciarLocalStorage();
+                mostrarToast('success', 'Se ha restablecido su carrito.', '#005d43ce');
+            }
         });
     }
 }
@@ -139,13 +144,7 @@ function vaciarLocalStorage() {
 //Procesar pedido
 function procesarPedido() {
     if (obtenerProductosLocalStorage().length === 0) {
-        Swal.fire({
-            type: 'error',
-            title: 'Oops...',
-            text: 'El carrito está vacío, agrega algún producto.',
-            showConfirmButton: false,
-            timer: 1500
-        });
+        mostrarToast('error', 'El carrito está vacío, agrega algún producto.', '#820000ce');
     } else {
         location.href = "client/pages/carrito.php";
     }
@@ -200,6 +199,7 @@ function calcularTotal() {
     document.getElementById('total').innerHTML = "S/ " + total.toFixed(2);
 }
 
+//Actualizar cantidad
 function agregar(codigo) {
     let productosLS = obtenerProductosLocalStorage();
     let cantidad = document.querySelectorAll('#cantidad');
@@ -216,6 +216,7 @@ function agregar(codigo) {
     calcularTotal();
 }
 
+//Actualizar cantidad
 function quitar(codigo) {
     let productosLS = obtenerProductosLocalStorage();
     let cantidad = document.querySelectorAll('#cantidad');
@@ -237,7 +238,7 @@ function quitar(codigo) {
 function realizarPedido() {
     if (obtenerProductosLocalStorage().length === 0) {
         Swal.fire({
-            type: 'error',
+            icon: 'error',
             title: 'Oops...',
             text: 'No hay productos, selecciona alguno.',
             showConfirmButton: false,
@@ -246,32 +247,48 @@ function realizarPedido() {
             window.location = '../../';
         });
     } else {
-        if ($('#nombre').length) {
-            const cargandoCss = document.querySelector('#cargando');
-            cargandoCss.style.display = 'flex';
-            setTimeout(() => {
-                cargandoCss.style.display = 'none';
-                vaciarLocalStorage();
-                Swal.fire({
-                    type: 'success',
-                    title: 'Mensaje',
-                    text: 'Muchas gracias por su compra.',
-                    showConfirmButton: false,
-                    timer: 2000
-                }).then(() => {
-                    window.location = '../../';
-                });
-            }, 3500);
+        if (!$('#nombre').length) {
+            Swal.fire({
+                title: 'Iniciar Sesión',
+                text: 'Ingrese a su cuenta para realizar su pedido.',
+                icon: 'warning',
+                color: '#ffffff',
+                background: '#2a3646f6',
+                backdrop: '#000000ae',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ingresar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location = '../pages/login.php';
+                }
+            });
         } else {
             Swal.fire({
-                type: 'info',
-                title: 'Oops...',
-                text: 'Ingrese a su cuenta para realizar pedido.',
+                background: '#00000000',
+                backdrop: '#000000ca',
+                html: `
+                    <div id="loaders" class="d-block justify-content-center">
+                        <div class="cargando">
+                            <div class="pelotas"></div>
+                            <div class="pelotas mx-4"></div>
+                            <div class="pelotas"></div>
+                        </div>
+                        <span class="texto-cargando font-weight-bold">Cargando...</span>
+                    </div >
+                `,
                 showConfirmButton: false,
-                timer: 2000
+                timer: 2500
             }).then(() => {
-                window.location = '../pages/login.php';
+                vaciarLocalStorage();
+                enviarPedido();
+                window.location = '../../';
             });
         }
     }
+}
+
+function enviarPedido() {
+    
 }

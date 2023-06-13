@@ -2,29 +2,33 @@ body {
     color: #00b8de;
 }
 
+.swal2-html-container {
+    overflow: visible !important;
+    word-break: normal !important;
+}
+
 /* ======================== */
 .cargando {
-    width: 120px;
-    display: none;
+    display: flex;
     flex-wrap: wrap;
     align-items: flex-end;
-    justify-content: space-between;
-    padding-top: 60px;
-    padding-bottom: 5px;
+    justify-content: center;
+    padding-bottom: 10px;
 }
 
 .texto-cargando {
+    color: #ffffff;
     padding-top: 10px
 }
 
-.cargando span {
-    font-size: 20px;
+#loaders span {
+    font-size: 25px;
     text-transform: uppercase;
 }
 
 .pelotas {
-    width: 25px;
-    height: 25px;
+    width: 30px;
+    height: 30px;
     background-color: #00b8de;
     animation: salto .5s alternate infinite;
     border-radius: 50%

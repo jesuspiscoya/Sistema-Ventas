@@ -19617,14 +19617,11 @@ body.avgrund-active {
   .swal2-modal .swal2-title {
     font-size: 25px;
     line-height: 1;
-    font-weight: 500;
-    color: #ffffff;
-    font-weight: initial;
+    font-weight: 600;
     margin-bottom: 0; }
   .swal2-modal .swal2-icon,
   .swal2-modal .swal2-success-ring {
-    margin-top: 0;
-    margin-bottom: 42px; }
+    margin-top: 20px; }
   .swal2-modal .swal2-buttonswrapper {
     margin-top: 0;
     padding: 0; }

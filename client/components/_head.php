@@ -10,8 +10,6 @@
     <link rel="stylesheet" href="<?php echo $src ?>css/style.css">
     <!-- Fontawesome -->
     <script src="https://kit.fontawesome.com/f271c886fb.js" crossorigin="anonymous"></script>
-    <!-- CSS SweetAlert 2 -->
-    <link rel="stylesheet" href="<?php echo $src ?>assets/libraries/sweetalert2/css/sweetalert2.min.css">
     <!-- CSS Custom -->
     <link rel="stylesheet" href="<?php echo $src ?>css/loader.css">
     <!-- CSS login -->

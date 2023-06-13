@@ -15,7 +15,7 @@
             <div class="row my-5 py-5">
                 <div class="col">
                     <h2 class="text-center mb-4">Realizar Pedido</h2>
-                    <div class="table-responsive">
+                    <div class="table-responsive mb-md-5" style="margin-bottom: 105px;">
                         <table class="table table-hover">
                             <thead class="thead-dark">
                                 <tr class="text-uppercase">
@@ -51,15 +51,8 @@
                             </tr>
                         </table>
                     </div>
-                    <div class="row justify-content-center" id="loaders">
-                        <div class="cargando" id="cargando">
-                            <div class="pelotas"></div>
-                            <div class="pelotas"></div>
-                            <div class="pelotas"></div>
-                            <span class="texto-cargando font-weight-bold">Cargando...</span>
-                        </div>
-                    </div>
-                    <div class="row justify-content-between mt-2 mt-md-4">
+                    <div class="container row justify-content-between position-fixed fixed-bottom mx-auto pb-4 pb-sm-2 pb-md-0 px-2"
+                        style="margin-bottom: 62px;">
                         <div class="col-12 col-md-4 mb-2">
                             <a href="../../" class="btn btn-info btn-block py-3">Seguir navegando</a>
                         </div>
