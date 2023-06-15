@@ -14,7 +14,7 @@
           </div>
           <div class="profile-name">
             <h5 class="mb-0 font-weight-normal">
-              <?php echo $_SESSION['nombre'] ?>
+              <?php echo $_SESSION['usuario'] ?>
             </h5>
             <span>Administrador</span>
           </div>
@@ -23,7 +23,7 @@
           <i class="fa-solid fa-ellipsis-vertical px-2"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list" aria-labelledby="profile-dropdown">
-          <a href="<?php echo $srcPage ?>settings_page.php" class="dropdown-item preview-item">
+          <a href="<?php echo $srcPage ?>settings.php" class="dropdown-item preview-item">
             <div class="preview-thumbnail">
               <div class="preview-icon bg-dark rounded-circle">
                 <i class="fa-solid fa-gear text-primary"></i>
@@ -34,7 +34,7 @@
             </div>
           </a>
           <div class="dropdown-divider"></div>
-          <a href="<?php echo $srcPage ?>password_page.php" class="dropdown-item preview-item">
+          <a href="<?php echo $srcPage ?>password.php.php" class="dropdown-item preview-item">
             <div class="preview-thumbnail">
               <div class="preview-icon bg-dark rounded-circle">
                 <i class="fa-solid fa-key text-info"></i>
@@ -69,16 +69,16 @@
       <div class="collapse" id="perfil">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo $srcPage ?>settings_page.php">Configuración</a>
+            <a class="nav-link" href="<?php echo $srcPage ?>settings.php">Configuración</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo $srcPage ?>password_page.php">Contraseña</a>
+            <a class="nav-link" href="<?php echo $srcPage ?>password.php.php">Contraseña</a>
           </li>
         </ul>
       </div>
     </li>
     <li class="nav-item menu-items">
-      <a class="nav-link" href="<?php echo $srcPage ?>pedidos_page.php">
+      <a class="nav-link" href="<?php echo $srcPage ?>pedidos.php">
         <span class="menu-icon">
           <i class="fa-solid fa-box"></i>
         </span>
@@ -86,7 +86,7 @@
       </a>
     </li>
     <li class="nav-item menu-items">
-      <a class="nav-link" href="<?php echo $srcPage ?>productos_page.php">
+      <a class="nav-link" href="<?php echo $srcPage ?>productos.php">
         <span class="menu-icon">
           <i class="fa-solid fa-tags"></i>
         </span>
@@ -94,7 +94,7 @@
       </a>
     </li>
     <li class="nav-item menu-items">
-      <a class="nav-link" href="<?php echo $srcPage ?>usuarios_page.php">
+      <a class="nav-link" href="<?php echo $srcPage ?>usuarios.php">
         <span class="menu-icon">
           <i class="fa-solid fa-user"></i>
         </span>
@@ -102,7 +102,7 @@
       </a>
     </li>
     <li class="nav-item menu-items">
-      <a class="nav-link" href="<?php echo $srcPage ?>clientes_page.php">
+      <a class="nav-link" href="<?php echo $srcPage ?>clientes.php">
         <span class="menu-icon">
           <i class="fa-regular fa-face-smile"></i>
         </span>

@@ -1,4 +1,5 @@
 <?php
+$src = '../';
 require '../services/cliente_dao.php';
 $clienteDao = new ClienteDao;
 
@@ -6,7 +7,7 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-if (!empty($_SESSION['uid'])) {
+if (!empty($_SESSION['cid'])) {
     header('location: ../../');
 } else {
     if (!empty($_POST)) {
@@ -23,8 +24,8 @@ if (!empty($_SESSION['uid'])) {
             $res = $clienteDao->validar($_POST['correo'], $_POST['password']);
             if (!empty($res)) {
 
-                $_SESSION['uid'] = $res->codigo;
-                $_SESSION['nombre'] = $res->nombre;
+                $_SESSION['cid'] = $res->codigo;
+                $_SESSION['cliente'] = $res->nombre;
                 $_SESSION['estado'] = $res->estado;
                 header('location: ../../');
             }
@@ -42,7 +43,6 @@ if (!empty($_SESSION['uid'])) {
 <html lang="es">
 
 <?php $tittle = 'Registro'; ?>
-<?php $src = '../' ?>
 <?php $srcPage = '' ?>
 <?php $inicio = '../../' ?>
 <?php require '../components/_head.php' ?>

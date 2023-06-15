@@ -8,7 +8,7 @@
     <link rel="shortcut icon" href="<?php echo $src ?>assets/img/favicon.png" />
     <!-- Bootstrap 5 CSS Custom -->
     <link rel="stylesheet" href="<?php echo $src ?>css/style.css">
-    <!-- CSS Custom -->
+    <!-- CSS Custom Datatables -->
     <link rel="stylesheet" href="<?php echo $src ?>css/datatables.css">
     <!-- CSS Datatables Bootstrap 5 -->
     <link href="<?php echo $src ?>assets/libraries/datatables/DataTables-1.13.4/css/dataTables.bootstrap5.min.css"

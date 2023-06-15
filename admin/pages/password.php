@@ -52,7 +52,7 @@ if (isset($_POST['actualizar'])) {
                                         <img src="../assets/img/homer.png" alt="Image profile"
                                             class="rounded-circle img-fluid border border-2 border-white w-25 mb-4">
                                         <h5>
-                                            <?php echo $_SESSION['nombre'] ?>
+                                            <?php echo $_SESSION['usuario'] ?>
                                         </h5>
                                         <h6>
                                             Usuario Administrador

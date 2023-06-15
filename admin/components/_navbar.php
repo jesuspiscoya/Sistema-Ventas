@@ -21,13 +21,13 @@
           <div class="navbar-profile">
             <img class="img-xs rounded-circle" src="<?php echo $src ?>assets/img/homer.png" alt="Profile Image">
             <p class="mb-0 d-none d-sm-block navbar-profile-name">
-              <?php echo $_SESSION['nombre'] ?>
+              <?php echo $_SESSION['usuario'] ?>
             </p>
             <i class="fa-solid fa-caret-down d-none d-sm-block ml-2"></i>
           </div>
         </a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="profileDropdown">
-          <a class="dropdown-item preview-item" href="<?php echo $srcPage ?>settings_page.php">
+          <a class="dropdown-item preview-item" href="<?php echo $srcPage ?>settings.php">
             <div class="preview-thumbnail">
               <div class="preview-icon bg-dark rounded-circle">
                 <i class="fa-solid fa-user-gear text-success"></i>

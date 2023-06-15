@@ -178,6 +178,7 @@ function leerLocalStoragePedido() {
             </td>
         `;
         $('#lista-pedido').append(row);
+        calcularTotal();
     });
 }
 
@@ -194,9 +195,11 @@ function calcularTotal() {
     igv = parseFloat(total * 0.18).toFixed(2);
     subtotal = parseFloat(total - igv).toFixed(2);
 
-    document.getElementById('subtotal').innerHTML = "S/ " + subtotal;
-    document.getElementById('igv').innerHTML = "S/ " + igv;
-    document.getElementById('total').innerHTML = "S/ " + total.toFixed(2);
+    $('#subtotal').html("S/ " + subtotal);
+    $('#igv').html("S/ " + igv);
+    $('#total').html("S/ " + total.toFixed(2));
+
+    return total;
 }
 
 //Actualizar cantidad
@@ -281,14 +284,80 @@ function realizarPedido() {
                 showConfirmButton: false,
                 timer: 2500
             }).then(() => {
-                vaciarLocalStorage();
                 enviarPedido();
-                window.location = '../../';
             });
         }
     }
 }
 
 function enviarPedido() {
-    
+    let productosLS = obtenerProductosLocalStorage();
+    var parametros = {
+        'pedido': true,
+        'cantidad': productosLS.length,
+        'total': calcularTotal(),
+        'detalle': productosLS
+    };
+    $.ajax({
+        data: parametros, //datos que se envian a traves de ajax
+        url: '../controller/pedido_controller.php', //archivo que recibe la peticion
+        type: 'post', //método de envio
+        success: function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
+            if (response) {
+                window.location = 'confirmacion.php';
+            } else {
+                mostrarToast('error', 'Error al procesar su pedido.', '#820000ce');
+            }
+        }
+    });
+}
+
+function leerPedidoConfirmado() {
+    let productosLS = obtenerProductosLocalStorage();
+    productosLS.forEach(function (producto, index) {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${index + 1}</td>
+            <td class="text-white">${producto.nombre}</td>
+            <td class="text-white">S/ ${producto.precio}</td>
+            <td class="text-white text-center">${producto.cantidad}</td>
+            <td id="monto" class="text-white">S/ ${producto.precio * producto.cantidad}</td>
+        `;
+        $('#lista-pedido').append(row);
+    });
+    const row = document.createElement('tr');
+    row.innerHTML = `
+        <th class="border-0">°</th>
+        <th class="border-0"></th>
+        <th class="border-0"></th>
+        <th class="text-right text-white border-0">SUB TOTAL :</th>
+        <th class="border-0">
+            <p id="subtotal" class="my-auto text-white"></p>
+        </th>
+    `;
+    $('#lista-pedido').append(row);
+    const row2 = document.createElement('tr');
+    row2.innerHTML = `
+        <th class="border-0">°</th>
+        <th class="border-0"></th>
+        <th class="border-0"></th>
+        <th class="text-right text-white border-0">IGV :</th>
+        <th class="border-0">
+            <p id="igv" class="my-auto text-white"></p>
+        </th>
+    `;
+    $('#lista-pedido').append(row2);
+    const row3 = document.createElement('tr');
+    row3.innerHTML = `
+        <th class="border-0">°</th>
+        <th class="border-0"></th>
+        <th class="border-0"></th>
+        <th class="text-right text-success border-0">TOTAL :</th>
+        <th class="border-0">
+            <p id="total" class="my-auto text-success"></p>
+        </th>
+    `;
+    $('#lista-pedido').append(row3);
+    calcularTotal();
+    vaciarLocalStorage();
 }

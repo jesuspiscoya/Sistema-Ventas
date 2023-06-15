@@ -5,8 +5,8 @@ if (!isset($_SESSION)) {
 
 $nombre = null;
 
-if (isset($_SESSION['nombre'])) {
-    $nombre = $_SESSION['nombre'];
+if (isset($_SESSION['cliente'])) {
+    $nombre = $_SESSION['cliente'];
 }
 
 if (isset($_SESSION['registro'])) {

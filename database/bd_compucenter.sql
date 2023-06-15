@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-06-2023 a las 06:47:59
+-- Tiempo de generación: 15-06-2023 a las 09:53:03
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -78,6 +78,15 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarCliente` (IN `nombre` VARCH
 INSERT INTO persona VALUES(null, nombre, correo, dni, telefono, direccion, 1);
 SET @cod_per = (SELECT cod_persona FROM persona ORDER BY cod_persona DESC LIMIT 1);
 INSERT INTO cliente VALUES(null, @cod_per, SHA(contrasena));
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarDetalle` (IN `cod_producto` INT, IN `cantidad` INT, IN `monto` FLOAT)   BEGIN
+SET @cod_pedido = (SELECT cod_pedido FROM pedido ORDER BY cod_pedido DESC LIMIT 1);
+INSERT INTO detalle_pedido VALUES(null, @cod_pedido, cod_producto, cantidad, monto);
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarPedido` (IN `cliente` INT, IN `cantidad` INT, IN `total` FLOAT)   BEGIN
+INSERT INTO pedido VALUES(null, cliente, cantidad, total, null, 0);
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarPermiso` (IN `cod_permiso` INT, IN `cod_usuario` INT)   BEGIN
@@ -235,6 +244,13 @@ CREATE TABLE `detalle_pedido` (
   `monto` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `detalle_pedido`
+--
+
+INSERT INTO `detalle_pedido` (`cod_deta_pedido`, `cod_pedido`, `cod_producto`, `cantidad`, `monto`) VALUES
+(1, 10013, 10000, 5, 1500);
+
 -- --------------------------------------------------------
 
 --
@@ -274,6 +290,26 @@ CREATE TABLE `pedido` (
   `fecha` timestamp NOT NULL DEFAULT current_timestamp(),
   `estado` bit(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `pedido`
+--
+
+INSERT INTO `pedido` (`cod_pedido`, `cod_cliente`, `cantidad`, `total`, `fecha`, `estado`) VALUES
+(10000, 10000, 4, 15500, '2023-06-15 06:24:09', b'0'),
+(10001, 10000, 3, 18000, '2023-06-15 07:18:00', b'0'),
+(10002, 10000, 3, 18000, '2023-06-15 07:19:25', b'0'),
+(10003, 10000, 3, 18000, '2023-06-15 07:19:52', b'0'),
+(10004, 10000, 3, 18000, '2023-06-15 07:20:51', b'0'),
+(10005, 10000, 3, 18000, '2023-06-15 07:22:34', b'0'),
+(10006, 10000, 3, 18000, '2023-06-15 07:25:30', b'0'),
+(10007, 10000, 3, 18000, '2023-06-15 07:29:11', b'0'),
+(10008, 10000, 3, 18000, '2023-06-15 07:30:24', b'0'),
+(10009, 10000, 3, 18000, '2023-06-15 07:30:59', b'0'),
+(10010, 10000, 4, 34000, '2023-06-15 07:34:44', b'0'),
+(10011, 10000, 4, 34000, '2023-06-15 07:39:48', b'0'),
+(10012, 10000, 4, 34000, '2023-06-15 07:42:00', b'0'),
+(10013, 10000, 4, 34000, '2023-06-15 07:51:45', b'0');
 
 -- --------------------------------------------------------
 
@@ -473,6 +509,12 @@ ALTER TABLE `cliente`
   MODIFY `cod_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10005;
 
 --
+-- AUTO_INCREMENT de la tabla `detalle_pedido`
+--
+ALTER TABLE `detalle_pedido`
+  MODIFY `cod_deta_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT de la tabla `detalle_permiso`
 --
 ALTER TABLE `detalle_permiso`
@@ -482,7 +524,7 @@ ALTER TABLE `detalle_permiso`
 -- AUTO_INCREMENT de la tabla `pedido`
 --
 ALTER TABLE `pedido`
-  MODIFY `cod_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9999;
+  MODIFY `cod_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10014;
 
 --
 -- AUTO_INCREMENT de la tabla `permiso`

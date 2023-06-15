@@ -1,0 +1,22 @@
+.dataTables_wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.dataTables_info,
+.dataTables_length,
+.dataTables_filter,
+.dataTables_paginate {
+    display: none;
+}
+
+.dt-buttons {
+    margin-left: auto;
+}
+
+@media screen and (max-width: 767px) {
+
+    .cliente {
+        position: relative !important;
+    }
+}

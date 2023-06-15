@@ -69,7 +69,6 @@
     </main>
     <?php require 'client/components/_footer.php'; ?>
 
-    <script src="client/js/carrito.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", leerLocalStorage());
     </script>

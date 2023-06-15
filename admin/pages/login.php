@@ -15,7 +15,7 @@ if (!empty($_SESSION['uid'])) {
         $respuesta = $usuarioDao->validar($_POST['usuario'], $_POST['password']);
         if (!empty($respuesta)) {
             $_SESSION['uid'] = $respuesta->codigo;
-            $_SESSION['nombre'] = $respuesta->nombre;
+            $_SESSION['usuario'] = $respuesta->nombre;
             $_SESSION['estado'] = $respuesta->estado;
             header('location: ../');
         } else {

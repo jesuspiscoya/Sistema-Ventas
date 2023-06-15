@@ -23,7 +23,7 @@
                                     <th>Nombre</th>
                                     <th style="width: 120px;">Precio</th>
                                     <th style="width: 170px;">Cantidad</th>
-                                    <th style="width: 140px;">Sub Total</th>
+                                    <th style="width: 140px;">Monto</th>
                                     <th style="width: 70px;">Eliminar</th>
                                 </tr>
                             </thead>
@@ -67,14 +67,9 @@
     </main>
     <?php require '../components/_footer.php'; ?>
 
-    <script src="../js/carrito.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', leerLocalStoragePedido());
-        calcularTotal();
     </script>
-
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@2.3.2/dist/email.min.js"></script>
 </body>
 
 </html>

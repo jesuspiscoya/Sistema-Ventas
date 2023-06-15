@@ -16,3 +16,18 @@
 <script src="<?php echo $src ?>assets/libraries/js/vendor.bundle.base.js"></script>
 <!-- Plugin SweetAlert 2 Js -->
 <script src="<?php echo $src ?>assets/libraries/sweetalert2/js/sweetalert2.all.min.js"></script>
+<!-- Plugins Datatables Js -->
+<script src="<?php echo $src ?>assets/libraries/datatables/JSZip-2.5.0/jszip.min.js"></script>
+<script src="<?php echo $src ?>assets/libraries/datatables/pdfmake-0.1.36/pdfmake.min.js"></script>
+<script src="<?php echo $src ?>assets/libraries/datatables/pdfmake-0.1.36/vfs_fonts.js"></script>
+<!-- Datatables Js -->
+<script src="<?php echo $src ?>assets/libraries/datatables/DataTables-1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="<?php echo $src ?>assets/libraries/datatables/DataTables-1.13.4/js/dataTables.bootstrap5.min.js"></script>
+<!-- Datatables Buttons Js -->
+<script src="<?php echo $src ?>assets/libraries/datatables/Buttons-2.3.6/js/dataTables.buttons.min.js"></script>
+<script src="<?php echo $src ?>assets/libraries/datatables/Buttons-2.3.6/js/buttons.bootstrap5.min.js"></script>
+<script src="<?php echo $src ?>assets/libraries/datatables/Buttons-2.3.6/js/buttons.html5.min.js"></script>
+<script src="<?php echo $src ?>assets/libraries/datatables/Buttons-2.3.6/js/buttons.print.min.js"></script>
+<script src="<?php echo $src ?>js/carrito.js"></script>
+<!-- Custom Datatables Js -->
+<script src="<?php echo $src ?>js/datatables.js"></script>

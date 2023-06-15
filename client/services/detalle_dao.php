@@ -1,8 +1,8 @@
 <?php
 require_once 'conexion.php';
-require $src . 'model/pedido.php';
+require $src . 'model/detalle.php';
 
-class PedidoDao
+class DetalleDao
 {
     private $conexion;
 
@@ -11,10 +11,10 @@ class PedidoDao
         $this->conexion = new Conexion;
     }
 
-    public function insertar(Pedido $pedido)
+    public function insertar(Detalle $detalle)
     {
         $conexion = $this->conexion->getConexion();
-        $sql = "CALL InsertarPedido('" . $pedido->cliente . "','" . $pedido->cantidad . "','" . $pedido->total . "')";
+        $sql = "CALL InsertarDetalle('" . $detalle->producto . "','" . $detalle->cantidad . "','" . $detalle->monto . "')";
 
         try {
             $conexion->query($sql);
