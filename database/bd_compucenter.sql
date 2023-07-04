@@ -25,7 +25,7 @@ DELIMITER $$
 --
 -- Procedimientos
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `BuscarCliente` (IN `codigo` INT)   BEGIN
+CREATE PROCEDURE `BuscarCliente` (IN `codigo` INT)   BEGIN
 SELECT c.cod_cliente, p.nombre, p.correo, p.dni, p.telefono, p.direccion, p.estado, c.password
 FROM persona p
 INNER JOIN cliente c
@@ -33,11 +33,11 @@ ON c.cod_persona = p.cod_persona
 WHERE c.cod_cliente = codigo;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `BuscarPermiso` (IN `codigo` INT)   BEGIN
+CREATE PROCEDURE `BuscarPermiso` (IN `codigo` INT)   BEGIN
 SELECT cod_permiso FROM detalle_permiso WHERE cod_usuario = codigo;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `BuscarProducto` (IN `codigo` INT)   BEGIN
+CREATE PROCEDURE `BuscarProducto` (IN `codigo` INT)   BEGIN
 SELECT p.cod_producto, p.nombre, p.descripcion, c.cod_categoria, c.nom_categoria, p.precio, p.stock, p.imagen, p.estado
 FROM producto p
 INNER JOIN categoria c
@@ -45,7 +45,7 @@ ON p.cod_categoria = c.cod_categoria
 WHERE p.cod_producto = codigo;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `BuscarUsuario` (IN `codigo` INT)   BEGIN
+CREATE PROCEDURE `BuscarUsuario` (IN `codigo` INT)   BEGIN
 SELECT u.cod_usuario, p.nombre, p.correo, p.dni, p.telefono, p.direccion, p.estado, u.password
 FROM persona p
 INNER JOIN usuario u
@@ -53,68 +53,68 @@ ON u.cod_persona = p.cod_persona
 WHERE u.cod_usuario = codigo;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarCliente` (IN `codigo` INT)   BEGIN
+CREATE PROCEDURE `EliminarCliente` (IN `codigo` INT)   BEGIN
 SET @cod_per = (SELECT cod_persona FROM cliente WHERE cod_cliente = codigo);
 DELETE FROM cliente WHERE cod_cliente = codigo;
 DELETE FROM persona WHERE cod_persona = @cod_per;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarPermiso` (IN `cod_permisos` INT, IN `cod_usuarios` INT)   BEGIN
+CREATE PROCEDURE `EliminarPermiso` (IN `cod_permisos` INT, IN `cod_usuarios` INT)   BEGIN
 DELETE FROM detalle_permiso WHERE cod_permiso = cod_permisos AND cod_usuario = cod_usuarios;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarProducto` (IN `codigo` INT)   BEGIN
+CREATE PROCEDURE `EliminarProducto` (IN `codigo` INT)   BEGIN
 DELETE FROM producto WHERE cod_producto = codigo;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `EliminarUsuario` (IN `codigo` INT)   BEGIN
+CREATE PROCEDURE `EliminarUsuario` (IN `codigo` INT)   BEGIN
 SET @cod_per = (SELECT cod_persona FROM usuario WHERE cod_usuario = codigo);
 DELETE FROM detalle_permiso WHERE cod_usuario = codigo;
 DELETE FROM usuario WHERE cod_usuario = codigo;
 DELETE FROM persona WHERE cod_persona = @cod_per;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarCliente` (IN `nombre` VARCHAR(200), IN `correo` VARCHAR(200), IN `dni` VARCHAR(8), IN `telefono` VARCHAR(9), IN `direccion` VARCHAR(300), IN `contrasena` VARCHAR(50))   BEGIN
+CREATE PROCEDURE `InsertarCliente` (IN `nombre` VARCHAR(200), IN `correo` VARCHAR(200), IN `dni` VARCHAR(8), IN `telefono` VARCHAR(9), IN `direccion` VARCHAR(300), IN `contrasena` VARCHAR(50))   BEGIN
 INSERT INTO persona VALUES(null, nombre, correo, dni, telefono, direccion, 1);
 SET @cod_per = (SELECT cod_persona FROM persona ORDER BY cod_persona DESC LIMIT 1);
 INSERT INTO cliente VALUES(null, @cod_per, SHA(contrasena));
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarDetalle` (IN `cod_producto` INT, IN `cantidad` INT, IN `monto` FLOAT)   BEGIN
+CREATE PROCEDURE `InsertarDetalle` (IN `cod_producto` INT, IN `cantidad` INT, IN `monto` FLOAT)   BEGIN
 SET @cod_pedido = (SELECT cod_pedido FROM pedido ORDER BY cod_pedido DESC LIMIT 1);
 INSERT INTO detalle_pedido VALUES(null, @cod_pedido, cod_producto, cantidad, monto);
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarPedido` (IN `cliente` INT, IN `cantidad` INT, IN `total` FLOAT)   BEGIN
+CREATE PROCEDURE `InsertarPedido` (IN `cliente` INT, IN `cantidad` INT, IN `total` FLOAT)   BEGIN
 INSERT INTO pedido VALUES(null, cliente, cantidad, total, null, 0);
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarPermiso` (IN `cod_permiso` INT, IN `cod_usuario` INT)   BEGIN
+CREATE PROCEDURE `InsertarPermiso` (IN `cod_permiso` INT, IN `cod_usuario` INT)   BEGIN
 INSERT INTO detalle_permiso VALUES(null, cod_permiso, cod_usuario);
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarProducto` (IN `codigo` INT, IN `nombre` VARCHAR(50), IN `descripcion` VARCHAR(200), IN `precio` FLOAT, IN `stock` INT, IN `imagen` MEDIUMBLOB)   BEGIN
+CREATE PROCEDURE `InsertarProducto` (IN `codigo` INT, IN `nombre` VARCHAR(50), IN `descripcion` VARCHAR(200), IN `precio` FLOAT, IN `stock` INT, IN `imagen` MEDIUMBLOB)   BEGIN
 INSERT INTO producto VALUES(null, codigo, nombre, descripcion, precio, stock, imagen, 1);
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarUsuario` (IN `nombre` VARCHAR(200), IN `correo` VARCHAR(200), IN `dni` VARCHAR(8), IN `telefono` VARCHAR(9), IN `direccion` VARCHAR(300), IN `usuario` VARCHAR(20), IN `contrasena` VARCHAR(30))   BEGIN
+CREATE PROCEDURE `InsertarUsuario` (IN `nombre` VARCHAR(200), IN `correo` VARCHAR(200), IN `dni` VARCHAR(8), IN `telefono` VARCHAR(9), IN `direccion` VARCHAR(300), IN `usuario` VARCHAR(20), IN `contrasena` VARCHAR(30))   BEGIN
 INSERT INTO persona VALUES(null, nombre, correo, dni, telefono, direccion, 1);
 SET @cod_per = (SELECT cod_persona FROM persona ORDER BY cod_persona DESC LIMIT 1);
 INSERT INTO usuario VALUES(null, @cod_per, usuario, SHA(contrasena));
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ListarCategorias` ()   BEGIN
+CREATE PROCEDURE `ListarCategorias` ()   BEGIN
 SELECT * FROM categoria;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ListarClientes` ()   BEGIN
+CREATE PROCEDURE `ListarClientes` ()   BEGIN
 SELECT c.cod_cliente, p.nombre, p.correo, p.dni, p.telefono, p.direccion, p.estado
 FROM persona p
 INNER JOIN cliente c
 ON c.cod_persona = p.cod_persona;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ListarPedidos` ()   BEGIN
+CREATE PROCEDURE `ListarPedidos` ()   BEGIN
 SELECT p.cod_pedido, pe.nombre, p.cantidad, p.total, p.fecha, p.estado
 FROM pedido p
 INNER JOIN cliente c
@@ -122,7 +122,7 @@ INNER JOIN persona pe
 ON p.cod_cliente = c.cod_cliente AND c.cod_persona = pe.cod_persona;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ListarProductos` ()   BEGIN
+CREATE PROCEDURE `ListarProductos` ()   BEGIN
 SELECT p.cod_producto, p.nombre, p.descripcion, p.precio, p.stock, p.imagen, p.estado, c.nom_categoria
 FROM producto p
 INNER JOIN categoria c
@@ -130,35 +130,35 @@ ON p.cod_categoria = c.cod_categoria
 ORDER BY p.cod_producto;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ListarUsuarios` ()   BEGIN
+CREATE PROCEDURE `ListarUsuarios` ()   BEGIN
 SELECT u.cod_usuario, p.nombre, p.correo, p.dni, p.telefono, p.direccion, p.estado
 FROM persona p
 INNER JOIN usuario u
 ON u.cod_persona = p.cod_persona;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ModificarCliente` (IN `codigo` INT, IN `nombres` VARCHAR(200), IN `correos` VARCHAR(200), IN `telefonos` VARCHAR(9), IN `direccions` VARCHAR(300), IN `estados` BOOLEAN)   BEGIN
+CREATE PROCEDURE `ModificarCliente` (IN `codigo` INT, IN `nombres` VARCHAR(200), IN `correos` VARCHAR(200), IN `telefonos` VARCHAR(9), IN `direccions` VARCHAR(300), IN `estados` BOOLEAN)   BEGIN
 SET @cod_per = (SELECT cod_persona FROM cliente WHERE cod_cliente = codigo);
 UPDATE persona SET nombre = nombres, correo = correos, telefono = telefonos, direccion = direccions, estado = estados
 WHERE cod_persona = @cod_per;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ModificarPasswordUsuario` (IN `codigo` INT, IN `contrasena` VARCHAR(50))   BEGIN
+CREATE PROCEDURE `ModificarPasswordUsuario` (IN `codigo` INT, IN `contrasena` VARCHAR(50))   BEGIN
 UPDATE usuario SET password = SHA(contrasena) WHERE cod_usuario = codigo;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ModificarProducto` (IN `codigo` INT, IN `cod_categorias` INT, IN `producto` VARCHAR(50), IN `descripcions` VARCHAR(200), IN `precios` FLOAT, IN `stocks` INT, IN `imagens` MEDIUMBLOB, IN `estados` BOOLEAN)   BEGIN
+CREATE PROCEDURE `ModificarProducto` (IN `codigo` INT, IN `cod_categorias` INT, IN `producto` VARCHAR(50), IN `descripcions` VARCHAR(200), IN `precios` FLOAT, IN `stocks` INT, IN `imagens` MEDIUMBLOB, IN `estados` BOOLEAN)   BEGIN
 UPDATE producto SET cod_categoria = cod_categorias, nombre = producto, descripcion = descripcions, precio = precios, stock = stocks, imagen = imagens, estado = estados
 WHERE cod_producto = codigo;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ModificarUsuario` (IN `codigo` INT, IN `nombres` VARCHAR(200), IN `correos` VARCHAR(200), IN `telefonos` VARCHAR(9), IN `direccions` VARCHAR(300))   BEGIN
+CREATE PROCEDURE `ModificarUsuario` (IN `codigo` INT, IN `nombres` VARCHAR(200), IN `correos` VARCHAR(200), IN `telefonos` VARCHAR(9), IN `direccions` VARCHAR(300))   BEGIN
 SET @cod_per = (SELECT cod_persona FROM usuario WHERE cod_usuario = codigo);
 UPDATE persona SET nombre = nombres, correo = correos, telefono = telefonos, direccion = direccions
 WHERE cod_persona = @cod_per;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ValidarLoginCliente` (IN `correos` VARCHAR(200), IN `contrasena` VARCHAR(50))   BEGIN
+CREATE PROCEDURE `ValidarLoginCliente` (IN `correos` VARCHAR(200), IN `contrasena` VARCHAR(50))   BEGIN
 SELECT c.cod_cliente, p.nombre, p.estado
 FROM cliente c
 INNER JOIN persona p
@@ -166,7 +166,7 @@ ON c.cod_persona = p.cod_persona
 WHERE p.correo = correos AND c.password = SHA(contrasena);
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ValidarLoginUsuario` (IN `usuarios` VARCHAR(20), IN `contrasena` VARCHAR(50))   BEGIN
+CREATE PROCEDURE `ValidarLoginUsuario` (IN `usuarios` VARCHAR(20), IN `contrasena` VARCHAR(50))   BEGIN
 SELECT u.cod_usuario, p.nombre, p.estado
 FROM usuario u
 INNER JOIN persona p
@@ -174,7 +174,7 @@ ON u.cod_persona = p.cod_persona
 WHERE u.usuario = usuarios AND u.password = SHA(contrasena);
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ValidarPasswordUsuario` (IN `codigo` INT, IN `contrasena` VARCHAR(50))   BEGIN
+CREATE PROCEDURE `ValidarPasswordUsuario` (IN `codigo` INT, IN `contrasena` VARCHAR(50))   BEGIN
 SELECT (CASE WHEN password = SHA(contrasena) THEN 1 ELSE 0 END) AS validar FROM usuario WHERE cod_usuario = codigo;
 END$$
 
