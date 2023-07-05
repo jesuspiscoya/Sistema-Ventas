@@ -59,20 +59,26 @@ if (isset($_POST['modificar'])) {
     if (isset($_POST['usuarios'])) {
         $usuarioDao->eliminarPermiso(1, $_POST['cod_permiso']);
         $respuesta = $usuarioDao->insertarPermiso(1, $_POST['cod_permiso']);
+        $_SESSION['usuarios'] = true;
     } else {
         $respuesta = $usuarioDao->eliminarPermiso(1, $_POST['cod_permiso']);
+        $_SESSION['usuarios'] = false;
     }
     if (isset($_POST['clientes'])) {
         $usuarioDao->eliminarPermiso(2, $_POST['cod_permiso']);
         $respuesta = $usuarioDao->insertarPermiso(2, $_POST['cod_permiso']);
+        $_SESSION['clientes'] = true;
     } else {
         $respuesta = $usuarioDao->eliminarPermiso(2, $_POST['cod_permiso']);
+        $_SESSION['clientes'] = false;
     }
     if (isset($_POST['productos'])) {
         $usuarioDao->eliminarPermiso(3, $_POST['cod_permiso']);
         $respuesta = $usuarioDao->insertarPermiso(3, $_POST['cod_permiso']);
+        $_SESSION['productos'] = true;
     } else {
         $respuesta = $usuarioDao->eliminarPermiso(3, $_POST['cod_permiso']);
+        $_SESSION['productos'] = false;
     }
 
     if ($respuesta) {

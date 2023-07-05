@@ -34,7 +34,7 @@
             </div>
           </a>
           <div class="dropdown-divider"></div>
-          <a href="<?php echo $srcPage ?>password.php.php" class="dropdown-item preview-item">
+          <a href="<?php echo $srcPage ?>password.php" class="dropdown-item preview-item">
             <div class="preview-thumbnail">
               <div class="preview-icon bg-dark rounded-circle">
                 <i class="fa-solid fa-key text-info"></i>
@@ -72,43 +72,51 @@
             <a class="nav-link" href="<?php echo $srcPage ?>settings.php">Configuración</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo $srcPage ?>password.php.php">Contraseña</a>
+            <a class="nav-link" href="<?php echo $srcPage ?>password.php">Contraseña</a>
           </li>
         </ul>
       </div>
     </li>
-    <li class="nav-item menu-items">
-      <a class="nav-link" href="<?php echo $srcPage ?>pedidos.php">
-        <span class="menu-icon">
-          <i class="fa-solid fa-box"></i>
-        </span>
-        <span class="menu-title">Pedidos</span>
-      </a>
-    </li>
-    <li class="nav-item menu-items">
-      <a class="nav-link" href="<?php echo $srcPage ?>productos.php">
-        <span class="menu-icon">
-          <i class="fa-solid fa-tags"></i>
-        </span>
-        <span class="menu-title">Productos</span>
-      </a>
-    </li>
-    <li class="nav-item menu-items">
-      <a class="nav-link" href="<?php echo $srcPage ?>usuarios.php">
-        <span class="menu-icon">
-          <i class="fa-solid fa-user"></i>
-        </span>
-        <span class="menu-title">Usuarios</span>
-      </a>
-    </li>
-    <li class="nav-item menu-items">
-      <a class="nav-link" href="<?php echo $srcPage ?>clientes.php">
-        <span class="menu-icon">
-          <i class="fa-regular fa-face-smile"></i>
-        </span>
-        <span class="menu-title">Clientes</span>
-      </a>
-    </li>
+    <?php if ($_SESSION['pedidos']) { ?>
+      <li class="nav-item menu-items">
+        <a class="nav-link" href="<?php echo $srcPage ?>pedidos.php">
+          <span class="menu-icon">
+            <i class="fa-solid fa-box"></i>
+          </span>
+          <span class="menu-title">Pedidos</span>
+        </a>
+      </li>
+    <?php }
+    if ($_SESSION['productos']) { ?>
+      <li class="nav-item menu-items">
+        <a class="nav-link" href="<?php echo $srcPage ?>productos.php">
+          <span class="menu-icon">
+            <i class="fa-solid fa-tags"></i>
+          </span>
+          <span class="menu-title">Productos</span>
+        </a>
+      </li>
+    <?php }
+    if ($_SESSION['usuarios']) { ?>
+      <li class="nav-item menu-items">
+        <a class="nav-link" href="<?php echo $srcPage ?>usuarios.php">
+          <span class="menu-icon">
+            <i class="fa-solid fa-user"></i>
+          </span>
+          <span class="menu-title">Usuarios</span>
+        </a>
+      </li>
+    <?php }
+    if ($_SESSION['clientes']) { ?>
+      <li class="nav-item menu-items">
+        <a class="nav-link" href="<?php echo $srcPage ?>clientes.php">
+          <span class="menu-icon">
+            <i class="fa-regular fa-face-smile"></i>
+          </span>
+          <span class="menu-title">Clientes</span>
+        </a>
+      </li>
+    <?php } ?>
     <li class="nav-item menu-items mt-auto">
       <div class="dropdown-divider"></div>
       <a class="nav-link mb-2" href="<?php echo $src ?>components/_logout.php">

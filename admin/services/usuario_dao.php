@@ -37,6 +37,23 @@ class UsuarioDao
         }
     }
 
+    public function validarPermisos(string $codigo)
+    {
+        $conexion = $this->conexion->getConexion();
+        $sql = "CALL ValidarPermisos('" . $codigo . "')";
+        $resultado = $conexion->query($sql);
+        $array = array();
+
+        while ($row = $resultado->fetch_assoc()) {
+            $array[] = $row['cod_permiso'];
+        }
+
+        $resultado->free_result();
+        $conexion->next_result();
+        $conexion->close();
+        return $array;
+    }
+
     public function insertar(Usuario $usuario)
     {
         $conexion = $this->conexion->getConexion();

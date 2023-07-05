@@ -17,6 +17,30 @@ if (!empty($_SESSION['uid'])) {
             $_SESSION['uid'] = $respuesta->codigo;
             $_SESSION['usuario'] = $respuesta->nombre;
             $_SESSION['estado'] = $respuesta->estado;
+
+            $_SESSION['usuarios'] = false;
+            $_SESSION['clientes'] = false;
+            $_SESSION['productos'] = false;
+            $_SESSION['pedidos'] = false;
+            $respuesta = $usuarioDao->validarPermisos($_SESSION['uid']);
+
+            foreach ($respuesta as $key => $value) {
+                switch ($value) {
+                    case 1:
+                        $_SESSION['usuarios'] = true;
+                        break;
+                    case 2:
+                        $_SESSION['clientes'] = true;
+                        break;
+                    case 3:
+                        $_SESSION['productos'] = true;
+                        break;
+                    case 4:
+                        $_SESSION['pedidos'] = true;
+                        break;
+                }
+            }
+
             header('location: ../');
         } else {
             $mensaje = 'Usuario o password incorrecto.';
