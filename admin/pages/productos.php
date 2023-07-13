@@ -74,7 +74,7 @@
                                                     <?php echo $array[$i]->stock ?>
                                                 </td>
                                                 <td>
-                                                    <?php $estado;
+                                                    <?php
                                                     if ($array[$i]->estado == 1) {
                                                         $estado = 'Disponible';
                                                         $color = 'success';

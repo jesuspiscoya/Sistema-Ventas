@@ -86,7 +86,7 @@ $usuario = $usuarioDao->buscar($_SESSION['uid']);
                                             <h3 class="card-title mb-3">Configuración</h3>
                                             <button type="submit" name="guardar"
                                                 class="btn btn-inverse-primary btn-rounded px-4 py-2 ml-auto mb-3">
-                                                <label class="h6 m-0">Guardar</label>
+                                                Guardar
                                             </button>
                                         </div>
                                     </div>

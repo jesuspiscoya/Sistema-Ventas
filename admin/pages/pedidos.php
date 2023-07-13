@@ -6,8 +6,10 @@
 <?php $srcPage = '' ?>
 <?php require '../components/_head.php' ?>
 <?php require '../services/pedido_dao.php' ?>
+<?php require '../services/producto_dao.php' ?>
 <?php require '../components/_validar_session.php' ?>
 <?php $pedidoDao = new PedidoDao ?>
+<?php $productoDao = new ProductoDao ?>
 
 <body>
     <style>
@@ -21,6 +23,26 @@
             <?php include '../components/_navbar.php'; ?>
             <div class="main-panel">
                 <div class="content-wrapper pt-4 pb-0">
+                    <!-- Modals de botones -->
+                    <?php include '../components/modificar_pedido.php' ?>
+                    <?php include '../components/estado_pedido.php' ?>
+                    <?php if (!empty($mensaje)) { ?>
+                        <div class="alert alert-<?php echo $alert ?> alert-dismissible fade show d-flex justify-content-between"
+                            role="alert">
+                            <span class="">
+                                <?php echo $mensaje ?>
+                            </span>
+                            <div class="btn p-0" data-bs-dismiss="alert" aria-label="Close">
+                                <i class="fa-solid fa-xmark text-<?php echo $alert ?> m-0 h3"></i>
+                            </div>
+                        </div>
+                    <?php } ?>
+                    <div class="alert alert-dismissible fade show d-none justify-content-between" role="alert">
+                        <span id="label"></span>
+                        <div class="btn p-0" data-bs-dismiss="alert" aria-label="Close">
+                            <i id="close" class="fa-solid fa-xmark m-0 h3"></i>
+                        </div>
+                    </div>
                     <div class="card border-0 mb-4">
                         <div class="card-body">
                             <h3 class="card-title position-absolute mb-3">Pedidos</h3>
@@ -61,25 +83,38 @@
                                                     <?php echo $array[$i]->fecha ?>
                                                 </td>
                                                 <td>
-                                                    <?php $estado;
-                                                    if ($array[$i]->estado == 1)
-                                                        $estado = 'Disponible';
-                                                    else
-                                                        $estado = 'No disponible'; ?>
-                                                    <label class="badge badge-pill badge-success">
+                                                    <?php
+                                                    if ($array[$i]->estado == 0) {
+                                                        $estado = 'Pendiente';
+                                                        $color = 'warning';
+                                                    } else if ($array[$i]->estado == 1) {
+                                                        $estado = 'Confirmado';
+                                                        $color = 'success';
+                                                    } else {
+                                                        $estado = 'Cancelado';
+                                                        $color = 'danger';
+                                                    }
+                                                    ?>
+                                                    <label class="badge badge-pill badge-<?php echo $color ?>">
                                                         <?php echo $estado ?>
                                                     </label>
                                                 </td>
                                                 <td class="p-0">
-                                                    <div class="btn btn-inverse-warning">
+                                                    <button class="btn btn-inverse-warning" data-bs-toggle="modal"
+                                                        data-bs-target="#modificar"
+                                                        onclick="modificarPedido(<?php echo $array[$i]->codigo ?>)">
                                                         <i class="fa-solid fa-pen m-0 my-1"></i>
-                                                    </div>
-                                                    <div class="btn btn-inverse-primary mx-1">
+                                                    </button>
+                                                    <button class="btn btn-inverse-primary mx-1" data-bs-toggle="modal"
+                                                        data-bs-target="#estado"
+                                                        onclick="estadoPedido(<?php echo $array[$i]->codigo ?>)">
                                                         <i class="fa-solid fa-gear m-0 my-1"></i>
-                                                    </div>
-                                                    <div class="btn btn-inverse-danger">
+                                                    </button>
+                                                    <button class="btn btn-inverse-danger" data-bs-toggle="modal"
+                                                        data-bs-target="#boleta"
+                                                        onclick="modificarPedido(<?php echo $array[$i]->codigo ?>)">
                                                         <i class="fa-solid fa-file-pdf m-0 my-1"></i>
-                                                    </div>
+                                                    </button>
                                                 </td>
                                             </tr>
                                         <?php } ?>

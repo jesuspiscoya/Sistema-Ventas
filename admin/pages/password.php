@@ -72,7 +72,7 @@ if (isset($_POST['actualizar'])) {
                                             </div>
                                             <button type="submit" name="actualizar"
                                                 class="btn btn-inverse-primary btn-rounded px-4 py-2 mt-3 mx-auto">
-                                                <label class="h5 m-0">Actualizar</label>
+                                                Actualizar
                                             </button>
                                         </div>
                                     </form>

@@ -42,6 +42,7 @@ class ProductoDao
             $producto->precio = $row['precio'];
             $producto->stock = $row['stock'];
             $producto->estado = $row['estado'];
+            $producto->imagen = base64_encode($row['imagen']);
         }
 
         $resultado->free_result();
@@ -95,8 +96,9 @@ class ProductoDao
     public function listar()
     {
         $conexion = $this->conexion->getConexion();
-        $sql = 'CALL ListarProductos';
-        $resultado = $conexion->query($sql);;
+        $sql = "CALL ListarProductos";
+        $resultado = $conexion->query($sql);
+        ;
         $array = array();
 
         while ($row = $resultado->fetch_assoc()) {
@@ -121,8 +123,9 @@ class ProductoDao
     public function categorias()
     {
         $conexion = $this->conexion->getConexion();
-        $sql = 'CALL ListarCategorias';
-        $resultado = $conexion->query($sql);;
+        $sql = "CALL ListarCategorias";
+        $resultado = $conexion->query($sql);
+        ;
 
         while ($row = $resultado->fetch_assoc()) {
             $producto = new Producto;

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-06-2023 a las 09:53:03
+-- Tiempo de generación: 13-07-2023 a las 20:36:26
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -33,6 +33,27 @@ ON c.cod_persona = p.cod_persona
 WHERE c.cod_cliente = codigo;
 END$$
 
+CREATE PROCEDURE `BuscarDetalle` (IN `codigo` INT)   BEGIN
+SELECT d.cod_deta_pedido, p.cod_producto, p.imagen, p.nombre, p.precio, d.cantidad, d.monto
+FROM detalle_pedido d
+INNER JOIN producto p
+ON d.cod_producto = p.cod_producto
+WHERE d.cod_pedido = codigo;
+END$$
+
+CREATE PROCEDURE `BuscarEstadoPedido` (IN `codigo` INT)   BEGIN
+SELECT estado FROM pedido WHERE cod_pedido = codigo;
+END$$
+
+CREATE PROCEDURE `BuscarPedido` (IN `codigo` INT)   BEGIN
+SELECT pe.nombre, p.fecha, p.cantidad, p.total
+FROM pedido p
+INNER JOIN cliente c
+INNER JOIN persona pe
+ON p.cod_cliente = c.cod_cliente AND c.cod_persona = pe.cod_persona
+WHERE p.cod_pedido = codigo;
+END$$
+
 CREATE PROCEDURE `BuscarPermiso` (IN `codigo` INT)   BEGIN
 SELECT cod_permiso FROM detalle_permiso WHERE cod_usuario = codigo;
 END$$
@@ -59,6 +80,14 @@ DELETE FROM cliente WHERE cod_cliente = codigo;
 DELETE FROM persona WHERE cod_persona = @cod_per;
 END$$
 
+CREATE PROCEDURE `EliminarDetalle` (IN `codigo` INT)   BEGIN
+DELETE FROM detalle_pedido WHERE cod_deta_pedido = codigo;
+SET @cod_pedido = (SELECT cod_pedido FROM detalle_pedido WHERE cod_deta_pedido = codigo);
+SET @cantidad = (SELECT cantidad FROM pedido WHERE cod_pedido = @cod_pedido);
+UPDATE pedido SET cantidad = @cantidad
+WHERE cod_pedido = @cod_pedido;
+END$$
+
 CREATE PROCEDURE `EliminarPermiso` (IN `cod_permisos` INT, IN `cod_usuarios` INT)   BEGIN
 DELETE FROM detalle_permiso WHERE cod_permiso = cod_permisos AND cod_usuario = cod_usuarios;
 END$$
@@ -83,6 +112,10 @@ END$$
 CREATE PROCEDURE `InsertarDetalle` (IN `cod_producto` INT, IN `cantidad` INT, IN `monto` FLOAT)   BEGIN
 SET @cod_pedido = (SELECT cod_pedido FROM pedido ORDER BY cod_pedido DESC LIMIT 1);
 INSERT INTO detalle_pedido VALUES(null, @cod_pedido, cod_producto, cantidad, monto);
+END$$
+
+CREATE PROCEDURE `InsertarDetalle2` (IN `cod_pedido` INT, IN `cod_producto` INT, IN `cantidad` INT, IN `monto` FLOAT)   BEGIN
+INSERT INTO detalle_pedido VALUES(null, cod_pedido, cod_producto, cantidad, monto);
 END$$
 
 CREATE PROCEDURE `InsertarPedido` (IN `cliente` INT, IN `cantidad` INT, IN `total` FLOAT)   BEGIN
@@ -143,8 +176,26 @@ UPDATE persona SET nombre = nombres, correo = correos, telefono = telefonos, dir
 WHERE cod_persona = @cod_per;
 END$$
 
+CREATE PROCEDURE `ModificarDetalle` (IN `codigo` INT, IN `cantidads` INT, IN `montos` FLOAT, IN `totals` FLOAT)   BEGIN
+UPDATE detalle_pedido SET cod_deta_pedido = codigo, cantidad = cantidads, monto = montos
+WHERE cod_deta_pedido = codigo;
+SET @cod_pedido = (SELECT cod_pedido FROM detalle_pedido WHERE cod_deta_pedido = codigo);
+UPDATE pedido SET total = totals
+WHERE cod_pedido = @cod_pedido;
+END$$
+
+CREATE PROCEDURE `ModificarEstadoPedido` (IN `codigo` INT, IN `estados` TINYINT(1))   BEGIN
+UPDATE pedido SET estado = estados
+WHERE cod_pedido = codigo;
+END$$
+
 CREATE PROCEDURE `ModificarPasswordUsuario` (IN `codigo` INT, IN `contrasena` VARCHAR(50))   BEGIN
 UPDATE usuario SET password = SHA(contrasena) WHERE cod_usuario = codigo;
+END$$
+
+CREATE PROCEDURE `ModificarPedido` (IN `codigo` INT, IN `cantidads` INT, IN `totals` FLOAT)   BEGIN
+UPDATE pedido SET cantidad = cantidads, total = totals
+WHERE cod_pedido = codigo;
 END$$
 
 CREATE PROCEDURE `ModificarProducto` (IN `codigo` INT, IN `cod_categorias` INT, IN `producto` VARCHAR(50), IN `descripcions` VARCHAR(200), IN `precios` FLOAT, IN `stocks` INT, IN `imagens` MEDIUMBLOB, IN `estados` BOOLEAN)   BEGIN
@@ -176,6 +227,14 @@ END$$
 
 CREATE PROCEDURE `ValidarPasswordUsuario` (IN `codigo` INT, IN `contrasena` VARCHAR(50))   BEGIN
 SELECT (CASE WHEN password = SHA(contrasena) THEN 1 ELSE 0 END) AS validar FROM usuario WHERE cod_usuario = codigo;
+END$$
+
+CREATE PROCEDURE `ValidarPermisos` (IN `codigo` INT)   BEGIN
+SELECT d.cod_permiso
+FROM usuario u
+INNER JOIN detalle_permiso d
+ON u.cod_usuario = d.cod_usuario
+WHERE u.cod_usuario = codigo;
 END$$
 
 DELIMITER ;
@@ -249,7 +308,11 @@ CREATE TABLE `detalle_pedido` (
 --
 
 INSERT INTO `detalle_pedido` (`cod_deta_pedido`, `cod_pedido`, `cod_producto`, `cantidad`, `monto`) VALUES
-(1, 10013, 10000, 5, 1500);
+(64, 10042, 10004, 1, 150),
+(67, 10042, 10003, 1, 3500),
+(68, 10042, 10001, 1, 3000),
+(69, 10042, 10000, 1, 5000),
+(70, 10042, 10005, 8, 2800);
 
 -- --------------------------------------------------------
 
@@ -268,13 +331,13 @@ CREATE TABLE `detalle_permiso` (
 --
 
 INSERT INTO `detalle_permiso` (`cod_deta_permiso`, `cod_permiso`, `cod_usuario`) VALUES
-(4, 1, 10001),
-(5, 2, 10001),
-(6, 3, 10001),
 (7, 1, 10002),
 (9, 2, 10002),
-(58, 1, 10000),
-(59, 3, 10000);
+(70, 1, 10000),
+(71, 2, 10000),
+(72, 3, 10000),
+(73, 4, 10000),
+(74, 1, 10001);
 
 -- --------------------------------------------------------
 
@@ -288,7 +351,7 @@ CREATE TABLE `pedido` (
   `cantidad` int(11) NOT NULL,
   `total` float NOT NULL,
   `fecha` timestamp NOT NULL DEFAULT current_timestamp(),
-  `estado` bit(1) NOT NULL
+  `estado` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -296,20 +359,7 @@ CREATE TABLE `pedido` (
 --
 
 INSERT INTO `pedido` (`cod_pedido`, `cod_cliente`, `cantidad`, `total`, `fecha`, `estado`) VALUES
-(10000, 10000, 4, 15500, '2023-06-15 06:24:09', b'0'),
-(10001, 10000, 3, 18000, '2023-06-15 07:18:00', b'0'),
-(10002, 10000, 3, 18000, '2023-06-15 07:19:25', b'0'),
-(10003, 10000, 3, 18000, '2023-06-15 07:19:52', b'0'),
-(10004, 10000, 3, 18000, '2023-06-15 07:20:51', b'0'),
-(10005, 10000, 3, 18000, '2023-06-15 07:22:34', b'0'),
-(10006, 10000, 3, 18000, '2023-06-15 07:25:30', b'0'),
-(10007, 10000, 3, 18000, '2023-06-15 07:29:11', b'0'),
-(10008, 10000, 3, 18000, '2023-06-15 07:30:24', b'0'),
-(10009, 10000, 3, 18000, '2023-06-15 07:30:59', b'0'),
-(10010, 10000, 4, 34000, '2023-06-15 07:34:44', b'0'),
-(10011, 10000, 4, 34000, '2023-06-15 07:39:48', b'0'),
-(10012, 10000, 4, 34000, '2023-06-15 07:42:00', b'0'),
-(10013, 10000, 4, 34000, '2023-06-15 07:51:45', b'0');
+(10042, 10000, 5, 14450, '2023-06-15 09:00:48', 1);
 
 -- --------------------------------------------------------
 
@@ -329,7 +379,8 @@ CREATE TABLE `permiso` (
 INSERT INTO `permiso` (`cod_permiso`, `nom_permiso`) VALUES
 (1, 'Usuarios'),
 (2, 'Clientes'),
-(3, 'Productos');
+(3, 'Productos'),
+(4, 'Pedidos');
 
 -- --------------------------------------------------------
 
@@ -419,7 +470,7 @@ CREATE TABLE `usuario` (
 
 INSERT INTO `usuario` (`cod_usuario`, `cod_persona`, `usuario`, `password`) VALUES
 (10000, 1, 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997'),
-(10001, 2, 'juan', 'juan'),
+(10001, 2, 'juan', 'b49a5780a99ea81284fc0746a78f84a30e4d5c73'),
 (10002, 3, 'luis', 'faea5242a00c52da62a0f00df168c199b7ab748d'),
 (10003, 5, 'carlos', 'ab5e2bca84933118bbc9d48ffaccce3bac4eeb64'),
 (10004, 7, 'luz', 'c307b63565c069c7f841b112a6280a8de6fc9ef6');
@@ -512,25 +563,25 @@ ALTER TABLE `cliente`
 -- AUTO_INCREMENT de la tabla `detalle_pedido`
 --
 ALTER TABLE `detalle_pedido`
-  MODIFY `cod_deta_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `cod_deta_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_permiso`
 --
 ALTER TABLE `detalle_permiso`
-  MODIFY `cod_deta_permiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `cod_deta_permiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- AUTO_INCREMENT de la tabla `pedido`
 --
 ALTER TABLE `pedido`
-  MODIFY `cod_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10014;
+  MODIFY `cod_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10043;
 
 --
 -- AUTO_INCREMENT de la tabla `permiso`
 --
 ALTER TABLE `permiso`
-  MODIFY `cod_permiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `cod_permiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `persona`
