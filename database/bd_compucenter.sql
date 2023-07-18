@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-07-2023 a las 20:36:26
+-- Tiempo de generación: 18-07-2023 a las 03:36:02
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -47,6 +47,15 @@ END$$
 
 CREATE PROCEDURE `BuscarPedido` (IN `codigo` INT)   BEGIN
 SELECT pe.nombre, p.fecha, p.cantidad, p.total
+FROM pedido p
+INNER JOIN cliente c
+INNER JOIN persona pe
+ON p.cod_cliente = c.cod_cliente AND c.cod_persona = pe.cod_persona
+WHERE p.cod_pedido = codigo;
+END$$
+
+CREATE PROCEDURE `BuscarPedidoPdf` (IN `codigo` INT)   BEGIN
+SELECT pe.nombre, pe.telefono, pe.direccion, pe.correo, p.fecha, p.total
 FROM pedido p
 INNER JOIN cliente c
 INNER JOIN persona pe
