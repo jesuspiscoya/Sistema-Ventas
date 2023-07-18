@@ -107,10 +107,9 @@ foreach ($detalle as $key => $value) {
     $dataURI = 'data:image/jpg;base64,' . $value['producto']->imagen;
     $pic = explode(',', $dataURI, 2)[1];
     $imagen = 'data://text/plain;base64,' . $pic;
-    $pdf->Cell(5);
-    $pdf->Cell(21, 12, $pdf->Image($imagen, $pdf->GetX(), $pdf->GetY(), 12, 0, 'jpg'));
-    $pdf->Cell(64, 12, utf8_decode($value['producto']->nombre));
-    $pdf->Cell(3);
+    $pdf->Cell(25, 12, $pdf->Image($imagen, $pdf->GetX() + 5, $pdf->GetY() + 1, 0, 10, 'jpg'));
+    $pdf->Cell(66, 12, utf8_decode($value['producto']->nombre));
+    $pdf->Cell(2);
     $pdf->Cell(25, 12, utf8_decode('S/ ' . $value['producto']->precio), 0, 0, 'C');
     $pdf->Cell(25, 12, utf8_decode($value['detalle']->cantidad), 0, 0, 'C');
     $pdf->Cell(25, 12, utf8_decode('S/ ' . $value['detalle']->monto), 0, 1, 'C');
