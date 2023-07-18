@@ -1,6 +1,6 @@
 <?php
 require_once 'conexion.php';
-require $src . 'model/producto.php';
+require_once $src . 'model/producto.php';
 
 class ProductoDao
 {

@@ -51,13 +51,13 @@
                                     <thead class="thead-dark">
                                         <tr class="text-uppercase">
                                             <th style="width: 15px;">#</th>
-                                            <th style="width: 70px;">código</th>
+                                            <th style="width: 60px;">código</th>
                                             <th>cliente</th>
-                                            <th style="width: 90px;">cantidad</th>
+                                            <th style="width: 80px;">cantidad</th>
                                             <th style="width: 75px;">total</th>
-                                            <th style="width: 90px;">fecha</th>
-                                            <th style="width: 110px;">estado</th>
-                                            <th style="width: 150px;">acción</th>
+                                            <th style="width: 150px;">fecha</th>
+                                            <th style="width: 100px;">estado</th>
+                                            <th style="width: 125px;">acción</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -110,11 +110,10 @@
                                                         onclick="estadoPedido(<?php echo $array[$i]->codigo ?>)">
                                                         <i class="fa-solid fa-gear m-0 my-1"></i>
                                                     </button>
-                                                    <button class="btn btn-inverse-danger" data-bs-toggle="modal"
-                                                        data-bs-target="#boleta"
-                                                        onclick="modificarPedido(<?php echo $array[$i]->codigo ?>)">
+                                                    <a href="../components/boleta.php?codigo=10042" target="_blank"
+                                                        class="btn btn-inverse-danger">
                                                         <i class="fa-solid fa-file-pdf m-0 my-1"></i>
-                                                    </button>
+                                                    </a>
                                                 </td>
                                             </tr>
                                         <?php } ?>

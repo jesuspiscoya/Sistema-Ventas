@@ -1,6 +1,7 @@
 <?php
 require_once 'conexion.php';
-require $src . 'model/pedido.php';
+require_once $src . 'model/pedido.php';
+require_once $src . 'model/cliente.php';
 
 class PedidoDao
 {
@@ -29,6 +30,28 @@ class PedidoDao
         $conexion->next_result();
         $conexion->close();
         return $pedido;
+    }
+
+    public function buscarPdf(int $codigo)
+    {
+        $conexion = $this->conexion->getConexion();
+        $sql = "CALL BuscarPedidoPdf('" . $codigo . "')";
+        $resultado = $conexion->query($sql);
+
+        if ($row = $resultado->fetch_assoc()) {
+            $cliente = new Cliente;
+            $cliente->nombre = $row['nombre'];
+            $cliente->telefono = $row['telefono'];
+            $cliente->direccion = $row['direccion'];
+            $cliente->correo = $row['correo'];
+            $cliente->codigo = $row['fecha'];
+            $cliente->dni = $row['total'];
+        }
+
+        $resultado->free_result();
+        $conexion->next_result();
+        $conexion->close();
+        return $cliente;
     }
 
     public function buscarEstado(int $codigo)
