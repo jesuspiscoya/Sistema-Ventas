@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-07-2023 a las 03:36:02
+-- Tiempo de generación: 23-07-2023 a las 19:51:26
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -73,6 +73,15 @@ FROM producto p
 INNER JOIN categoria c
 ON p.cod_categoria = c.cod_categoria
 WHERE p.cod_producto = codigo;
+END$$
+
+CREATE PROCEDURE `BuscarUltimoPedido` ()   BEGIN
+SELECT p.cod_pedido, pe.nombre, pe.telefono, pe.direccion, pe.correo, p.fecha, p.total
+FROM pedido p
+INNER JOIN cliente c
+INNER JOIN persona pe
+ON p.cod_cliente = c.cod_cliente AND c.cod_persona = pe.cod_persona
+ORDER BY cod_pedido DESC LIMIT 1;
 END$$
 
 CREATE PROCEDURE `BuscarUsuario` (IN `codigo` INT)   BEGIN
@@ -255,8 +264,8 @@ DELIMITER ;
 --
 
 CREATE TABLE `categoria` (
-  `cod_categoria` int(11) NOT NULL,
-  `nom_categoria` varchar(50) NOT NULL
+  `cod_categoria` int(11) NOT NULL COMMENT 'Código de categoría.',
+  `nom_categoria` varchar(50) NOT NULL COMMENT 'Nombre de la categoría.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -282,9 +291,9 @@ INSERT INTO `categoria` (`cod_categoria`, `nom_categoria`) VALUES
 --
 
 CREATE TABLE `cliente` (
-  `cod_cliente` int(11) NOT NULL,
-  `cod_persona` int(11) NOT NULL,
-  `password` varchar(50) NOT NULL
+  `cod_cliente` int(11) NOT NULL COMMENT 'Código de cliente.',
+  `cod_persona` int(11) NOT NULL COMMENT 'Código de la persona.',
+  `password` varchar(50) NOT NULL COMMENT 'Contraseña de cliente.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -305,11 +314,11 @@ INSERT INTO `cliente` (`cod_cliente`, `cod_persona`, `password`) VALUES
 --
 
 CREATE TABLE `detalle_pedido` (
-  `cod_deta_pedido` int(11) NOT NULL,
-  `cod_pedido` int(11) NOT NULL,
-  `cod_producto` int(11) NOT NULL,
-  `cantidad` int(11) NOT NULL,
-  `monto` float NOT NULL
+  `cod_deta_pedido` int(11) NOT NULL COMMENT 'Código de detalle de pedido.',
+  `cod_pedido` int(11) NOT NULL COMMENT 'Código del pedido.',
+  `cod_producto` int(11) NOT NULL COMMENT 'Código del producto.',
+  `cantidad` int(11) NOT NULL COMMENT 'Cantidad del producto.',
+  `monto` float NOT NULL COMMENT 'Monto total del producto.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -321,7 +330,11 @@ INSERT INTO `detalle_pedido` (`cod_deta_pedido`, `cod_pedido`, `cod_producto`, `
 (67, 10042, 10003, 1, 3500),
 (68, 10042, 10001, 1, 3000),
 (69, 10042, 10000, 1, 5000),
-(70, 10042, 10005, 8, 2800);
+(70, 10042, 10005, 8, 2800),
+(74, 10043, 10005, 2, 700),
+(75, 10043, 10006, 2, 11800),
+(76, 10043, 10004, 1, 150),
+(77, 10043, 10002, 3, 12000);
 
 -- --------------------------------------------------------
 
@@ -330,9 +343,9 @@ INSERT INTO `detalle_pedido` (`cod_deta_pedido`, `cod_pedido`, `cod_producto`, `
 --
 
 CREATE TABLE `detalle_permiso` (
-  `cod_deta_permiso` int(11) NOT NULL,
-  `cod_permiso` int(11) NOT NULL,
-  `cod_usuario` int(11) NOT NULL
+  `cod_deta_permiso` int(11) NOT NULL COMMENT 'Código de detalle de permiso.',
+  `cod_permiso` int(11) NOT NULL COMMENT 'Código del permiso.',
+  `cod_usuario` int(11) NOT NULL COMMENT 'Código del usuario.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -355,12 +368,12 @@ INSERT INTO `detalle_permiso` (`cod_deta_permiso`, `cod_permiso`, `cod_usuario`)
 --
 
 CREATE TABLE `pedido` (
-  `cod_pedido` int(11) NOT NULL,
-  `cod_cliente` int(11) NOT NULL,
-  `cantidad` int(11) NOT NULL,
-  `total` float NOT NULL,
-  `fecha` timestamp NOT NULL DEFAULT current_timestamp(),
-  `estado` tinyint(1) NOT NULL
+  `cod_pedido` int(11) NOT NULL COMMENT 'Código de pedido.',
+  `cod_cliente` int(11) NOT NULL COMMENT 'Código del cliente.',
+  `cantidad` int(11) NOT NULL COMMENT 'Cantidad de productos.',
+  `total` float NOT NULL COMMENT 'Monto total del pedido.',
+  `fecha` timestamp NOT NULL DEFAULT current_timestamp() COMMENT 'Fecha de creación del pedido.',
+  `estado` tinyint(1) NOT NULL COMMENT 'Estado del pedido.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -368,7 +381,8 @@ CREATE TABLE `pedido` (
 --
 
 INSERT INTO `pedido` (`cod_pedido`, `cod_cliente`, `cantidad`, `total`, `fecha`, `estado`) VALUES
-(10042, 10000, 5, 14450, '2023-06-15 09:00:48', 1);
+(10042, 10000, 5, 14450, '2023-06-15 09:00:48', 1),
+(10043, 10000, 4, 24650, '2023-07-22 23:01:47', 2);
 
 -- --------------------------------------------------------
 
@@ -377,8 +391,8 @@ INSERT INTO `pedido` (`cod_pedido`, `cod_cliente`, `cantidad`, `total`, `fecha`,
 --
 
 CREATE TABLE `permiso` (
-  `cod_permiso` int(11) NOT NULL,
-  `nom_permiso` varchar(20) NOT NULL
+  `cod_permiso` int(11) NOT NULL COMMENT 'Código de permiso.',
+  `nom_permiso` varchar(20) NOT NULL COMMENT 'Nombre del permiso.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -398,13 +412,13 @@ INSERT INTO `permiso` (`cod_permiso`, `nom_permiso`) VALUES
 --
 
 CREATE TABLE `persona` (
-  `cod_persona` int(11) NOT NULL,
-  `nombre` varchar(200) NOT NULL,
-  `correo` varchar(200) NOT NULL,
-  `dni` varchar(8) NOT NULL,
-  `telefono` varchar(9) NOT NULL,
-  `direccion` varchar(300) NOT NULL,
-  `estado` tinyint(1) NOT NULL
+  `cod_persona` int(11) NOT NULL COMMENT 'Código de persona.',
+  `nombre` varchar(200) NOT NULL COMMENT 'Nombre de la persona.',
+  `correo` varchar(200) NOT NULL COMMENT 'Correo electrónico de la persona.',
+  `dni` varchar(8) NOT NULL COMMENT 'DNI de la persona.',
+  `telefono` varchar(9) NOT NULL COMMENT 'Teléfono de la persona.',
+  `direccion` varchar(300) NOT NULL COMMENT 'Dirección de la persona.',
+  `estado` tinyint(1) NOT NULL COMMENT 'Estado de la persona.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -429,14 +443,14 @@ INSERT INTO `persona` (`cod_persona`, `nombre`, `correo`, `dni`, `telefono`, `di
 --
 
 CREATE TABLE `producto` (
-  `cod_producto` int(11) NOT NULL,
-  `cod_categoria` int(11) NOT NULL,
-  `nombre` varchar(50) NOT NULL,
-  `descripcion` varchar(200) NOT NULL,
-  `precio` float NOT NULL,
-  `stock` int(11) NOT NULL,
-  `imagen` mediumblob NOT NULL,
-  `estado` bit(1) NOT NULL
+  `cod_producto` int(11) NOT NULL COMMENT 'Código de producto.',
+  `cod_categoria` int(11) NOT NULL COMMENT 'Código de la categoría del producto.',
+  `nombre` varchar(50) NOT NULL COMMENT 'Nombre del producto.',
+  `descripcion` varchar(200) NOT NULL COMMENT 'Descripción del producto.',
+  `precio` float NOT NULL COMMENT 'Precio del producto.',
+  `stock` int(11) NOT NULL COMMENT 'Stock del producto.',
+  `imagen` mediumblob NOT NULL COMMENT 'Imagen del producto.',
+  `estado` bit(1) NOT NULL COMMENT 'Estado del producto.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -467,10 +481,10 @@ INSERT INTO `producto` (`cod_producto`, `cod_categoria`, `nombre`, `descripcion`
 --
 
 CREATE TABLE `usuario` (
-  `cod_usuario` int(11) NOT NULL,
-  `cod_persona` int(11) NOT NULL,
-  `usuario` varchar(20) NOT NULL,
-  `password` varchar(50) NOT NULL
+  `cod_usuario` int(11) NOT NULL COMMENT 'Código de usuario.',
+  `cod_persona` int(11) NOT NULL COMMENT 'Código de la persona',
+  `usuario` varchar(20) NOT NULL COMMENT 'Nombre de usuario.',
+  `password` varchar(50) NOT NULL COMMENT 'Contraseña de usuario.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -560,55 +574,55 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `cod_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `cod_categoria` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Código de categoría.', AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `cod_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10005;
+  MODIFY `cod_cliente` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Código de cliente.', AUTO_INCREMENT=10005;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_pedido`
 --
 ALTER TABLE `detalle_pedido`
-  MODIFY `cod_deta_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+  MODIFY `cod_deta_pedido` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Código de detalle de pedido.', AUTO_INCREMENT=78;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_permiso`
 --
 ALTER TABLE `detalle_permiso`
-  MODIFY `cod_deta_permiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+  MODIFY `cod_deta_permiso` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Código de detalle de permiso.', AUTO_INCREMENT=75;
 
 --
 -- AUTO_INCREMENT de la tabla `pedido`
 --
 ALTER TABLE `pedido`
-  MODIFY `cod_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10043;
+  MODIFY `cod_pedido` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Código de pedido.', AUTO_INCREMENT=10044;
 
 --
 -- AUTO_INCREMENT de la tabla `permiso`
 --
 ALTER TABLE `permiso`
-  MODIFY `cod_permiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `cod_permiso` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Código de permiso.', AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `persona`
 --
 ALTER TABLE `persona`
-  MODIFY `cod_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `cod_persona` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Código de persona.', AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `cod_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10008;
+  MODIFY `cod_producto` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Código de producto.', AUTO_INCREMENT=10008;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `cod_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10005;
+  MODIFY `cod_usuario` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Código de usuario.', AUTO_INCREMENT=10005;
 
 --
 -- Restricciones para tablas volcadas
