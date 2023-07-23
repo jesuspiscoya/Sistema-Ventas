@@ -110,8 +110,8 @@
                                                         onclick="estadoPedido(<?php echo $array[$i]->codigo ?>)">
                                                         <i class="fa-solid fa-gear m-0 my-1"></i>
                                                     </button>
-                                                    <a href="../components/boleta.php?codigo=10042" target="_blank"
-                                                        class="btn btn-inverse-danger">
+                                                    <a href="../components/boleta.php?codigo=<?php echo $array[$i]->codigo ?>"
+                                                        target="_blank" class="btn btn-inverse-danger">
                                                         <i class="fa-solid fa-file-pdf m-0 my-1"></i>
                                                     </a>
                                                 </td>

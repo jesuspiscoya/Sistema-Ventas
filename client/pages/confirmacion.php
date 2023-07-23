@@ -15,13 +15,17 @@
             <div class="d-flex flex-column my-5 py-5">
                 <h2 class="text-center">¡Pedido Confirmado!</h2>
                 <span class="text-center mb-3 mb-md-4 text-warning">Su pedido se ha procesado correctamente, gracias por
-                    comprar
-                    en CompuCenter.</span>
-                <div class="position-relative table-responsive mb-sm-5 mb-md-4" style="margin-bottom: 60px;">
-                    <div class="cliente position-absolute font-weight-bold mt-md-2 mb-2">Cliente:
-                        <?php echo $nombre ?>
+                    comprar en CompuCenter.</span>
+                <div class="table-responsive mb-sm-5 mb-md-4" style="margin-bottom: 60px;">
+                    <div class="d-flex justify-content-between mb-2 p-1">
+                        <div class="cliente font-weight-bold mt-md-2 mb-2">Cliente:
+                            <?php echo $nombre ?>
+                        </div>
+                        <a href="../components/boleta.php" target="_blank" class="btn btn-inverse-danger px-3 py-2 my-auto">
+                            <i class="fa-solid fa-file-pdf mr-2"></i>Boleta
+                        </a>
                     </div>
-                    <table class="table table-hover" id="dataTableConfirmacion">
+                    <table class="table table-hover">
                         <thead class="thead-dark">
                             <tr class="text-uppercase">
                                 <th style="width: 50px;">#</th>

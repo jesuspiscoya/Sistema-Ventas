@@ -10,13 +10,13 @@ class PDF extends FPDF
     function Header()
     {
         $pedidoDao = new PedidoDao;
-        $cliente = $pedidoDao->buscarPdf($_GET['codigo']);
+        $cliente = $pedidoDao->buscar();
 
         $this->SetFont('Arial', 'B', 9); //tipo fuente, negrita(B-I-U-BIU), tamañoTexto
         $this->Image('../assets/img/logo-pdf.png', 10, 10, 50); //logo de la empresa, moverDerecha, moverAbajo, tamañoIMG
 
         $this->Ln(4);
-        $this->Cell(0, 0, utf8_decode('PEDIDO N°' . $_GET['codigo']), 0, 0, 'R'); // AnchoCelda,AltoCelda,titulo,borde(1-0),saltoLinea(1-0),posicion
+        $this->Cell(0, 0, utf8_decode('PEDIDO N°' . $cliente->codigo), 0, 0, 'R'); // AnchoCelda,AltoCelda,titulo,borde(1-0),saltoLinea(1-0),posicion
         $this->SetTextColor(0, 0, 0); //color
         $this->Ln(15); // Salto de línea
 
@@ -45,7 +45,7 @@ class PDF extends FPDF
         $this->Ln(5);
 
         /* FECHA */
-        $fecha = date('d/m/Y', strtotime($cliente->codigo));
+        $fecha = date('d/m/Y', strtotime($cliente->estado));
         $this->Cell(0, 0, utf8_decode("Fecha : " . $fecha));
         $this->Ln(9);
 
@@ -88,8 +88,8 @@ $pdf->SetDrawColor(163, 163, 163); //colorBorde
 
 $pedidoDao = new PedidoDao;
 $detalleDao = new DetalleDao;
-$pedido = $pedidoDao->buscar($_GET['codigo']);
-$detalle = $detalleDao->buscar($_GET['codigo']);
+$pedido = $pedidoDao->buscar();
+$detalle = $detalleDao->buscar($pedido->codigo);
 
 /* TABLA */
 foreach ($detalle as $key => $value) {
@@ -112,15 +112,15 @@ $pdf->SetFont('Arial', 'B', 9);
 $pdf->Cell(0, 3, '', 0, 1);
 $pdf->Cell(7);
 $pdf->Cell(151, 8, utf8_decode('SUBTOTAL :'), 1, 0, 'R', 1);
-$pdf->Cell(25, 8, utf8_decode('S/  ' . $pedido->total - ($pedido->total * 0.18)), 1, 1, 'C', 1);
+$pdf->Cell(25, 8, utf8_decode('S/  ' . $pedido->dni - ($pedido->dni * 0.18)), 1, 1, 'C', 1);
 
 $pdf->Cell(7);
 $pdf->Cell(151, 8, utf8_decode('IGV :'), 1, 0, 'R', 1);
-$pdf->Cell(25, 8, utf8_decode('S/  ' . $pedido->total * 0.18), 1, 1, 'C', 1);
+$pdf->Cell(25, 8, utf8_decode('S/  ' . $pedido->dni * 0.18), 1, 1, 'C', 1);
 
 $pdf->SetTextColor(40, 180, 99); //colorTexto
 $pdf->Cell(7);
 $pdf->Cell(151, 8, utf8_decode('TOTAL :'), 1, 0, 'R', 1);
-$pdf->Cell(25, 8, utf8_decode('S/  ' . $pedido->total), 1, 1, 'C', 1);
+$pdf->Cell(25, 8, utf8_decode('S/  ' . $pedido->dni), 1, 1, 'C', 1);
 
-$pdf->Output('BOLETA_' . $_GET['codigo'] . '.pdf', 'I'); //nombreDescarga, Visor(I->visualizar - D->descargar)
+$pdf->Output('BOLETA_' . $pedido->codigo . '.pdf', 'I'); //nombreDescarga, Visor(I->visualizar - D->descargar)
